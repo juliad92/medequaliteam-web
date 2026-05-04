@@ -35,6 +35,11 @@
   "pnpm": {
     "overrides": {
       "undici": "5.28.5"
-    }
+    },
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp",
+      "unrs-resolver"
+    ]
   }
 }
