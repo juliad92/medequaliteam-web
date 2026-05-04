@@ -45,6 +45,7 @@ import { Posts } from '@/collections/Posts'
 import { TeamMembers, Testimonials } from '@/collections/People'
 import { Media, Pages } from '@/collections/MediaAndPages'
 import { Navigation, SiteInfo, Homepage } from '@/globals/index'
+import { Users } from '@/collections/Users'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -81,6 +82,7 @@ export default buildConfig({
     TeamMembers,
     Projects,
     Testimonials,
+    Users, // Admin users
     Pages, // Flexible block-based pages (About, Volunteer, Legal…)
   ],
 
@@ -110,6 +112,6 @@ export default buildConfig({
   // ── TypeScript output ────────────────────────────────────────────────────────
   // Run `npx payload generate:types` to regenerate after config changes.
   typescript: {
-    outputFile: 'payload-types.ts',
+    outputFile: path.resolve(__dirname, 'payload-types.ts'),
   },
 })

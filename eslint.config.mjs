@@ -16,7 +16,7 @@ const eslintConfig = [
   ...compat.extends('next/core-web-vitals'),
   ...compat.extends('plugin:@next/next/recommended'),
   // ...nextVitals,
-  ...nextTs,
+  // ...nextTs,
   // Override default ignores of eslint-config-next.
   {
     // Remplace globalIgnores pour le format Flat Config
