@@ -12,7 +12,7 @@ const __cwd = path.dirname(__filename)
 const compat = new FlatCompat({
   baseDirectory: __cwd,
 })
-const eslintConfig = defineConfig([
+const eslintConfig = [
   ...compat.extends('next/core-web-vitals'),
   ...compat.extends('plugin:@next/next/recommended'),
   // ...nextVitals,
@@ -29,6 +29,6 @@ const eslintConfig = defineConfig([
       'payload-types.ts',
     ],
   },
-])
+]
 
 export default eslintConfig
