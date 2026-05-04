@@ -22,8 +22,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     limit: 3,
   })
 
-  console.log(projects)
-
   const { docs: posts } = await payload.find({
     collection: 'posts',
     sort: '-publishedAt',
