@@ -20,7 +20,14 @@ const eslintConfig = defineConfig([
   // Override default ignores of eslint-config-next.
   {
     // Remplace globalIgnores pour le format Flat Config
-    ignores: ['.next/**', 'out/**', 'build/**', 'next-env.d.ts', 'node_modules/**'],
+    ignores: [
+      '.next/**',
+      'out/**',
+      'build/**',
+      'next-env.d.ts',
+      'node_modules/**',
+      'payload-types.ts',
+    ],
   },
 ])
 
