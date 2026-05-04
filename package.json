@@ -6,10 +6,17 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "format": "prettier --write ./src",
+    "format:check": "prettier --check ./src"
   },
   "dependencies": {
-    "next": "16.2.4",
+    "@payloadcms/db-mongodb": "^3.84.1",
+    "@payloadcms/next": "^3.84.1",
+    "@payloadcms/richtext-lexical": "^3.84.1",
+    "graphql": "^16.13.2",
+    "next": "^15.3.1",
+    "payload": "^3.84.1",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
@@ -19,8 +26,15 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.2.4",
+    "eslint-config-next": "^15.3.1",
+    "prettier": "^3.8.3",
+    "prettier-plugin-tailwindcss": "^0.8.0",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "pnpm": {
+    "overrides": {
+      "undici": "5.28.5"
+    }
   }
 }
