@@ -1,5 +1,6 @@
 import React from 'react'
 import { notFound } from 'next/navigation'
+import { Analytics } from '@vercel/analytics/next'
 // import './styles.css'
 
 const locales = ['en', 'fr'] as const
@@ -23,7 +24,10 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   )
 }
