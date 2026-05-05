@@ -30,6 +30,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   })
   const featuredProject = homepageSettings?.featuredProject
 
+  const impactStats = homepageSettings?.impactStats
+
   const { docs: posts } = await payload.find({
     collection: 'posts',
     sort: '-publishedAt',
@@ -41,7 +43,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     <>
       <Navbar locale={locale} />
       <HeroSection locale={locale} project={featuredProject as any} />
-      <ImpactBar locale={locale} />
+      <ImpactBar locale={locale} impactStats={impactStats as any} />
       <MissionSection locale={locale} />
       <ProjectsSection locale={locale} projects={projects as any} />
       <VolunteerCTA locale={locale} />
