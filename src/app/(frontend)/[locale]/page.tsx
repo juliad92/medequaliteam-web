@@ -23,6 +23,13 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     limit: 3,
   })
 
+  // Get the project configured in featuredProject in globals
+  const homepageSettings = await payload.findGlobal({
+    slug: 'homepage',
+    locale: locale as 'en' | 'fr',
+  })
+  const featuredProject = homepageSettings?.featuredProject
+
   const { docs: posts } = await payload.find({
     collection: 'posts',
     sort: '-publishedAt',
@@ -33,7 +40,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   return (
     <>
       <Navbar locale={locale} />
-      <HeroSection locale={locale} project={projects[0] as any} />
+      <HeroSection locale={locale} project={featuredProject as any} />
       <ImpactBar locale={locale} />
       <MissionSection locale={locale} />
       <ProjectsSection locale={locale} projects={projects as any} />
