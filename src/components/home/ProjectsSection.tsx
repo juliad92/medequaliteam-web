@@ -12,24 +12,6 @@ const getPlaceholders = (t: ReturnType<typeof getT>) => [
       'Providing basic medical care to displaced populations in the Thessaloniki region since December 2023.',
     gradient: 'linear-gradient(135deg, #7db87d, #5a9e5a)',
   },
-  {
-    slug: 'samos',
-    status: 'past',
-    location: 'Samos, Greece',
-    title: 'Samos (2018–2021)',
-    summary:
-      'Our founding project — a clinic treating over 80,000 patients on the island of Samos.',
-    gradient: 'linear-gradient(135deg, #b0c4b0, #8aaa8a)',
-  },
-  {
-    slug: 'poland',
-    status: 'past',
-    location: 'Poland',
-    title: 'Ukraine (2022–2023)',
-    summary:
-      'Mobile medical units supporting Ukrainian refugees and relieving pressure on the Polish healthcare system.',
-    gradient: 'linear-gradient(135deg, #aab8c8, #8898b0)',
-  },
 ]
 
 type Project = {

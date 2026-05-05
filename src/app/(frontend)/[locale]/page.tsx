@@ -17,8 +17,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   // Fetch real data from Payload (falls back to placeholders in components if empty)
   const { docs: projects } = await payload.find({
     collection: 'projects',
-    where: { featured: { equals: true } },
+    where: { featured: { equals: true }, _status: { equals: 'published' } },
     locale: locale as 'en' | 'fr',
+    fallbackLocale: 'en',
     limit: 3,
   })
 

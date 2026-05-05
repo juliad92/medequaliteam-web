@@ -4,7 +4,7 @@ export const Projects: CollectionConfig = {
   slug: 'projects',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'location', 'status', 'updatedAt'],
+    defaultColumns: ['title', 'location', 'status', 'featured', 'updatedAt'],
     description: "Medical projects run by Med'EqualiTeam on the ground.",
   },
   access: {
@@ -71,7 +71,7 @@ export const Projects: CollectionConfig = {
       name: 'coverImage',
       type: 'upload',
       relationTo: 'media',
-      required: true,
+      // required: true,
     },
     {
       name: 'summary',
