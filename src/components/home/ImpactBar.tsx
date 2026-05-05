@@ -1,7 +1,15 @@
 import React from 'react'
 import { getT } from '@/i18n/translations'
 
-export default function ImpactBar({ locale, impactStats }: { locale: string; impactStats: any }) {
+type ImpactBarProps = {
+  locale: string
+  impactStats: {
+    value: string
+    label: string
+  }[]
+}
+
+export default function ImpactBar({ locale, impactStats }: ImpactBarProps) {
   const t = getT(locale)
 
   return (
