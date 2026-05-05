@@ -20,7 +20,7 @@ export const translations = {
     hero: {
       eyebrow: 'Medical NGO · Since 2018',
       title: "Med'EqualiTeam",
-      tagline: 'Caring for people on the move',
+      // tagline: 'Caring for people on the move',
       donateCta: 'Donate now',
       volunteerCta: 'Volunteer with us',
       latestProject: 'Latest project',
@@ -112,7 +112,7 @@ export const translations = {
     hero: {
       eyebrow: 'ONG médicale · Depuis 2018',
       title: "Med'EqualiTeam",
-      tagline: 'Prendre soin des personnes en mouvement',
+      // tagline: 'Prendre soin des personnes en mouvement',
       donateCta: 'Faire un don',
       volunteerCta: 'Devenir bénévole',
       latestProject: 'Dernier projet',

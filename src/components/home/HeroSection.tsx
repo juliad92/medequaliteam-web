@@ -11,8 +11,17 @@ type Project = {
   gradient: string
 }
 
-export default function HeroSection({ locale, project }: { locale: string; project?: Project }) {
+export default function HeroSection({
+  locale,
+  heroData,
+  project,
+}: {
+  locale: string
+  heroData?: any
+  project?: Project
+}) {
   const t = getT(locale)
+
   return (
     <section className="relative flex min-h-[88vh] items-end overflow-hidden bg-[var(--charcoal)]">
       <div
@@ -47,7 +56,7 @@ export default function HeroSection({ locale, project }: { locale: string; proje
             </em>
           </h1>
           <p className="mb-10 font-serif text-xl text-white/55" style={{ fontStyle: 'italic' }}>
-            {t.hero.tagline}
+            {heroData?.tagline}
           </p>
           <div className="flex flex-wrap gap-4">
             <Link
