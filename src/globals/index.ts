@@ -149,7 +149,7 @@ export const Homepage: GlobalConfig = {
           name: 'image',
           type: 'upload',
           relationTo: 'media',
-          required: true,
+          // required: true,
         },
         {
           name: 'primaryCta',
