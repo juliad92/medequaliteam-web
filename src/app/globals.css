@@ -1,37 +1,9 @@
 @import 'tailwindcss';
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 :root {
+  /* Design Tokens */
   --green: #3d8c4f;
   --green-light: #4fa363;
   --green-pale: #edf5ef;
@@ -41,6 +13,29 @@ body {
   --cream: #f0ede6;
   --muted: #6b7068;
   --border: #d6d9d3;
+  /* Theme Defaults */
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+/* Dark Mode Overrides */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+@theme inline {
+  /* Mapping variables to Tailwind utilities */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  /* Custom colors from  palette */
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  /* Font mapping */
+  --font-sans: 'DM Sans', ui-sans-serif, system-ui;
+  --font-serif: 'Fraunces', Georgia, serif;
 }
 
 html {
@@ -48,14 +43,24 @@ html {
 }
 
 body {
-  font-family: 'DM Sans', system-ui, sans-serif;
-  background: var(--warm-white);
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+/* Removed @tailwind base;, @tailwind components;, and @tailwind utilities;. In Tailwind v4, @import "tailwindcss"; does all that heavy lifting for you.
+@tailwind base;
+@tailwind components;
+@tailwind utilities; */
+/* 
+body {
+  sbackground: var(--warm-white);
   color: var(--charcoal);
-}
+} */
 
-.font-serif {
+/* .font-serif {
   font-family: 'Fraunces', Georgia, serif;
-}
+} */
 
 @keyframes fadeUp {
   from {
