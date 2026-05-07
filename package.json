@@ -9,7 +9,7 @@
     "lint": "eslint",
     "format": "prettier --write ./src",
     "format:check": "prettier --check ./src",
-    "generate:types": "payload generate:types"
+    "generate:types": "npx --yes node@22.22.2 --experimental-strip-types --disable-warning=ExperimentalWarning ./node_modules/payload/bin.js generate:types --disable-transpile"
   },
   "dependencies": {
     "@payloadcms/db-mongodb": "^3.84.1",
@@ -37,9 +37,6 @@
     "typescript": "^5"
   },
   "pnpm": {
-    "overrides": {
-      "undici": "5.28.5"
-    },
     "onlyBuiltDependencies": [
       "esbuild",
       "sharp",

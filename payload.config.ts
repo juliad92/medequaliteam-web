@@ -40,12 +40,12 @@ import sharp from 'sharp'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
-import { Projects } from '@/collections/Projects'
-import { Posts } from '@/collections/Posts'
-import { TeamMembers, Testimonials } from '@/collections/People'
-import { Media, Pages } from '@/collections/MediaAndPages'
-import { Navigation, SiteInfo, Homepage } from '@/globals/index'
-import { Users } from '@/collections/Users'
+import { Projects } from './src/collections/Projects.ts'
+import { Posts } from './src/collections/Posts.ts'
+import { TeamMembers, Testimonials } from './src/collections/People.ts'
+import { Media, Pages } from './src/collections/MediaAndPages.ts'
+import { Navigation, SiteInfo, Homepage } from './src/globals/index.ts'
+import { Users } from './src/collections/Users.ts'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -112,6 +112,6 @@ export default buildConfig({
   // ── TypeScript output ────────────────────────────────────────────────────────
   // Run `npx payload generate:types` to regenerate after config changes.
   typescript: {
-    outputFile: path.resolve(__dirname, 'payload-types.ts'),
+    outputFile: path.resolve(__dirname, 'src/payload/payload-types.ts'),
   },
 })
