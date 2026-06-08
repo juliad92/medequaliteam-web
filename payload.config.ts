@@ -42,6 +42,7 @@ import { fileURLToPath } from 'url'
 
 import { Projects } from './src/collections/Projects.ts'
 import { Posts } from './src/collections/Posts.ts'
+import { VolunteerNeeds } from './src/collections/VolunteerNeeds.ts'
 import { TeamMembers, Testimonials } from './src/collections/People.ts'
 import { Media, Pages } from './src/collections/MediaAndPages.ts'
 import { Navigation, SiteInfo, Homepage } from './src/globals/index.ts'
@@ -81,6 +82,7 @@ export default buildConfig({
     Posts, // News, reports, newsletters
     TeamMembers,
     Projects,
+    VolunteerNeeds,
     Testimonials,
     Users, // Admin users
     Pages, // Flexible block-based pages (About, Volunteer, Legal…)

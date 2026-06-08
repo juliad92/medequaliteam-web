@@ -71,6 +71,7 @@ export interface Config {
     posts: Post;
     'team-members': TeamMember;
     projects: Project;
+    'volunteer-needs': VolunteerNeed;
     testimonials: Testimonial;
     users: User;
     pages: Page;
@@ -85,6 +86,7 @@ export interface Config {
     posts: PostsSelect<false> | PostsSelect<true>;
     'team-members': TeamMembersSelect<false> | TeamMembersSelect<true>;
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
+    'volunteer-needs': VolunteerNeedsSelect<false> | VolunteerNeedsSelect<true>;
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
@@ -323,6 +325,87 @@ export interface TeamMember {
   createdAt: string;
 }
 /**
+ * Open volunteer roles linked to field projects (e.g. medical coordinator, nurse).
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "volunteer-needs".
+ */
+export interface VolunteerNeed {
+  id: string;
+  /**
+   * e.g. "Medical coordinator" / "Coordinateur·rice médical·e"
+   */
+  roleName: string;
+  /**
+   * Optional. e.g. "6 months" / "6 mois"
+   */
+  duration?: string | null;
+  jobDescription: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  requiredExperienceAndSkills: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  desiredExperienceAndSkills?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  furtherInformation?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  project: string | Project;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
  * Quotes from volunteers, shown on the Volunteer page.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -495,6 +578,10 @@ export interface PayloadLockedDocument {
         value: string | Project;
       } | null)
     | ({
+        relationTo: 'volunteer-needs';
+        value: string | VolunteerNeed;
+      } | null)
+    | ({
         relationTo: 'testimonials';
         value: string | Testimonial;
       } | null)
@@ -663,6 +750,22 @@ export interface ProjectsSelect<T extends boolean = true> {
         id?: T;
       };
   featured?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "volunteer-needs_select".
+ */
+export interface VolunteerNeedsSelect<T extends boolean = true> {
+  roleName?: T;
+  duration?: T;
+  jobDescription?: T;
+  requiredExperienceAndSkills?: T;
+  desiredExperienceAndSkills?: T;
+  furtherInformation?: T;
+  project?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
