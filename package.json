@@ -9,14 +9,18 @@
     "lint": "eslint",
     "format": "prettier --write ./src",
     "format:check": "prettier --check ./src",
-    "generate:types": "npx --yes node@22.22.2 --experimental-strip-types --disable-warning=ExperimentalWarning ./node_modules/payload/bin.js generate:types --disable-transpile"
+    "generate:types": "npx --yes node@22.22.2 --experimental-strip-types --disable-warning=ExperimentalWarning ./node_modules/payload/bin.js generate:types --disable-transpile",
+    "test:e2e": "playwright test",
+    "test:e2e:seed": "tsx e2e/scripts/seed.ts",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:install": "playwright install chromium"
   },
   "dependencies": {
+    "@faceless-ui/modal": "3.0.0",
+    "@faceless-ui/scroll-info": "2.0.0",
     "@payloadcms/db-mongodb": "^3.84.1",
     "@payloadcms/next": "^3.84.1",
     "@payloadcms/richtext-lexical": "^3.84.1",
-    "@faceless-ui/modal": "3.0.0",
-    "@faceless-ui/scroll-info": "2.0.0",
     "@vercel/analytics": "^2.0.1",
     "graphql": "^16.13.2",
     "next": "15.3.9",
@@ -27,6 +31,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.5",
+    "@playwright/test": "^1.55.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -36,6 +41,7 @@
     "prettier": "^3.8.3",
     "prettier-plugin-tailwindcss": "^0.8.0",
     "tailwindcss": "^4",
+    "tsx": "^4.22.4",
     "typescript": "^5"
   },
   "pnpm": {
