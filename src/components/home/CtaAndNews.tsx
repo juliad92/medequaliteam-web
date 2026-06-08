@@ -2,7 +2,13 @@ import React from 'react'
 import Link from 'next/link'
 import { getT } from '@/i18n/translations'
 
-export function VolunteerCTA({ locale }: { locale: string }) {
+export function VolunteerCTA({
+  locale,
+  volunteerHref,
+}: {
+  locale: string
+  volunteerHref: string
+}) {
   const t = getT(locale)
   return (
     <section className="px-8 py-20" style={{ background: 'var(--green-dark)' }}>
@@ -21,7 +27,7 @@ export function VolunteerCTA({ locale }: { locale: string }) {
         </div>
         <div className="flex flex-shrink-0 flex-col gap-3">
           <Link
-            href={`/${locale}/volunteer/greece`}
+            href={volunteerHref}
             className="rounded-lg bg-white px-8 py-3.5 text-center text-sm font-medium text-[var(--green-dark)] transition-colors hover:bg-[var(--cream)]"
           >
             {t.volunteerCta.primary}

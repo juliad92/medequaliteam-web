@@ -8,6 +8,12 @@ importers:
 
   .:
     dependencies:
+      '@faceless-ui/modal':
+        specifier: 3.0.0
+        version: 3.0.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@faceless-ui/scroll-info':
+        specifier: 2.0.0
+        version: 2.0.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@payloadcms/db-mongodb':
         specifier: ^3.84.1
         version: 3.84.1(payload@3.84.1(graphql@16.13.2)(typescript@5.9.3))

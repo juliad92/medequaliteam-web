@@ -15,6 +15,8 @@
     "@payloadcms/db-mongodb": "^3.84.1",
     "@payloadcms/next": "^3.84.1",
     "@payloadcms/richtext-lexical": "^3.84.1",
+    "@faceless-ui/modal": "3.0.0",
+    "@faceless-ui/scroll-info": "2.0.0",
     "@vercel/analytics": "^2.0.1",
     "graphql": "^16.13.2",
     "next": "15.3.9",

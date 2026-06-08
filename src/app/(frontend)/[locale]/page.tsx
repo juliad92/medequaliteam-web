@@ -2,13 +2,12 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import React from 'react'
 
-import Navbar from '@/components/layout/Navbar'
-import Footer from '@/components/layout/Footer'
 import HeroSection from '@/components/home/HeroSection'
 import ImpactBar from '@/components/home/ImpactBar'
 import MissionSection from '@/components/home/MissionSection'
 import ProjectsSection from '@/components/home/ProjectsSection'
 import { VolunteerCTA, NewsSection } from '@/components/home/CtaAndNews'
+import { getProjectsWithVolunteerNeeds } from '@/lib/volunteer'
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
@@ -39,16 +38,19 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     limit: 3,
   })
 
+  const volunteerProjects = await getProjectsWithVolunteerNeeds(payload, locale as 'en' | 'fr')
+  const volunteerHref = volunteerProjects[0]
+    ? `/${locale}/volunteer/${volunteerProjects[0].slug}`
+    : `/${locale}/volunteer/stories`
+
   return (
     <>
-      <Navbar locale={locale} />
       <HeroSection locale={locale} heroData={heroData} project={featuredProject as any} />
       <ImpactBar locale={locale} impactStats={impactStats as any} />
       <MissionSection locale={locale} />
       <ProjectsSection locale={locale} projects={projects as any} />
-      <VolunteerCTA locale={locale} />
+      <VolunteerCTA locale={locale} volunteerHref={volunteerHref} />
       <NewsSection locale={locale} posts={posts as any} />
-      <Footer locale={locale} />
     </>
   )
 }

@@ -3,8 +3,15 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { getT } from '@/i18n/translations'
+import type { VolunteerProjectNavItem } from '@/lib/volunteer'
 
-export default function Navbar({ locale }: { locale: string }) {
+export default function Navbar({
+  locale,
+  volunteerProjects = [],
+}: {
+  locale: string
+  volunteerProjects?: VolunteerProjectNavItem[]
+}) {
   const t = getT(locale)
   const [scrolled, setScrolled] = useState(false)
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
@@ -32,9 +39,14 @@ export default function Navbar({ locale }: { locale: string }) {
 
   const volunteerNav = {
     label: t.nav.volunteer,
-    href: '/volunteer',
+    href: volunteerProjects[0]
+      ? `/volunteer/${volunteerProjects[0].slug}`
+      : '/volunteer/stories',
     children: [
-      { label: t.nav.volunteerGreece, href: '/volunteer/greece' },
+      ...volunteerProjects.map((project) => ({
+        label: project.title,
+        href: `/volunteer/${project.slug}`,
+      })),
       { label: t.nav.volunteerStories, href: '/volunteer/stories' },
     ],
   }

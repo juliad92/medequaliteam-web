@@ -72,6 +72,7 @@ export interface Config {
     'team-members': TeamMember;
     projects: Project;
     'volunteer-needs': VolunteerNeed;
+    'volunteer-applications': VolunteerApplication;
     testimonials: Testimonial;
     users: User;
     pages: Page;
@@ -87,6 +88,7 @@ export interface Config {
     'team-members': TeamMembersSelect<false> | TeamMembersSelect<true>;
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
     'volunteer-needs': VolunteerNeedsSelect<false> | VolunteerNeedsSelect<true>;
+    'volunteer-applications': VolunteerApplicationsSelect<false> | VolunteerApplicationsSelect<true>;
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
@@ -406,6 +408,55 @@ export interface VolunteerNeed {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Volunteer recruitment submissions from the website.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "volunteer-applications".
+ */
+export interface VolunteerApplication {
+  id: string;
+  firstName: string;
+  lastName: string;
+  age: number;
+  email: string;
+  countryOfResidence: string;
+  nationality: string;
+  phoneCountryCode?: string | null;
+  phone?: string | null;
+  selectedRoles?: (string | VolunteerNeed)[] | null;
+  emergencyFirstName?: string | null;
+  emergencyLastName?: string | null;
+  emergencyRelation?: string | null;
+  emergencyPhoneCountryCode?: string | null;
+  emergencyPhone?: string | null;
+  professionalExperience?: string | null;
+  relevantWorkAcademicExperience?: string | null;
+  volunteerExperience?: string | null;
+  experienceWithRefugees?: string | null;
+  otherExperience?: string | null;
+  medicalGraduationDate?: string | null;
+  preferredStartDate?: string | null;
+  preferredEndDate?: string | null;
+  motivation: string;
+  happyStressfulEnvironment?: ('yes' | 'no') | null;
+  goodEnglishLevel?: ('yes' | 'no') | null;
+  euSchengenResident?: ('yes' | 'no') | null;
+  greeceVisa?: ('yes' | 'no') | null;
+  greeceVisaComments?: string | null;
+  visaExpiryDate?: string | null;
+  experienceWorkingAbroad?: string | null;
+  languageGreek?: ('' | 'basic' | 'intermediate' | 'fluent') | null;
+  languageArabic?: ('' | 'basic' | 'intermediate' | 'fluent') | null;
+  languageFarsi?: ('' | 'basic' | 'intermediate' | 'fluent') | null;
+  drivingLicence?: ('yes' | 'no' | 'other') | null;
+  drivingLicenceOther?: string | null;
+  howDidYouHearAboutUs?: string | null;
+  project: string | Project;
+  locale: 'en' | 'fr';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * Quotes from volunteers, shown on the Volunteer page.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -580,6 +631,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'volunteer-needs';
         value: string | VolunteerNeed;
+      } | null)
+    | ({
+        relationTo: 'volunteer-applications';
+        value: string | VolunteerApplication;
       } | null)
     | ({
         relationTo: 'testimonials';
@@ -769,6 +824,52 @@ export interface VolunteerNeedsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "volunteer-applications_select".
+ */
+export interface VolunteerApplicationsSelect<T extends boolean = true> {
+  firstName?: T;
+  lastName?: T;
+  age?: T;
+  email?: T;
+  countryOfResidence?: T;
+  nationality?: T;
+  phoneCountryCode?: T;
+  phone?: T;
+  selectedRoles?: T;
+  emergencyFirstName?: T;
+  emergencyLastName?: T;
+  emergencyRelation?: T;
+  emergencyPhoneCountryCode?: T;
+  emergencyPhone?: T;
+  professionalExperience?: T;
+  relevantWorkAcademicExperience?: T;
+  volunteerExperience?: T;
+  experienceWithRefugees?: T;
+  otherExperience?: T;
+  medicalGraduationDate?: T;
+  preferredStartDate?: T;
+  preferredEndDate?: T;
+  motivation?: T;
+  happyStressfulEnvironment?: T;
+  goodEnglishLevel?: T;
+  euSchengenResident?: T;
+  greeceVisa?: T;
+  greeceVisaComments?: T;
+  visaExpiryDate?: T;
+  experienceWorkingAbroad?: T;
+  languageGreek?: T;
+  languageArabic?: T;
+  languageFarsi?: T;
+  drivingLicence?: T;
+  drivingLicenceOther?: T;
+  howDidYouHearAboutUs?: T;
+  project?: T;
+  locale?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

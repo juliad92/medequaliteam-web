@@ -1,8 +1,15 @@
 import React from 'react'
 import Link from 'next/link'
 import { getT } from '@/i18n/translations'
+import type { VolunteerProjectNavItem } from '@/lib/volunteer'
 
-export default function Footer({ locale }: { locale: string }) {
+export default function Footer({
+  locale,
+  volunteerProjects = [],
+}: {
+  locale: string
+  volunteerProjects?: VolunteerProjectNavItem[]
+}) {
   const t = getT(locale)
   const footerLinks = {
     [t.nav.about]: [
@@ -15,7 +22,10 @@ export default function Footer({ locale }: { locale: string }) {
       { label: t.nav.projectsPast, href: '/projects/past' },
     ],
     [t.nav.volunteer]: [
-      { label: t.nav.volunteerGreece, href: '/volunteer/greece' },
+      ...volunteerProjects.map((project) => ({
+        label: project.title,
+        href: `/volunteer/${project.slug}`,
+      })),
       { label: t.nav.volunteerStories, href: '/volunteer/stories' },
     ],
     [t.nav.donate]: [
