@@ -161,6 +161,94 @@ export const translations = {
       },
     },
 
+    // Complaints
+    complaints: {
+      metaTitle: 'Make a complaint',
+      metaDescription:
+        'Raise a concern or report misconduct within the Med\'EqualiTeam network. Learn about our complaints procedure and submit a complaint.',
+      srTitle: 'Med\'EqualiTeam complaints page — information and complaint form.',
+      title: 'Make a complaint',
+      intro:
+        'This page outlines our approach when handling complaints. Med\'EqualiTeam is committed to safe and transparent conduct and encourages everybody in its network to raise their voice if they have a concern or if an incident occurs.',
+      waysTitle: 'Ways of raising a complaint',
+      waysIntro:
+        'Any member of staff, volunteer, partner, or person otherwise connected to Med\'EqualiTeam\'s network and its mission can raise a concern or report a case of misconduct.',
+      waysBullets: [
+        'Where a complaint is in regards to a volunteer or partner the form below will be sent to our Designated Safeguarding Officer. If the complaint relates to an issue within a partner organisation, we encourage you to escalate your concern within the partner organisation as far as possible before reaching out to us in order for it to be addressed in the most appropriate way.',
+        'Where it is inappropriate to reach out to Med\'EqualiTeam\'s coordination team or Designated Safeguarding Officer you can indicate in the form below, and the complaint will be redirected to an external member to maintain impartiality.',
+      ],
+      expectTitle: 'What to expect when raising a complaint',
+      expectIntro:
+        'Med\'EqualiTeam is committed to processing your complaint responsibly and professionally. While each case may require a different approach, we commit to the following, general procedure when receiving a complaint.',
+      expectSteps: [
+        {
+          title: 'Acknowledgment & exploration',
+          body: 'Once you have submitted your complaint, the most appropriate member of the Med\'EqualiTeam team will start processing it. If you share your identity and/or contact details with us, you will be informed of this step.',
+        },
+        {
+          title: 'Investigation',
+          body: 'If it\'s appropriate for us to investigate, the details you have provided will be verified, and — only where appropriate — other parties may be questioned about their involvement in the issue you have raised.',
+        },
+        {
+          title: 'Follow up',
+          body: 'Taking into account what we have learnt, we will decide on appropriate follow-up actions. If you share your identity and/or contact details with us, if it is appropriate to do so, we will inform you of what these actions entail.',
+        },
+        {
+          title: 'Outcome & closing',
+          body: 'Med\'EqualiTeam will address the issue by implementing its action plan, involving stakeholders where needed, and — where appropriate and possible — arranging support to those affected by the issue.',
+        },
+      ],
+      expectNote:
+        'Please note that while we are committed to resolving complaints as quickly as possible, the exact timeline for this procedure will depend on the nature of the complaint. All complaints are recorded internally in a confidential manner.',
+      anonymityTitle: 'Anonymity and Confidentiality',
+      anonymityBody:
+        'This procedure is designed to be easily accessible and certain safeguards are in place to protect your identity. While we encourage you to share your name with us for the processing of your complaint, you can also raise a complaint anonymously. Additionally, you can share your name with us but request that it remain anonymous from other parties involved in the complaint you\'re lodging.',
+      anonymityPrivacy:
+        'Throughout our process, we will comply with our {privacyPolicy} and the EU General Data Protection Regulation.',
+      privacyPolicyLabel: 'Privacy Policy',
+      reportTitle: 'What should be reported?',
+      reportIntro:
+        'Med\'EqualiTeam is interested in receiving information relating to potential criminal offences, safeguarding concerns, or otherwise unacceptable behaviour by representatives of the organisation, its partners, or volunteers.',
+      reportExamplesIntro: 'Examples of complaints include but are not limited to:',
+      reportExamples: [
+        'Failure to comply with a legal obligation or internal governance guidelines',
+        'Financial malpractice, corruption, fraud or theft',
+        'Criminal activity',
+        'Bullying, harassment, abuse or other forms of harm',
+        'Misuse of power',
+        'Breach of confidentiality',
+        'Improper conduct or unethical behaviour',
+        'Discrimination',
+        'Defamation',
+        'Attempts to conceal any of the above',
+      ],
+      safeguardingPolicyLabel: 'Med\'EqualiTeam Safeguarding Policy',
+      safeguardingPolicySuffix: 'for a more in-depth list of harms',
+      reportDisclaimer:
+        'This process is not intended for use for complaints relating to a political disagreement with MedEqualiTeam or its representatives, or a disagreement regarding agreed rules of the organisation.',
+      coordinationNote:
+        'Complaints made directly against our coordination team will be immediately directed to a board member of the organisation.',
+      form: {
+        sensitiveLabel:
+          'If this complaint concerns a member of the MedEqualiTeam coordination team, then please indicate so here:',
+        yes: 'Yes',
+        no: 'No',
+        personalDetails: 'Personal details',
+        firstName: 'First name',
+        lastName: 'Last name',
+        email: 'Email address',
+        phoneCountryCode: 'Country calling code',
+        phone: 'Phone number',
+        complaintDetails: 'Complaint details',
+        complaintDetailsLabel: 'Please detail your complaint here:',
+        submit: 'Submit form',
+        fieldErrors: {
+          required: 'This field is required.',
+          email: 'Please enter a valid email address.',
+        },
+      },
+    },
+
     // Footer
     footer: {
       tagline:
@@ -334,6 +422,94 @@ export const translations = {
         submitting: 'Envoi…',
         success: 'Merci ! Nous vous contacterons rapidement avec les instructions de virement.',
         error: 'Une erreur est survenue. Réessayez ou écrivez à donate@medequali.team.',
+      },
+    },
+
+    // Complaints
+    complaints: {
+      metaTitle: 'Formuler une plainte',
+      metaDescription:
+        'Signalez une préoccupation ou un cas d\'inconduite au sein du réseau Med\'EqualiTeam. Découvrez notre procédure de traitement des plaintes et déposez une réclamation.',
+      srTitle: 'Page réclamations Med\'EqualiTeam — informations et formulaire de plainte.',
+      title: 'Formuler une plainte',
+      intro:
+        'Cette page décrit notre approche lors du traitement des réclamations. Med\'EqualiTeam s\'engage à adopter une conduite sûre et transparente et encourage tous les membres de son réseau à faire entendre leur voix en cas d\'inquiétude ou d\'incident.',
+      waysTitle: 'Comment déposer une plainte',
+      waysIntro:
+        'Tout membre du personnel, bénévole, partenaire ou personne autrement liée au réseau de Med\'EqualiTeam et à sa mission peut soulever une préoccupation ou signaler un cas d\'inconduite.',
+      waysBullets: [
+        'Lorsqu\'une plainte concerne un bénévole ou un partenaire, le formulaire ci-dessous sera envoyé à notre agent de protection désigné. Si la plainte concerne un problème au sein d\'une organisation partenaire, nous vous encourageons à faire remonter votre préoccupation au sein de l\'organisation partenaire dans la mesure du possible avant de nous contacter afin qu\'elle soit traitée de la manière la plus appropriée.',
+        'S\'il est inapproprié de contacter l\'équipe de coordination de Med\'EqualiTeam ou l\'agent de sauvegarde désigné, vous pouvez l\'indiquer dans le formulaire ci-dessous, et la plainte sera redirigée vers un membre externe pour maintenir l\'impartialité.',
+      ],
+      expectTitle: 'À quoi s\'attendre lors du dépôt d\'une plainte',
+      expectIntro:
+        'Med\'EqualiTeam s\'engage à traiter votre réclamation de manière responsable et professionnelle. Bien que chaque cas puisse nécessiter une approche différente, nous nous engageons à suivre la procédure générale suivante lors de la réception d\'une plainte.',
+      expectSteps: [
+        {
+          title: 'Accusé de réception & exploration',
+          body: 'Une fois que vous avez soumis votre réclamation, le membre le plus approprié de l\'équipe Med\'EqualiTeam commencera à la traiter. Si vous nous communiquez votre identité et/ou vos coordonnées, vous serez informé·e de cette étape.',
+        },
+        {
+          title: 'Enquête',
+          body: 'S\'il est approprié pour nous d\'enquêter, les détails que vous avez fournis seront vérifiés et — uniquement lorsque cela est approprié — d\'autres parties pourront être interrogées sur leur implication dans le problème que vous avez soulevé.',
+        },
+        {
+          title: 'Suivi',
+          body: 'En tenant compte de ce que nous avons appris, nous déciderons des actions de suivi appropriées. Si vous partagez votre identité et/ou vos coordonnées avec nous, si cela est approprié, nous vous informerons de ce que ces actions impliquent.',
+        },
+        {
+          title: 'Résultat et clôture',
+          body: 'Med\'EqualiTeam abordera le problème en mettant en œuvre son plan d\'action, en impliquant les parties prenantes si nécessaire et — le cas échéant et si possible — en organisant un soutien aux personnes concernées par le problème.',
+        },
+      ],
+      expectNote:
+        'Veuillez noter que même si nous nous engageons à résoudre les plaintes le plus rapidement possible, le délai exact de cette procédure dépendra de la nature de la plainte. Toutes les réclamations sont enregistrées en interne de manière confidentielle.',
+      anonymityTitle: 'Anonymat et confidentialité',
+      anonymityBody:
+        'Cette procédure est conçue pour être facilement accessible et certaines garanties sont en place pour protéger votre identité. Bien que nous vous encourageons à partager votre nom avec nous pour le traitement de votre plainte, vous pouvez également déposer une plainte de manière anonyme. De plus, vous pouvez partager votre nom avec nous, mais demander qu\'il reste anonyme vis-à-vis des autres parties impliquées dans la plainte que vous déposez.',
+      anonymityPrivacy:
+        'Tout au long de notre processus, nous nous conformerons à notre {privacyPolicy} et au règlement général de l\'UE sur la protection des données.',
+      privacyPolicyLabel: 'Politique de confidentialité',
+      reportTitle: 'Que faut-il signaler ?',
+      reportIntro:
+        'Med\'EqualiTeam souhaite recevoir des informations relatives à d\'éventuelles infractions pénales, à des préoccupations en matière de protection ou à tout autre comportement inacceptable de la part de représentants de l\'organisation, de ses partenaires ou de bénévoles.',
+      reportExamplesIntro: 'Les exemples de plaintes incluent, mais ne sont pas limités à :',
+      reportExamples: [
+        'Manquement à une obligation légale ou à des directives de gouvernance interne',
+        'Malversations financières, corruption, fraude ou vol',
+        'Activité criminelle',
+        'Intimidation, harcèlement, abus ou autres formes de préjudice',
+        'Abus de pouvoir',
+        'Violation de la confidentialité',
+        'Mauvaise conduite ou comportement contraire à l\'éthique',
+        'Discrimination',
+        'Diffamation',
+        'Tentative de dissimulation d\'un ou des éléments ci-dessus',
+      ],
+      safeguardingPolicyLabel: 'Politique de sauvegarde de Med\'EqualiTeam',
+      safeguardingPolicySuffix: 'pour une liste plus détaillée des préjudices',
+      reportDisclaimer:
+        'Ce processus n\'est pas destiné à être utilisé pour les plaintes relatives à un désaccord politique avec MedEqualiTeam ou ses représentant·e·s, ou un désaccord concernant les règles convenues de l\'organisation.',
+      coordinationNote:
+        'Les plaintes formulées directement contre notre équipe de coordination seront immédiatement transmises à un·e membre du conseil d\'administration de l\'organisation.',
+      form: {
+        sensitiveLabel:
+          'Si cette plainte concerne un·e membre de l\'équipe de coordination de MedEqualiTeam, veuillez l\'indiquer ici :',
+        yes: 'Oui',
+        no: 'Non',
+        personalDetails: 'Coordonnées personnelles',
+        firstName: 'Prénom',
+        lastName: 'Nom',
+        email: 'Adresse e-mail',
+        phoneCountryCode: 'Indicatif téléphonique',
+        phone: 'Numéro de téléphone',
+        complaintDetails: 'Détails de la plainte',
+        complaintDetailsLabel: 'Veuillez détailler votre plainte ici :',
+        submit: 'Envoyer le formulaire',
+        fieldErrors: {
+          required: 'Ce champ est obligatoire.',
+          email: 'Veuillez saisir une adresse e-mail valide.',
+        },
       },
     },
 
