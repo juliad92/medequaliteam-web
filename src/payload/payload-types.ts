@@ -73,6 +73,7 @@ export interface Config {
     projects: Project;
     'volunteer-needs': VolunteerNeed;
     'volunteer-applications': VolunteerApplication;
+    'donation-inquiries': DonationInquiry;
     testimonials: Testimonial;
     users: User;
     pages: Page;
@@ -89,6 +90,7 @@ export interface Config {
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
     'volunteer-needs': VolunteerNeedsSelect<false> | VolunteerNeedsSelect<true>;
     'volunteer-applications': VolunteerApplicationsSelect<false> | VolunteerApplicationsSelect<true>;
+    'donation-inquiries': DonationInquiriesSelect<false> | DonationInquiriesSelect<true>;
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
@@ -429,7 +431,6 @@ export interface VolunteerApplication {
   emergencyRelation?: string | null;
   emergencyPhoneCountryCode?: string | null;
   emergencyPhone?: string | null;
-  professionalExperience?: string | null;
   relevantWorkAcademicExperience?: string | null;
   volunteerExperience?: string | null;
   experienceWithRefugees?: string | null;
@@ -453,6 +454,22 @@ export interface VolunteerApplication {
   howDidYouHearAboutUs?: string | null;
   project: string | Project;
   locale: 'en' | 'fr';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Transnational Giving Europe donation requests from the website.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "donation-inquiries".
+ */
+export interface DonationInquiry {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  country: string;
+  locale?: ('en' | 'fr') | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -635,6 +652,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'volunteer-applications';
         value: string | VolunteerApplication;
+      } | null)
+    | ({
+        relationTo: 'donation-inquiries';
+        value: string | DonationInquiry;
       } | null)
     | ({
         relationTo: 'testimonials';
@@ -844,7 +865,6 @@ export interface VolunteerApplicationsSelect<T extends boolean = true> {
   emergencyRelation?: T;
   emergencyPhoneCountryCode?: T;
   emergencyPhone?: T;
-  professionalExperience?: T;
   relevantWorkAcademicExperience?: T;
   volunteerExperience?: T;
   experienceWithRefugees?: T;
@@ -867,6 +887,19 @@ export interface VolunteerApplicationsSelect<T extends boolean = true> {
   drivingLicenceOther?: T;
   howDidYouHearAboutUs?: T;
   project?: T;
+  locale?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "donation-inquiries_select".
+ */
+export interface DonationInquiriesSelect<T extends boolean = true> {
+  firstName?: T;
+  lastName?: T;
+  email?: T;
+  country?: T;
   locale?: T;
   updatedAt?: T;
   createdAt?: T;

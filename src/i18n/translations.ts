@@ -80,6 +80,87 @@ export const translations = {
       viewAll: 'All news',
     },
 
+    // Donate
+    donate: {
+      metaTitle: 'Donate',
+      metaDescription:
+        'Support Med\'EqualiTeam with a donation. 100% of funds go to medicines and medical supplies in Northern Greece.',
+      srTitle: 'Med\'EqualiTeam donation page — select your country to see tax deduction options and donate online.',
+      eyebrow: "Med'EqualiTeam — Free healthcare for refugees",
+      title: 'Every donation saves lives',
+      subtitle:
+        '100% of funds go to medicines & medical supplies in Northern Greece. We depend entirely on your generosity.',
+      impact: {
+        consultation: { value: '€15', label: '1 consultation funded' },
+        medicine: { value: '€50', label: '1 week of medicine for a child' },
+        kit: { value: '€200', label: 'Emergency medical kit' },
+      },
+      countryLabel: 'Your country',
+      countryPlaceholder: '— Select your country —',
+      countries: {
+        FR: 'France',
+        US: 'United States',
+        DE: 'Germany',
+        BE: 'Belgium',
+        CH: 'Switzerland',
+        GB: 'United Kingdom',
+        OTHER: 'Other country',
+      },
+      frequencyLabel: 'Frequency',
+      frequency: {
+        once: 'One-time',
+        monthly: 'Monthly',
+        yearly: 'Annual',
+      },
+      amountLabel: 'Amount',
+      customPlaceholder: 'Custom amount',
+      netCost: {
+        donation: 'Donation',
+        deduction: 'Tax deduction',
+        actual: 'Your actual cost',
+      },
+      donateNow: 'Donate now',
+      donateAmount: 'Donate {amount}{freq}',
+      freqMonthly: '/mo',
+      freqYearly: '/yr',
+      platformNote: "You'll be redirected to {platform}",
+      selectCountryAlert: 'Please select your country first to be redirected to the right platform.',
+      selectCountryTooltip: 'Select your country before donating',
+      otherWays: 'Other ways to give',
+      paypal: 'PayPal',
+      paypalNote: '1.4% + €0.35 fee',
+      bankTransfer: 'Bank transfer',
+      bankNote: 'Contact us for details',
+      trust: {
+        charity: 'Registered charity W102001158',
+        secure: 'Secure payment',
+        operations: '100% to operations',
+      },
+      tax: {
+        FR: 'French tax residents: 66% tax deduction on your income tax (up to 20% of taxable income). A €50 donation costs you just {net} after deduction.',
+        US: 'US taxpayers: Fully tax-deductible under IRS 501(c)(3) via Friends of Fondation de France. Deduction depends on your marginal tax bracket (up to 37%).',
+        DE: 'German taxpayers: Tax-deductible via Maecenata, an independent German tax-exempt foundation. Effective deduction up to ~45% depending on your tax rate.',
+        BE: 'Belgian residents: Tax deduction available via Transnational Giving Europe. Fill in the contact form and we\'ll send you transfer instructions.',
+        CH: 'Swiss residents: Tax deduction available via Transnational Giving Europe. Fill in the contact form and we\'ll guide you through the process.',
+        GB: 'UK taxpayers: Via Gift Aid, we can reclaim 25p for every £1 you donate at no cost to you. Via Transnational Giving Europe you can also claim higher-rate relief.',
+        OTHER:
+          'We accept donations from anywhere in the world. Tax deductibility depends on your local legislation — check with your tax authority.',
+      },
+      tge: {
+        title: 'Transnational Giving Europe',
+        description:
+          'Fill in this form with your contact information, and we will provide instructions on how to transfer funds and obtain a tax deduction.',
+        firstName: 'First name',
+        lastName: 'Last name',
+        email: 'Email address',
+        country: 'Country of residence',
+        submit: 'Submit',
+        submitting: 'Sending…',
+        success: 'Thank you! We will contact you shortly with transfer instructions.',
+        error: 'Something went wrong. Please try again or email donate@medequali.team.',
+      },
+    },
+
     // Footer
     footer: {
       tagline:
@@ -171,6 +252,89 @@ export const translations = {
       eyebrow: 'Dernières nouvelles',
       title: 'Actualités du terrain',
       viewAll: 'Toutes les actualités',
+    },
+
+    // Donate
+    donate: {
+      metaTitle: 'Faire un don',
+      metaDescription:
+        "Soutenez Med'EqualiTeam par un don. 100 % des fonds vont aux médicaments et au matériel médical en Grèce du Nord.",
+      srTitle:
+        "Page de don Med'EqualiTeam — sélectionnez votre pays pour voir les options de déduction fiscale et faire un don en ligne.",
+      eyebrow: "Med'EqualiTeam — Soins gratuits pour les réfugiés",
+      title: 'Chaque don sauve des vies',
+      subtitle:
+        '100 % des fonds vont aux médicaments et au matériel médical en Grèce du Nord. Nous dépendons entièrement de votre générosité.',
+      impact: {
+        consultation: { value: '15 €', label: '1 consultation financée' },
+        medicine: { value: '50 €', label: "1 semaine de médicaments pour un enfant" },
+        kit: { value: '200 €', label: 'Kit médical d\'urgence' },
+      },
+      countryLabel: 'Votre pays',
+      countryPlaceholder: '— Sélectionnez votre pays —',
+      countries: {
+        FR: 'France',
+        US: 'États-Unis',
+        DE: 'Allemagne',
+        BE: 'Belgique',
+        CH: 'Suisse',
+        GB: 'Royaume-Uni',
+        OTHER: 'Autre pays',
+      },
+      frequencyLabel: 'Fréquence',
+      frequency: {
+        once: 'Ponctuel',
+        monthly: 'Mensuel',
+        yearly: 'Annuel',
+      },
+      amountLabel: 'Montant',
+      customPlaceholder: 'Montant libre',
+      netCost: {
+        donation: 'Don',
+        deduction: 'Déduction fiscale',
+        actual: 'Coût réel pour vous',
+      },
+      donateNow: 'Faire un don',
+      donateAmount: 'Donner {amount}{freq}',
+      freqMonthly: '/mois',
+      freqYearly: '/an',
+      platformNote: 'Vous serez redirigé·e vers {platform}',
+      selectCountryAlert:
+        'Veuillez d\'abord sélectionner votre pays pour être redirigé·e vers la bonne plateforme.',
+      selectCountryTooltip: 'Sélectionnez votre pays avant de faire un don',
+      otherWays: 'Autres moyens de donner',
+      paypal: 'PayPal',
+      paypalNote: 'Frais de 1,4 % + 0,35 €',
+      bankTransfer: 'Virement bancaire',
+      bankNote: 'Contactez-nous pour les coordonnées',
+      trust: {
+        charity: 'Association enregistrée W102001158',
+        secure: 'Paiement sécurisé',
+        operations: '100 % sur le terrain',
+      },
+      tax: {
+        FR: 'Résidents fiscaux français : déduction de 66 % de l\'impôt sur le revenu (dans la limite de 20 % du revenu imposable). Un don de 50 € ne vous coûte que {net} après déduction.',
+        US: 'Contribuables américains : don entièrement déductible via Friends of Fondation de France (501(c)(3)). La déduction dépend de votre tranche marginale (jusqu\'à 37 %).',
+        DE: 'Contribuables allemands : don déductible via la fondation Maecenata. Déduction effective jusqu\'à ~45 % selon votre taux d\'imposition.',
+        BE: 'Résidents belges : déduction fiscale via Transnational Giving Europe. Remplissez le formulaire de contact et nous vous enverrons les instructions de virement.',
+        CH: 'Résidents suisses : déduction fiscale via Transnational Giving Europe. Remplissez le formulaire de contact et nous vous guiderons dans la démarche.',
+        GB: 'Contribuables britanniques : via Gift Aid, nous pouvons récupérer 25 p pour chaque £1 donné sans frais pour vous. Via Transnational Giving Europe, vous pouvez aussi bénéficier d\'une déduction au taux supérieur.',
+        OTHER:
+          'Nous acceptons les dons du monde entier. La déductibilité fiscale dépend de la législation locale — renseignez-vous auprès de votre administration fiscale.',
+      },
+      tge: {
+        title: 'Transnational Giving Europe',
+        description:
+          'Remplissez ce formulaire avec vos coordonnées et nous vous enverrons les instructions pour effectuer un virement et obtenir une déduction fiscale.',
+        firstName: 'Prénom',
+        lastName: 'Nom',
+        email: 'Adresse e-mail',
+        country: 'Pays de résidence',
+        submit: 'Envoyer',
+        submitting: 'Envoi…',
+        success: 'Merci ! Nous vous contacterons rapidement avec les instructions de virement.',
+        error: 'Une erreur est survenue. Réessayez ou écrivez à donate@medequali.team.',
+      },
     },
 
     // Footer
