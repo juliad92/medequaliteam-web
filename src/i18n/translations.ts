@@ -84,8 +84,9 @@ export const translations = {
     donate: {
       metaTitle: 'Donate',
       metaDescription:
-        'Support Med\'EqualiTeam with a donation. 100% of funds go to medicines and medical supplies in Northern Greece.',
-      srTitle: 'Med\'EqualiTeam donation page — select your country to see tax deduction options and donate online.',
+        "Support Med'EqualiTeam with a donation. 100% of funds go to medicines and medical supplies in Northern Greece.",
+      srTitle:
+        "Med'EqualiTeam donation page — select your country to see tax deduction options and donate online.",
       eyebrow: "Med'EqualiTeam — Free healthcare for refugees",
       title: 'Every donation saves lives',
       subtitle:
@@ -124,7 +125,36 @@ export const translations = {
       freqMonthly: '/mo',
       freqYearly: '/yr',
       platformNote: "You'll be redirected to {platform}",
-      selectCountryAlert: 'Please select your country first to be redirected to the right platform.',
+      helloAssoTitle: 'Donate via HelloAsso',
+      helloAssoNote:
+        'Secure payment with automatic tax receipt for French tax residents (66% deduction).',
+      helloAssoNoteInternational:
+        'Secure online payment in euros. Tax deductibility depends on your country of residence.',
+      donationChannelLabel: 'How to donate',
+      donationChannel: {
+        helloasso: {
+          label: 'HelloAsso',
+          hint: 'Pay online now',
+        },
+        givingEurope: {
+          label: 'Giving Europe',
+          hint: 'Local tax deduction',
+        },
+        localHint: 'Local tax deduction',
+      },
+      localPlatform: {
+        US: {
+          description:
+            'Fully tax-deductible under IRS 501(c)(3) via Friends of Fondation de France. Deduction depends on your marginal tax bracket (up to 37%).',
+        },
+        DE: {
+          description:
+            'Tax-deductible via Maecenata, an independent German tax-exempt foundation. Effective deduction up to ~45% depending on your tax rate.',
+        },
+      },
+      dualChannelNote: 'Choose your preferred donation method below.',
+      selectCountryAlert:
+        'Please select your country first to be redirected to the right platform.',
       selectCountryTooltip: 'Select your country before donating',
       otherWays: 'Other ways to give',
       paypal: 'PayPal',
@@ -138,26 +168,60 @@ export const translations = {
       },
       tax: {
         FR: 'French tax residents: 66% tax deduction on your income tax (up to 20% of taxable income). A €50 donation costs you just {net} after deduction.',
-        US: 'US taxpayers: Fully tax-deductible under IRS 501(c)(3) via Friends of Fondation de France. Deduction depends on your marginal tax bracket (up to 37%).',
-        DE: 'German taxpayers: Tax-deductible via Maecenata, an independent German tax-exempt foundation. Effective deduction up to ~45% depending on your tax rate.',
-        BE: 'Belgian residents: Tax deduction available via Transnational Giving Europe. Fill in the contact form and we\'ll send you transfer instructions.',
-        CH: 'Swiss residents: Tax deduction available via Transnational Giving Europe. Fill in the contact form and we\'ll guide you through the process.',
-        GB: 'UK taxpayers: Via Gift Aid, we can reclaim 25p for every £1 you donate at no cost to you. Via Transnational Giving Europe you can also claim higher-rate relief.',
+        US: 'US taxpayers: donate online via HelloAsso, or via Friends of Fondation de France for full IRS 501(c)(3) tax deduction.',
+        DE: 'German taxpayers: donate online via HelloAsso, or via Maecenata for local tax deduction.',
+        BE: 'Belgian residents: donate online via HelloAsso, or via Giving Europe for local tax deduction (bank transfer).',
+        CH: 'Swiss residents: donate online via HelloAsso, or via Giving Europe for donations of at least 500 CHF (local tax deduction).',
+        GB: 'UK taxpayers: donate online via HelloAsso, or via Giving Europe for Gift Aid and higher-rate relief.',
         OTHER:
           'We accept donations from anywhere in the world. Tax deductibility depends on your local legislation — check with your tax authority.',
       },
-      tge: {
-        title: 'Transnational Giving Europe',
-        description:
-          'Fill in this form with your contact information, and we will provide instructions on how to transfer funds and obtain a tax deduction.',
-        firstName: 'First name',
-        lastName: 'Last name',
-        email: 'Email address',
-        country: 'Country of residence',
-        submit: 'Submit',
-        submitting: 'Sending…',
-        success: 'Thank you! We will contact you shortly with transfer instructions.',
-        error: 'Something went wrong. Please try again or email donate@medequali.team.',
+      givingEurope: {
+        title: 'Giving Europe',
+        profileLink: 'View our Giving Europe profile',
+        BE: {
+          contact: {
+            name: 'Ms. Carine Poskin',
+            email: 'givingeurope@kbs-frb.be',
+            phone: '+32 2 549 02 31',
+          },
+          bankIntro:
+            'Belgian donors can make their Giving Europe donations on the following account:',
+          bank: {
+            accountHolder: 'Account holder',
+            accountHolderValue: 'Fondation Roi Baudouin, rue Brederode 21 – 1000 Bruxelles',
+            bank: 'Bank',
+            bankValue: 'BNP Paribas Fortis',
+            address: 'Address',
+            addressValue: 'Montagne du Parc 3 - 1000 Bruxelles',
+            accountNumber: 'Account number',
+            accountNumberValue: '000-0000004-04',
+            iban: 'IBAN',
+            ibanValue: 'BE10 0000 0000 0404',
+            bic: 'BIC',
+            bicValue: 'GEBABEBB',
+          },
+          communicationNote:
+            'Please remember to include the following structured communication in all your donations by bank transfer:',
+          communication: "<< GIVING EUROPE-Med'EqualiTeam-FRANCE>>",
+        },
+        CH: {
+          intro:
+            'Donors living in Switzerland and wanting to make a donation of at least 500 CHF should first contact the Swiss Philanthropy Foundation.',
+          contact: {
+            email: 'givingeurope@swissphilanthropy.ch',
+            phone: '+41 22 732 55 54',
+          },
+        },
+        GB: {
+          intro:
+            'Donors living in the UK should first contact the Charities Aid Foundation, to complete a Gift Aid declaration and be electronically verified before they are invited to transfer funds (Know Your Customer – KYC – procedure).',
+          contact: {
+            name: 'Mr Andrew Fakley',
+            email: 'tge@cafonline.org',
+            phone: '+44 30 00 12 36 38',
+          },
+        },
       },
     },
 
@@ -165,29 +229,29 @@ export const translations = {
     complaints: {
       metaTitle: 'Make a complaint',
       metaDescription:
-        'Raise a concern or report misconduct within the Med\'EqualiTeam network. Learn about our complaints procedure and submit a complaint.',
-      srTitle: 'Med\'EqualiTeam complaints page — information and complaint form.',
+        "Raise a concern or report misconduct within the Med'EqualiTeam network. Learn about our complaints procedure and submit a complaint.",
+      srTitle: "Med'EqualiTeam complaints page — information and complaint form.",
       title: 'Make a complaint',
       intro:
-        'This page outlines our approach when handling complaints. Med\'EqualiTeam is committed to safe and transparent conduct and encourages everybody in its network to raise their voice if they have a concern or if an incident occurs.',
+        "This page outlines our approach when handling complaints. Med'EqualiTeam is committed to safe and transparent conduct and encourages everybody in its network to raise their voice if they have a concern or if an incident occurs.",
       waysTitle: 'Ways of raising a complaint',
       waysIntro:
-        'Any member of staff, volunteer, partner, or person otherwise connected to Med\'EqualiTeam\'s network and its mission can raise a concern or report a case of misconduct.',
+        "Any member of staff, volunteer, partner, or person otherwise connected to Med'EqualiTeam's network and its mission can raise a concern or report a case of misconduct.",
       waysBullets: [
         'Where a complaint is in regards to a volunteer or partner the form below will be sent to our Designated Safeguarding Officer. If the complaint relates to an issue within a partner organisation, we encourage you to escalate your concern within the partner organisation as far as possible before reaching out to us in order for it to be addressed in the most appropriate way.',
-        'Where it is inappropriate to reach out to Med\'EqualiTeam\'s coordination team or Designated Safeguarding Officer you can indicate in the form below, and the complaint will be redirected to an external member to maintain impartiality.',
+        "Where it is inappropriate to reach out to Med'EqualiTeam's coordination team or Designated Safeguarding Officer you can indicate in the form below, and the complaint will be redirected to an external member to maintain impartiality.",
       ],
       expectTitle: 'What to expect when raising a complaint',
       expectIntro:
-        'Med\'EqualiTeam is committed to processing your complaint responsibly and professionally. While each case may require a different approach, we commit to the following, general procedure when receiving a complaint.',
+        "Med'EqualiTeam is committed to processing your complaint responsibly and professionally. While each case may require a different approach, we commit to the following, general procedure when receiving a complaint.",
       expectSteps: [
         {
           title: 'Acknowledgment & exploration',
-          body: 'Once you have submitted your complaint, the most appropriate member of the Med\'EqualiTeam team will start processing it. If you share your identity and/or contact details with us, you will be informed of this step.',
+          body: "Once you have submitted your complaint, the most appropriate member of the Med'EqualiTeam team will start processing it. If you share your identity and/or contact details with us, you will be informed of this step.",
         },
         {
           title: 'Investigation',
-          body: 'If it\'s appropriate for us to investigate, the details you have provided will be verified, and — only where appropriate — other parties may be questioned about their involvement in the issue you have raised.',
+          body: "If it's appropriate for us to investigate, the details you have provided will be verified, and — only where appropriate — other parties may be questioned about their involvement in the issue you have raised.",
         },
         {
           title: 'Follow up',
@@ -195,20 +259,20 @@ export const translations = {
         },
         {
           title: 'Outcome & closing',
-          body: 'Med\'EqualiTeam will address the issue by implementing its action plan, involving stakeholders where needed, and — where appropriate and possible — arranging support to those affected by the issue.',
+          body: "Med'EqualiTeam will address the issue by implementing its action plan, involving stakeholders where needed, and — where appropriate and possible — arranging support to those affected by the issue.",
         },
       ],
       expectNote:
         'Please note that while we are committed to resolving complaints as quickly as possible, the exact timeline for this procedure will depend on the nature of the complaint. All complaints are recorded internally in a confidential manner.',
       anonymityTitle: 'Anonymity and Confidentiality',
       anonymityBody:
-        'This procedure is designed to be easily accessible and certain safeguards are in place to protect your identity. While we encourage you to share your name with us for the processing of your complaint, you can also raise a complaint anonymously. Additionally, you can share your name with us but request that it remain anonymous from other parties involved in the complaint you\'re lodging.',
+        "This procedure is designed to be easily accessible and certain safeguards are in place to protect your identity. While we encourage you to share your name with us for the processing of your complaint, you can also raise a complaint anonymously. Additionally, you can share your name with us but request that it remain anonymous from other parties involved in the complaint you're lodging.",
       anonymityPrivacy:
         'Throughout our process, we will comply with our {privacyPolicy} and the EU General Data Protection Regulation.',
       privacyPolicyLabel: 'Privacy Policy',
       reportTitle: 'What should be reported?',
       reportIntro:
-        'Med\'EqualiTeam is interested in receiving information relating to potential criminal offences, safeguarding concerns, or otherwise unacceptable behaviour by representatives of the organisation, its partners, or volunteers.',
+        "Med'EqualiTeam is interested in receiving information relating to potential criminal offences, safeguarding concerns, or otherwise unacceptable behaviour by representatives of the organisation, its partners, or volunteers.",
       reportExamplesIntro: 'Examples of complaints include but are not limited to:',
       reportExamples: [
         'Failure to comply with a legal obligation or internal governance guidelines',
@@ -222,7 +286,7 @@ export const translations = {
         'Defamation',
         'Attempts to conceal any of the above',
       ],
-      safeguardingPolicyLabel: 'Med\'EqualiTeam Safeguarding Policy',
+      safeguardingPolicyLabel: "Med'EqualiTeam Safeguarding Policy",
       safeguardingPolicySuffix: 'for a more in-depth list of harms',
       reportDisclaimer:
         'This process is not intended for use for complaints relating to a political disagreement with MedEqualiTeam or its representatives, or a disagreement regarding agreed rules of the organisation.',
@@ -355,8 +419,8 @@ export const translations = {
         '100 % des fonds vont aux médicaments et au matériel médical en Grèce du Nord. Nous dépendons entièrement de votre générosité.',
       impact: {
         consultation: { value: '15 €', label: '1 consultation financée' },
-        medicine: { value: '50 €', label: "1 semaine de médicaments pour un enfant" },
-        kit: { value: '200 €', label: 'Kit médical d\'urgence' },
+        medicine: { value: '50 €', label: '1 semaine de médicaments pour un enfant' },
+        kit: { value: '200 €', label: "Kit médical d'urgence" },
       },
       countryLabel: 'Votre pays',
       countryPlaceholder: '— Sélectionnez votre pays —',
@@ -387,8 +451,36 @@ export const translations = {
       freqMonthly: '/mois',
       freqYearly: '/an',
       platformNote: 'Vous serez redirigé·e vers {platform}',
+      helloAssoTitle: 'Donner via HelloAsso',
+      helloAssoNote:
+        'Paiement sécurisé avec reçu fiscal automatique pour les résidents fiscaux français (déduction de 66 %).',
+      helloAssoNoteInternational:
+        'Paiement en ligne sécurisé en euros. La déductibilité fiscale dépend de votre pays de résidence.',
+      donationChannelLabel: 'Mode de don',
+      donationChannel: {
+        helloasso: {
+          label: 'HelloAsso',
+          hint: 'Payer en ligne',
+        },
+        givingEurope: {
+          label: 'Giving Europe',
+          hint: 'Déduction fiscale locale',
+        },
+        localHint: 'Déduction fiscale locale',
+      },
+      localPlatform: {
+        US: {
+          description:
+            "Don entièrement déductible via Friends of Fondation de France (501(c)(3)). La déduction dépend de votre tranche marginale (jusqu'à 37 %).",
+        },
+        DE: {
+          description:
+            "Don déductible via la fondation Maecenata. Déduction effective jusqu'à ~45 % selon votre taux d'imposition.",
+        },
+      },
+      dualChannelNote: 'Choisissez votre mode de don ci-dessous.',
       selectCountryAlert:
-        'Veuillez d\'abord sélectionner votre pays pour être redirigé·e vers la bonne plateforme.',
+        "Veuillez d'abord sélectionner votre pays pour être redirigé·e vers la bonne plateforme.",
       selectCountryTooltip: 'Sélectionnez votre pays avant de faire un don',
       otherWays: 'Autres moyens de donner',
       paypal: 'PayPal',
@@ -401,27 +493,61 @@ export const translations = {
         operations: '100 % sur le terrain',
       },
       tax: {
-        FR: 'Résidents fiscaux français : déduction de 66 % de l\'impôt sur le revenu (dans la limite de 20 % du revenu imposable). Un don de 50 € ne vous coûte que {net} après déduction.',
-        US: 'Contribuables américains : don entièrement déductible via Friends of Fondation de France (501(c)(3)). La déduction dépend de votre tranche marginale (jusqu\'à 37 %).',
-        DE: 'Contribuables allemands : don déductible via la fondation Maecenata. Déduction effective jusqu\'à ~45 % selon votre taux d\'imposition.',
-        BE: 'Résidents belges : déduction fiscale via Transnational Giving Europe. Remplissez le formulaire de contact et nous vous enverrons les instructions de virement.',
-        CH: 'Résidents suisses : déduction fiscale via Transnational Giving Europe. Remplissez le formulaire de contact et nous vous guiderons dans la démarche.',
-        GB: 'Contribuables britanniques : via Gift Aid, nous pouvons récupérer 25 p pour chaque £1 donné sans frais pour vous. Via Transnational Giving Europe, vous pouvez aussi bénéficier d\'une déduction au taux supérieur.',
+        FR: "Résidents fiscaux français : déduction de 66 % de l'impôt sur le revenu (dans la limite de 20 % du revenu imposable). Un don de 50 € ne vous coûte que {net} après déduction.",
+        US: "Contribuables américains : don en ligne via HelloAsso, ou via Friends of Fondation de France pour la déduction fiscale IRS 501(c)(3).",
+        DE: "Contribuables allemands : don en ligne via HelloAsso, ou via Maecenata pour la déduction fiscale locale.",
+        BE: 'Résidents belges : don en ligne via HelloAsso, ou via Giving Europe pour la déduction fiscale locale (virement bancaire).',
+        CH: 'Résidents suisses : don en ligne via HelloAsso, ou via Giving Europe pour les dons d\'au moins 500 CHF (déduction fiscale locale).',
+        GB: 'Contribuables britanniques : don en ligne via HelloAsso, ou via Giving Europe pour le Gift Aid et la déduction au taux supérieur.',
         OTHER:
           'Nous acceptons les dons du monde entier. La déductibilité fiscale dépend de la législation locale — renseignez-vous auprès de votre administration fiscale.',
       },
-      tge: {
-        title: 'Transnational Giving Europe',
-        description:
-          'Remplissez ce formulaire avec vos coordonnées et nous vous enverrons les instructions pour effectuer un virement et obtenir une déduction fiscale.',
-        firstName: 'Prénom',
-        lastName: 'Nom',
-        email: 'Adresse e-mail',
-        country: 'Pays de résidence',
-        submit: 'Envoyer',
-        submitting: 'Envoi…',
-        success: 'Merci ! Nous vous contacterons rapidement avec les instructions de virement.',
-        error: 'Une erreur est survenue. Réessayez ou écrivez à donate@medequali.team.',
+      givingEurope: {
+        title: 'Giving Europe',
+        profileLink: 'Voir notre page Giving Europe',
+        BE: {
+          contact: {
+            name: 'Mme Carine Poskin',
+            email: 'givingeurope@kbs-frb.be',
+            phone: '+32 2 549 02 31',
+          },
+          bankIntro:
+            'Les donateurs belges peuvent effectuer leurs dons Giving Europe sur le compte suivant :',
+          bank: {
+            accountHolder: 'Titulaire du compte',
+            accountHolderValue: 'Fondation Roi Baudouin, rue Brederode 21 – 1000 Bruxelles',
+            bank: 'Banque',
+            bankValue: 'BNP Paribas Fortis',
+            address: 'Adresse',
+            addressValue: 'Montagne du Parc 3 - 1000 Bruxelles',
+            accountNumber: 'Numéro de compte',
+            accountNumberValue: '000-0000004-04',
+            iban: 'IBAN',
+            ibanValue: 'BE10 0000 0000 0404',
+            bic: 'BIC',
+            bicValue: 'GEBABEBB',
+          },
+          communicationNote:
+            "N'oubliez pas d'indiquer la communication structurée suivante pour tout virement :",
+          communication: "<< GIVING EUROPE-Med'EqualiTeam-FRANCE>>",
+        },
+        CH: {
+          intro:
+            "Les donateurs résidant en Suisse et souhaitant faire un don d'au moins 500 CHF doivent d'abord contacter la Swiss Philanthropy Foundation.",
+          contact: {
+            email: 'givingeurope@swissphilanthropy.ch',
+            phone: '+41 22 732 55 54',
+          },
+        },
+        GB: {
+          intro:
+            "Les donateurs résidant au Royaume-Uni doivent d'abord contacter le Charities Aid Foundation pour compléter une déclaration Gift Aid et être vérifiés électroniquement avant d'être invités à transférer des fonds (procédure KYC – Know Your Customer).",
+          contact: {
+            name: 'M. Andrew Fakley',
+            email: 'tge@cafonline.org',
+            phone: '+44 30 00 12 36 38',
+          },
+        },
       },
     },
 
@@ -429,29 +555,29 @@ export const translations = {
     complaints: {
       metaTitle: 'Formuler une plainte',
       metaDescription:
-        'Signalez une préoccupation ou un cas d\'inconduite au sein du réseau Med\'EqualiTeam. Découvrez notre procédure de traitement des plaintes et déposez une réclamation.',
-      srTitle: 'Page réclamations Med\'EqualiTeam — informations et formulaire de plainte.',
+        "Signalez une préoccupation ou un cas d'inconduite au sein du réseau Med'EqualiTeam. Découvrez notre procédure de traitement des plaintes et déposez une réclamation.",
+      srTitle: "Page réclamations Med'EqualiTeam — informations et formulaire de plainte.",
       title: 'Formuler une plainte',
       intro:
-        'Cette page décrit notre approche lors du traitement des réclamations. Med\'EqualiTeam s\'engage à adopter une conduite sûre et transparente et encourage tous les membres de son réseau à faire entendre leur voix en cas d\'inquiétude ou d\'incident.',
+        "Cette page décrit notre approche lors du traitement des réclamations. Med'EqualiTeam s'engage à adopter une conduite sûre et transparente et encourage tous les membres de son réseau à faire entendre leur voix en cas d'inquiétude ou d'incident.",
       waysTitle: 'Comment déposer une plainte',
       waysIntro:
-        'Tout membre du personnel, bénévole, partenaire ou personne autrement liée au réseau de Med\'EqualiTeam et à sa mission peut soulever une préoccupation ou signaler un cas d\'inconduite.',
+        "Tout membre du personnel, bénévole, partenaire ou personne autrement liée au réseau de Med'EqualiTeam et à sa mission peut soulever une préoccupation ou signaler un cas d'inconduite.",
       waysBullets: [
-        'Lorsqu\'une plainte concerne un bénévole ou un partenaire, le formulaire ci-dessous sera envoyé à notre agent de protection désigné. Si la plainte concerne un problème au sein d\'une organisation partenaire, nous vous encourageons à faire remonter votre préoccupation au sein de l\'organisation partenaire dans la mesure du possible avant de nous contacter afin qu\'elle soit traitée de la manière la plus appropriée.',
-        'S\'il est inapproprié de contacter l\'équipe de coordination de Med\'EqualiTeam ou l\'agent de sauvegarde désigné, vous pouvez l\'indiquer dans le formulaire ci-dessous, et la plainte sera redirigée vers un membre externe pour maintenir l\'impartialité.',
+        "Lorsqu'une plainte concerne un bénévole ou un partenaire, le formulaire ci-dessous sera envoyé à notre agent de protection désigné. Si la plainte concerne un problème au sein d'une organisation partenaire, nous vous encourageons à faire remonter votre préoccupation au sein de l'organisation partenaire dans la mesure du possible avant de nous contacter afin qu'elle soit traitée de la manière la plus appropriée.",
+        "S'il est inapproprié de contacter l'équipe de coordination de Med'EqualiTeam ou l'agent de sauvegarde désigné, vous pouvez l'indiquer dans le formulaire ci-dessous, et la plainte sera redirigée vers un membre externe pour maintenir l'impartialité.",
       ],
-      expectTitle: 'À quoi s\'attendre lors du dépôt d\'une plainte',
+      expectTitle: "À quoi s'attendre lors du dépôt d'une plainte",
       expectIntro:
-        'Med\'EqualiTeam s\'engage à traiter votre réclamation de manière responsable et professionnelle. Bien que chaque cas puisse nécessiter une approche différente, nous nous engageons à suivre la procédure générale suivante lors de la réception d\'une plainte.',
+        "Med'EqualiTeam s'engage à traiter votre réclamation de manière responsable et professionnelle. Bien que chaque cas puisse nécessiter une approche différente, nous nous engageons à suivre la procédure générale suivante lors de la réception d'une plainte.",
       expectSteps: [
         {
           title: 'Accusé de réception & exploration',
-          body: 'Une fois que vous avez soumis votre réclamation, le membre le plus approprié de l\'équipe Med\'EqualiTeam commencera à la traiter. Si vous nous communiquez votre identité et/ou vos coordonnées, vous serez informé·e de cette étape.',
+          body: "Une fois que vous avez soumis votre réclamation, le membre le plus approprié de l'équipe Med'EqualiTeam commencera à la traiter. Si vous nous communiquez votre identité et/ou vos coordonnées, vous serez informé·e de cette étape.",
         },
         {
           title: 'Enquête',
-          body: 'S\'il est approprié pour nous d\'enquêter, les détails que vous avez fournis seront vérifiés et — uniquement lorsque cela est approprié — d\'autres parties pourront être interrogées sur leur implication dans le problème que vous avez soulevé.',
+          body: "S'il est approprié pour nous d'enquêter, les détails que vous avez fournis seront vérifiés et — uniquement lorsque cela est approprié — d'autres parties pourront être interrogées sur leur implication dans le problème que vous avez soulevé.",
         },
         {
           title: 'Suivi',
@@ -459,20 +585,20 @@ export const translations = {
         },
         {
           title: 'Résultat et clôture',
-          body: 'Med\'EqualiTeam abordera le problème en mettant en œuvre son plan d\'action, en impliquant les parties prenantes si nécessaire et — le cas échéant et si possible — en organisant un soutien aux personnes concernées par le problème.',
+          body: "Med'EqualiTeam abordera le problème en mettant en œuvre son plan d'action, en impliquant les parties prenantes si nécessaire et — le cas échéant et si possible — en organisant un soutien aux personnes concernées par le problème.",
         },
       ],
       expectNote:
         'Veuillez noter que même si nous nous engageons à résoudre les plaintes le plus rapidement possible, le délai exact de cette procédure dépendra de la nature de la plainte. Toutes les réclamations sont enregistrées en interne de manière confidentielle.',
       anonymityTitle: 'Anonymat et confidentialité',
       anonymityBody:
-        'Cette procédure est conçue pour être facilement accessible et certaines garanties sont en place pour protéger votre identité. Bien que nous vous encourageons à partager votre nom avec nous pour le traitement de votre plainte, vous pouvez également déposer une plainte de manière anonyme. De plus, vous pouvez partager votre nom avec nous, mais demander qu\'il reste anonyme vis-à-vis des autres parties impliquées dans la plainte que vous déposez.',
+        "Cette procédure est conçue pour être facilement accessible et certaines garanties sont en place pour protéger votre identité. Bien que nous vous encourageons à partager votre nom avec nous pour le traitement de votre plainte, vous pouvez également déposer une plainte de manière anonyme. De plus, vous pouvez partager votre nom avec nous, mais demander qu'il reste anonyme vis-à-vis des autres parties impliquées dans la plainte que vous déposez.",
       anonymityPrivacy:
-        'Tout au long de notre processus, nous nous conformerons à notre {privacyPolicy} et au règlement général de l\'UE sur la protection des données.',
+        "Tout au long de notre processus, nous nous conformerons à notre {privacyPolicy} et au règlement général de l'UE sur la protection des données.",
       privacyPolicyLabel: 'Politique de confidentialité',
       reportTitle: 'Que faut-il signaler ?',
       reportIntro:
-        'Med\'EqualiTeam souhaite recevoir des informations relatives à d\'éventuelles infractions pénales, à des préoccupations en matière de protection ou à tout autre comportement inacceptable de la part de représentants de l\'organisation, de ses partenaires ou de bénévoles.',
+        "Med'EqualiTeam souhaite recevoir des informations relatives à d'éventuelles infractions pénales, à des préoccupations en matière de protection ou à tout autre comportement inacceptable de la part de représentants de l'organisation, de ses partenaires ou de bénévoles.",
       reportExamplesIntro: 'Les exemples de plaintes incluent, mais ne sont pas limités à :',
       reportExamples: [
         'Manquement à une obligation légale ou à des directives de gouvernance interne',
@@ -481,20 +607,20 @@ export const translations = {
         'Intimidation, harcèlement, abus ou autres formes de préjudice',
         'Abus de pouvoir',
         'Violation de la confidentialité',
-        'Mauvaise conduite ou comportement contraire à l\'éthique',
+        "Mauvaise conduite ou comportement contraire à l'éthique",
         'Discrimination',
         'Diffamation',
-        'Tentative de dissimulation d\'un ou des éléments ci-dessus',
+        "Tentative de dissimulation d'un ou des éléments ci-dessus",
       ],
-      safeguardingPolicyLabel: 'Politique de sauvegarde de Med\'EqualiTeam',
+      safeguardingPolicyLabel: "Politique de sauvegarde de Med'EqualiTeam",
       safeguardingPolicySuffix: 'pour une liste plus détaillée des préjudices',
       reportDisclaimer:
-        'Ce processus n\'est pas destiné à être utilisé pour les plaintes relatives à un désaccord politique avec MedEqualiTeam ou ses représentant·e·s, ou un désaccord concernant les règles convenues de l\'organisation.',
+        "Ce processus n'est pas destiné à être utilisé pour les plaintes relatives à un désaccord politique avec MedEqualiTeam ou ses représentant·e·s, ou un désaccord concernant les règles convenues de l'organisation.",
       coordinationNote:
-        'Les plaintes formulées directement contre notre équipe de coordination seront immédiatement transmises à un·e membre du conseil d\'administration de l\'organisation.',
+        "Les plaintes formulées directement contre notre équipe de coordination seront immédiatement transmises à un·e membre du conseil d'administration de l'organisation.",
       form: {
         sensitiveLabel:
-          'Si cette plainte concerne un·e membre de l\'équipe de coordination de MedEqualiTeam, veuillez l\'indiquer ici :',
+          "Si cette plainte concerne un·e membre de l'équipe de coordination de MedEqualiTeam, veuillez l'indiquer ici :",
         yes: 'Oui',
         no: 'Non',
         personalDetails: 'Coordonnées personnelles',

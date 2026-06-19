@@ -9,7 +9,7 @@ export const DonationInquiries: CollectionConfig = {
   admin: {
     useAsTitle: 'email',
     defaultColumns: ['firstName', 'lastName', 'email', 'country', 'createdAt'],
-    description: 'Transnational Giving Europe donation requests from the website.',
+    description: 'Giving Europe donation inquiries from the website (legacy).',
   },
   access: {
     read: ({ req }) => Boolean(req.user),

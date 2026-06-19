@@ -2,15 +2,23 @@
 
 import React, { useRef, useState } from 'react'
 
+import GivingEuropeInstructions from '@/components/donate/GivingEuropeInstructions'
+import HelloAssoWidget from '@/components/donate/HelloAssoWidget'
+import LocalPlatformPanel from '@/components/donate/LocalPlatformPanel'
 import { getT } from '@/i18n/translations'
 import {
   DONATE_COUNTRY_CONFIG,
   DONATE_EMAIL,
   DONATE_PRESET_AMOUNTS,
+  HELLOASSO_FORM_URL,
   PAYPAL_URL,
   getImpactLabel,
+  isGivingEuropeCountry,
+  isLocalPlatformCountry,
+  offersDualDonationChannel,
   type DonateCountryCode,
   type DonateFrequency,
+  type DonationChannel,
 } from '@/lib/donate/config'
 
 const COUNTRY_FLAGS: Record<DonateCountryCode, string> = {
@@ -23,9 +31,6 @@ const COUNTRY_FLAGS: Record<DonateCountryCode, string> = {
   OTHER: '🌍',
 }
 
-const inputClass =
-  'h-11 w-full rounded-lg border border-[var(--border)] bg-white px-4 text-[14px] text-[var(--charcoal)] outline-none focus:border-[var(--green)] focus:ring-2 focus:ring-[var(--green)]/20'
-
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
     <p className="mb-3 text-[11px] font-medium tracking-[0.1em] text-[var(--muted)] uppercase">
@@ -34,22 +39,10 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   )
 }
 
-function TaxBanner({
-  variant,
-  message,
-}: {
-  variant: 'green' | 'blue' | 'gray'
-  message: string
-}) {
-  const styles = {
-    green: 'border-[var(--green)]/30 bg-[var(--green-pale)] text-[var(--green-dark)]',
-    blue: 'border-[var(--border)] bg-[var(--cream)] text-[var(--charcoal)]',
-    gray: 'border-[var(--border)] bg-[var(--cream)] text-[var(--muted)]',
-  }
-
+function TaxBanner({ message }: { message: string }) {
   return (
     <div
-      className={`mb-6 flex gap-2.5 rounded-lg border px-4 py-3 text-[13px] leading-relaxed ${styles[variant]}`}
+      className="mb-6 flex gap-2.5 rounded-lg border border-[var(--green)]/30 bg-[var(--green-pale)] px-4 py-3 text-[13px] leading-relaxed text-[var(--green-dark)]"
       role="status"
     >
       <svg
@@ -78,6 +71,18 @@ function formatTaxMessage(
   return template.replace('{net}', `${symbol}${net}`)
 }
 
+function getLocalChannelCopy(
+  country: DonateCountryCode,
+  d: ReturnType<typeof getT>['donate'],
+): { label: string; hint: string } {
+  const alt = DONATE_COUNTRY_CONFIG[country].dualChannelAlt
+  if (alt === 'givingEurope') return d.donationChannel.givingEurope
+  return {
+    label: DONATE_COUNTRY_CONFIG[country].platform,
+    hint: d.donationChannel.localHint,
+  }
+}
+
 export default function DonationForm({ locale }: { locale: string }) {
   const t = getT(locale)
   const d = t.donate
@@ -87,16 +92,31 @@ export default function DonationForm({ locale }: { locale: string }) {
   const [selectedAmount, setSelectedAmount] = useState(50)
   const [customMode, setCustomMode] = useState(false)
   const [customValue, setCustomValue] = useState('')
+  const [donationChannel, setDonationChannel] = useState<DonationChannel>('local')
 
-  const [tgeForm, setTgeForm] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-  })
-  const [tgeStatus, setTgeStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
-  const tgeRef = useRef<HTMLDivElement>(null)
+  const paymentMethodsRef = useRef<HTMLDivElement>(null)
 
   const config = country ? DONATE_COUNTRY_CONFIG[country] : null
+  const showDualChannel = Boolean(country && offersDualDonationChannel(country))
+  const showHelloAsso =
+    country === 'FR' ||
+    country === 'OTHER' ||
+    (showDualChannel && donationChannel === 'helloasso')
+  const showGivingEuropePanel = Boolean(
+    country &&
+      showDualChannel &&
+      donationChannel === 'local' &&
+      config?.dualChannelAlt === 'givingEurope' &&
+      isGivingEuropeCountry(country),
+  )
+  const showLocalPlatformPanel = Boolean(
+    country &&
+      showDualChannel &&
+      donationChannel === 'local' &&
+      config?.dualChannelAlt === 'platform' &&
+      config.url &&
+      isLocalPlatformCountry(country),
+  )
 
   const symbol = config?.symbol ?? '€'
   const deductionRate = config?.deductionRate ?? 0
@@ -121,7 +141,7 @@ export default function DonationForm({ locale }: { locale: string }) {
         )
       : ''
 
-  const showTgeForm = Boolean(country && config?.needsContactForm)
+  const helloAssoNote = country === 'FR' ? d.helloAssoNote : d.helloAssoNoteInternational
 
   function selectAmount(amount: number) {
     setSelectedAmount(amount)
@@ -141,37 +161,13 @@ export default function DonationForm({ locale }: { locale: string }) {
   function handleDonate() {
     if (!country || !config) return
 
-    if (config.needsContactForm) {
-      tgeRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    if (showDualChannel) {
+      paymentMethodsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
       return
     }
 
     if (config.url) {
       window.open(config.url, '_blank', 'noopener,noreferrer')
-    }
-  }
-
-  async function handleTgeSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    if (!country) return
-
-    setTgeStatus('submitting')
-    try {
-      const res = await fetch('/api/donation-inquiry', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...tgeForm,
-          country: d.countries[country],
-          locale,
-        }),
-      })
-      const data = await res.json()
-      if (!res.ok || !data.ok) throw new Error('submit failed')
-      setTgeStatus('success')
-      setTgeForm({ firstName: '', lastName: '', email: '' })
-    } catch {
-      setTgeStatus('error')
     }
   }
 
@@ -203,8 +199,11 @@ export default function DonationForm({ locale }: { locale: string }) {
         <select
           value={country}
           onChange={(e) => {
-            setCountry(e.target.value as DonateCountryCode | '')
-            setTgeStatus('idle')
+            const nextCountry = e.target.value as DonateCountryCode | ''
+            setCountry(nextCountry)
+            if (nextCountry && offersDualDonationChannel(nextCountry)) {
+              setDonationChannel('local')
+            }
           }}
           className="h-11 w-full cursor-pointer appearance-none rounded-lg border border-[var(--border)] bg-white px-4 pr-10 text-[14px] text-[var(--charcoal)] outline-none focus:border-[var(--green)] focus:ring-2 focus:ring-[var(--green)]/20"
           aria-label={d.countryLabel}
@@ -229,9 +228,99 @@ export default function DonationForm({ locale }: { locale: string }) {
       </div>
 
       {country && config && (
-        <TaxBanner variant={config.bannerVariant} message={taxMessage} />
+        <TaxBanner message={taxMessage} />
       )}
 
+      {showDualChannel && (
+        <p className="mb-4 text-center text-[11px] text-[var(--muted)]">{d.dualChannelNote}</p>
+      )}
+
+      <div ref={paymentMethodsRef}>
+        {showDualChannel && country && (
+          <>
+            <SectionLabel>{d.donationChannelLabel}</SectionLabel>
+            <div className="mb-6 grid grid-cols-2 gap-1.5">
+              {(['helloasso', 'local'] as const).map((channel) => {
+                const active = donationChannel === channel
+                const copy =
+                  channel === 'helloasso'
+                    ? d.donationChannel.helloasso
+                    : getLocalChannelCopy(country, d)
+                return (
+                  <button
+                    key={channel}
+                    type="button"
+                    onClick={() => setDonationChannel(channel)}
+                    className={`rounded-lg border px-2 py-2.5 text-center transition-colors ${
+                      active
+                        ? 'border-[var(--green)] bg-[var(--green-pale)] font-medium text-[var(--green-dark)]'
+                        : 'border-[var(--border)] bg-white text-[var(--muted)] hover:border-[var(--green)]/40'
+                    }`}
+                  >
+                    <span className={`block text-[13px] ${active ? 'font-medium' : ''}`}>
+                      {copy.label}
+                    </span>
+                    <span
+                      className={`mt-0.5 block text-[11px] ${
+                        active ? 'text-[var(--green-dark)]/80' : 'text-[var(--muted)]'
+                      }`}
+                    >
+                      {copy.hint}
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
+          </>
+        )}
+
+        {showHelloAsso && (
+          <section
+            className="mb-8 overflow-hidden rounded-xl border border-[var(--border)] bg-white"
+            aria-label={d.helloAssoTitle}
+          >
+            <div className="border-b border-[var(--border)] bg-[var(--cream)] px-4 py-4">
+              <p className="text-[11px] font-medium tracking-[0.1em] text-[var(--muted)] uppercase">
+                {d.helloAssoTitle}
+              </p>
+              <p className="mt-1 text-[13px] leading-relaxed text-[var(--charcoal)]">
+                {helloAssoNote}
+              </p>
+            </div>
+            <HelloAssoWidget formUrl={HELLOASSO_FORM_URL} />
+          </section>
+        )}
+
+        {showGivingEuropePanel && country && isGivingEuropeCountry(country) && (
+          <div className="rounded-xl border border-[var(--border)] bg-[var(--cream)] p-6">
+            <p className="text-[11px] font-medium tracking-[0.1em] text-[var(--green)] uppercase">
+              {d.givingEurope.title}
+            </p>
+            <div className="mt-4">
+              <GivingEuropeInstructions country={country} locale={locale} />
+            </div>
+          </div>
+        )}
+
+        {showLocalPlatformPanel && country && isLocalPlatformCountry(country) && config?.url && (
+          <div className="rounded-xl border border-[var(--border)] bg-[var(--cream)] p-6">
+            <p className="text-[11px] font-medium tracking-[0.1em] text-[var(--green)] uppercase">
+              {config.platform}
+            </p>
+            <div className="mt-4">
+              <LocalPlatformPanel
+                country={country}
+                locale={locale}
+                platform={config.platform}
+                url={config.url}
+              />
+            </div>
+          </div>
+        )}
+      </div>
+
+      {!country && (
+        <>
       <SectionLabel>{d.frequencyLabel}</SectionLabel>
       <div className="mb-6 grid grid-cols-3 gap-1.5">
         {(['once', 'monthly', 'yearly'] as const).map((freq) => (
@@ -289,7 +378,7 @@ export default function DonationForm({ locale }: { locale: string }) {
           value={customValue}
           onChange={(e) => handleCustomInput(e.target.value)}
           placeholder={d.customPlaceholder}
-          className={`${inputClass} pl-7`}
+          className="h-11 w-full rounded-lg border border-[var(--border)] bg-white py-0 pr-4 pl-7 text-[14px] text-[var(--charcoal)] outline-none focus:border-[var(--green)] focus:ring-2 focus:ring-[var(--green)]/20"
           aria-label={d.customPlaceholder}
         />
       </div>
@@ -350,92 +439,7 @@ export default function DonationForm({ locale }: { locale: string }) {
           </span>
         )}
       </span>
-
-      {country && config && !config.needsContactForm && (
-        <p className="mb-6 text-center text-[11px] text-[var(--muted)]">
-          {d.platformNote.replace('{platform}', config.platform)}
-        </p>
-      )}
-
-      {showTgeForm && (
-        <div
-          ref={tgeRef}
-          className="mb-6 rounded-xl border border-[var(--border)] bg-[var(--cream)] p-6"
-        >
-          <p className="text-[11px] font-medium tracking-[0.1em] text-[var(--green)] uppercase">
-            {d.tge.title}
-          </p>
-          <p className="mt-2 mb-5 text-[13px] leading-relaxed text-[var(--muted)]">
-            {d.tge.description}
-          </p>
-
-          {tgeStatus === 'success' ? (
-            <p className="rounded-lg border border-[var(--green)]/30 bg-[var(--green-pale)] px-4 py-3 text-[13px] text-[var(--green-dark)]">
-              {d.tge.success}
-            </p>
-          ) : (
-            <form onSubmit={handleTgeSubmit} className="space-y-3">
-              <div className="grid gap-3 sm:grid-cols-2">
-                <label className="block">
-                  <span className="mb-1 block text-[12px] font-medium text-[var(--charcoal)]">
-                    {d.tge.firstName}
-                  </span>
-                  <input
-                    required
-                    value={tgeForm.firstName}
-                    onChange={(e) => setTgeForm((f) => ({ ...f, firstName: e.target.value }))}
-                    className={inputClass}
-                  />
-                </label>
-                <label className="block">
-                  <span className="mb-1 block text-[12px] font-medium text-[var(--charcoal)]">
-                    {d.tge.lastName}
-                  </span>
-                  <input
-                    required
-                    value={tgeForm.lastName}
-                    onChange={(e) => setTgeForm((f) => ({ ...f, lastName: e.target.value }))}
-                    className={inputClass}
-                  />
-                </label>
-              </div>
-              <label className="block">
-                <span className="mb-1 block text-[12px] font-medium text-[var(--charcoal)]">
-                  {d.tge.email}
-                </span>
-                <input
-                  required
-                  type="email"
-                  value={tgeForm.email}
-                  onChange={(e) => setTgeForm((f) => ({ ...f, email: e.target.value }))}
-                  className={inputClass}
-                />
-              </label>
-              <label className="block">
-                <span className="mb-1 block text-[12px] font-medium text-[var(--charcoal)]">
-                  {d.tge.country}
-                </span>
-                <input
-                  readOnly
-                  value={country ? d.countries[country] : ''}
-                  className={`${inputClass} bg-[var(--cream)] text-[var(--muted)]`}
-                />
-              </label>
-              {tgeStatus === 'error' && (
-                <p className="text-[12px] text-red-700" role="alert">
-                  {d.tge.error}
-                </p>
-              )}
-              <button
-                type="submit"
-                disabled={tgeStatus === 'submitting'}
-                className="flex h-11 w-full items-center justify-center rounded-lg bg-[var(--green)] text-[14px] font-medium text-white transition-colors hover:bg-[var(--green-dark)] disabled:opacity-60"
-              >
-                {tgeStatus === 'submitting' ? d.tge.submitting : d.tge.submit}
-              </button>
-            </form>
-          )}
-        </div>
+        </>
       )}
 
       <div className="mt-8">
