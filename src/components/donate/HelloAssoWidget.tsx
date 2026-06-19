@@ -26,7 +26,6 @@ export default function HelloAssoWidget({ formUrl }: { formUrl: string }) {
       id="haWidget"
       title="HelloAsso"
       src={getHelloAssoWidgetUrl(formUrl)}
-      allowTransparency
       className="w-full border-none"
       style={{ height: `${height}px` }}
     />
