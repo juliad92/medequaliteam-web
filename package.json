@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "pnpm run generate:types && next build",
     "start": "next start",
     "lint": "eslint",
     "format": "prettier --write ./src",
@@ -13,6 +13,7 @@
     "test:e2e": "playwright test",
     "test:e2e:seed": "tsx e2e/scripts/seed.ts",
     "seed:volunteer-planning": "tsx scripts/seed-volunteer-planning-data.ts",
+    "seed:volunteer-greece-roles": "tsx scripts/seed-volunteer-greece-roles.ts",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:install": "playwright install chromium"
   },
