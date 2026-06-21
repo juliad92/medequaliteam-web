@@ -12,6 +12,7 @@
     "generate:types": "npx --yes node@22.22.2 --experimental-strip-types --disable-warning=ExperimentalWarning ./node_modules/payload/bin.js generate:types --disable-transpile",
     "test:e2e": "playwright test",
     "test:e2e:seed": "tsx e2e/scripts/seed.ts",
+    "seed:volunteer-planning": "tsx scripts/seed-volunteer-planning-data.ts",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:install": "playwright install chromium"
   },

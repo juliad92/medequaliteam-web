@@ -452,13 +452,26 @@ export interface VolunteerApplication {
   drivingLicence?: ('yes' | 'no' | 'other') | null;
   drivingLicenceOther?: string | null;
   howDidYouHearAboutUs?: string | null;
+  /**
+   * Suivi interne : Confirmé, En cours d'échange ou Non confirmé.
+   */
+  applicationStatus: 'confirmed' | 'in_discussion' | 'not_confirmed';
+  /**
+   * Rôle retenu une fois la candidature confirmée.
+   */
+  confirmedVolunteerRole?: (string | null) | VolunteerNeed;
+  /**
+   * Dates réelles une fois la candidature confirmée.
+   */
+  confirmedStartDate?: string | null;
+  confirmedEndDate?: string | null;
   project: string | Project;
   locale: 'en' | 'fr';
   updatedAt: string;
   createdAt: string;
 }
 /**
- * Transnational Giving Europe donation requests from the website.
+ * Giving Europe donation inquiries from the website (legacy).
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "donation-inquiries".
@@ -886,6 +899,10 @@ export interface VolunteerApplicationsSelect<T extends boolean = true> {
   drivingLicence?: T;
   drivingLicenceOther?: T;
   howDidYouHearAboutUs?: T;
+  applicationStatus?: T;
+  confirmedVolunteerRole?: T;
+  confirmedStartDate?: T;
+  confirmedEndDate?: T;
   project?: T;
   locale?: T;
   updatedAt?: T;

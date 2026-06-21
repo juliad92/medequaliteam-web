@@ -1,4 +1,8 @@
 import type { CollectionConfig } from 'payload'
+import {
+  defaultVolunteerApplicationStatus,
+  volunteerApplicationStatusOptions,
+} from '../lib/volunteer/application-status.ts'
 
 const yesNoOptions = [
   { label: 'Yes', value: 'yes' },
@@ -20,8 +24,25 @@ export const VolunteerApplications: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'email',
-    defaultColumns: ['firstName', 'lastName', 'email', 'project', 'createdAt'],
+    defaultColumns: [
+      'firstName',
+      'lastName',
+      'email',
+      'selectedRoles',
+      'applicationStatus',
+      'project',
+      'preferredStartDate',
+      'preferredEndDate',
+      'confirmedStartDate',
+      'confirmedEndDate',
+      'confirmedVolunteerRole',
+    ],
     description: 'Volunteer recruitment submissions from the website.',
+    components: {
+      beforeList: [
+        '/src/components/admin/volunteer-applications/VolunteerApplicationsPlanning#VolunteerApplicationsPlanning',
+      ],
+    },
   },
   access: {
     read: ({ req }) => Boolean(req.user),
@@ -206,6 +227,49 @@ export const VolunteerApplications: CollectionConfig = {
       label: 'How did you hear about us?',
     },
 
+    {
+      name: 'applicationStatus',
+      type: 'select',
+      label: 'Statut',
+      required: true,
+      defaultValue: defaultVolunteerApplicationStatus,
+      options: [...volunteerApplicationStatusOptions],
+      admin: {
+        position: 'sidebar',
+        description: "Suivi interne : Confirmé, En cours d'échange, Annulé ou Non confirmé.",
+      },
+    },
+    {
+      name: 'confirmedVolunteerRole',
+      type: 'relationship',
+      relationTo: 'volunteer-needs',
+      label: 'Confirmed volunteer role',
+      admin: {
+        position: 'sidebar',
+        description: 'Rôle retenu une fois la candidature confirmée.',
+      },
+    },
+    {
+      type: 'row',
+      admin: { position: 'sidebar' },
+      fields: [
+        {
+          name: 'confirmedStartDate',
+          type: 'date',
+          label: 'Présence confirmée — début',
+          admin: {
+            date: { pickerAppearance: 'dayOnly' },
+            description: 'Dates réelles une fois la candidature confirmée.',
+          },
+        },
+        {
+          name: 'confirmedEndDate',
+          type: 'date',
+          label: 'Présence confirmée — fin',
+          admin: { date: { pickerAppearance: 'dayOnly' } },
+        },
+      ],
+    },
     {
       name: 'project',
       type: 'relationship',

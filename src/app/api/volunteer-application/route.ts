@@ -1,5 +1,6 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
+import { defaultVolunteerApplicationStatus } from '@/lib/volunteer/application-status'
 
 function str(value: unknown): string | undefined {
   const s = String(value ?? '').trim()
@@ -100,6 +101,7 @@ export async function POST(req: Request) {
         howDidYouHearAboutUs,
         project,
         locale,
+        applicationStatus: defaultVolunteerApplicationStatus,
       },
     })
 
