@@ -1,5 +1,6 @@
 import type { Payload } from 'payload'
 
+import { inferVolunteerRoleCategory } from '../src/lib/volunteer/planning-dates'
 import { loadLocalEnv, requireEnv } from '../e2e/helpers/env'
 import { htmlToLexical } from '../e2e/helpers/lexical'
 import {
@@ -84,6 +85,7 @@ async function ensureVolunteerGreeceProject(payload: Payload): Promise<string> {
 function roleToPayloadData(role: ScrapedVolunteerRole, projectId: string) {
   return {
     roleName: role.roleName,
+    roleCategory: inferVolunteerRoleCategory(role.roleName),
     duration: role.duration,
     jobDescription: htmlToLexical(role.jobDescriptionHtml),
     requiredExperienceAndSkills: htmlToLexical(role.requiredExperienceAndSkillsHtml),

@@ -341,6 +341,10 @@ export interface VolunteerNeed {
    */
   roleName: string;
   /**
+   * Doctor/Nurse/Helper
+   */
+  roleCategory: 'doctor' | 'nurse' | 'helper';
+  /**
    * Optional. e.g. "6 months" / "6 mois"
    */
   duration?: string | null;
@@ -453,15 +457,15 @@ export interface VolunteerApplication {
   drivingLicenceOther?: string | null;
   howDidYouHearAboutUs?: string | null;
   /**
-   * Suivi interne : Confirmé, En cours d'échange, Annulé ou Non confirmé.
+   * Internal tracking: Confirmed, In discussion, Canceled or Not confirmed.
    */
   applicationStatus: 'confirmed' | 'in_discussion' | 'not_confirmed' | 'canceled';
   /**
-   * Rôle retenu une fois la candidature confirmée.
+   * Role retained once the application is confirmed.
    */
   confirmedVolunteerRole?: (string | null) | VolunteerNeed;
   /**
-   * Dates réelles une fois la candidature confirmée.
+   * Actual dates once the application is confirmed.
    */
   confirmedStartDate?: string | null;
   confirmedEndDate?: string | null;
@@ -849,6 +853,7 @@ export interface ProjectsSelect<T extends boolean = true> {
  */
 export interface VolunteerNeedsSelect<T extends boolean = true> {
   roleName?: T;
+  roleCategory?: T;
   duration?: T;
   jobDescription?: T;
   requiredExperienceAndSkills?: T;
