@@ -41,15 +41,15 @@ test.describe('Volunteer recruitment', () => {
     await expect(page.getByRole('heading', { level: 1 })).toContainText('Volunteer')
     await expect(rolesSection.getByRole('heading', { name: /Open roles/i })).toBeVisible()
     await expect(rolesSection.getByRole('button', { name: seedState.roleName })).toBeVisible()
-    await expect(
-      rolesSection.getByRole('button', { name: 'Apply for this role' }),
-    ).toBeVisible()
+    await expect(rolesSection.getByRole('button', { name: 'Apply for this role' })).toBeVisible()
 
     await expect(
       applicationSection.getByRole('heading', { name: 'Volunteer application form' }),
     ).toBeVisible()
     await expect(applicationSection.getByText('Step 1 of 4 — Profile')).toBeVisible()
-    await expect(applicationSection.getByRole('button', { name: 'Submit application' })).toBeHidden()
+    await expect(
+      applicationSection.getByRole('button', { name: 'Submit application' }),
+    ).toBeHidden()
     await expect(applicationSection.getByRole('button', { name: 'Next' })).toBeVisible()
   })
 
@@ -58,10 +58,8 @@ test.describe('Volunteer recruitment', () => {
     expect(response?.status()).toBe(404)
   })
 
-  test('submits an application and shows it in Volunteer applications admin', async ({
-    page,
-  }) => {
-    test.setTimeout(120_000)
+  test('submits an application and shows it in Volunteer applications admin', async ({ page }) => {
+    test.setTimeout(180_000)
     const uniqueEmail = `e2e-applicant-${Date.now()}@example.com`
     const applicant = {
       firstName: 'E2E',

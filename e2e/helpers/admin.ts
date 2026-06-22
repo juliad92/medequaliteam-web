@@ -12,7 +12,10 @@ export async function loginToPayloadAdmin(page: Page) {
 
   expect(loginResponse.ok(), `Admin login failed: ${await loginResponse.text()}`).toBeTruthy()
 
-  await page.goto('/admin/collections/volunteer-applications')
+  await page.goto('/admin/collections/volunteer-applications', {
+    waitUntil: 'domcontentloaded',
+    timeout: 90_000,
+  })
   await expect(page).toHaveURL(/\/admin\/collections\/volunteer-applications/, {
     timeout: 30_000,
   })

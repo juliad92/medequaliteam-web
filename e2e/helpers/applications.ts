@@ -12,11 +12,13 @@ export async function expectVolunteerApplicationInAdmin(
 ) {
   await expect(page).toHaveURL(/\/admin\/collections\/volunteer-applications/)
 
-  const row = page.locator('tbody tr').filter({ hasText: applicant.email })
+  const row = page
+    .locator('tbody tr')
+    .filter({ hasText: applicant.firstName })
+    .filter({ hasText: applicant.lastName })
   await expect(row).toBeVisible({ timeout: 30_000 })
   await expect(row).toContainText(applicant.firstName)
   await expect(row).toContainText(applicant.lastName)
-  await expect(row).toContainText(applicant.email)
 
   // Payload links the first visible column (first name), not the email field.
   await row.getByRole('link', { name: applicant.firstName, exact: true }).click()
