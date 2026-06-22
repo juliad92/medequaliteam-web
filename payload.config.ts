@@ -33,6 +33,8 @@
 //   plugins: [],
 // });
 
+import { en } from '@payloadcms/translations/languages/en'
+import { fr } from '@payloadcms/translations/languages/fr'
 import { buildConfig } from 'payload'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
@@ -75,6 +77,12 @@ export default buildConfig({
     ],
     defaultLocale: 'en',
     fallback: true,
+  },
+
+  // Admin UI language (English / French).
+  i18n: {
+    fallbackLanguage: 'en',
+    supportedLanguages: { en, fr },
   },
 
   // ── Collections ─────────────────────────────────────────────────────────────

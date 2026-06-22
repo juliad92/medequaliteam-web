@@ -13,7 +13,7 @@
     "test:e2e": "playwright test",
     "test:e2e:seed": "tsx e2e/scripts/seed.ts",
     "seed:volunteer-planning": "tsx scripts/seed-volunteer-planning-data.ts",
-    "seed:volunteer-greece-roles": "tsx scripts/seed-volunteer-greece-roles.ts",
+    "seed:volunteer-greece": "tsx scripts/seed-volunteer-greece-roles.ts",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:install": "playwright install chromium"
   },
@@ -23,6 +23,8 @@
     "@payloadcms/db-mongodb": "^3.84.1",
     "@payloadcms/next": "^3.84.1",
     "@payloadcms/richtext-lexical": "^3.84.1",
+    "@payloadcms/translations": "3.84.1",
+    "@payloadcms/ui": "3.84.1",
     "@vercel/analytics": "^2.0.1",
     "graphql": "^16.13.2",
     "next": "15.3.9",

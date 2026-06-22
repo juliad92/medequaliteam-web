@@ -2,43 +2,52 @@
 
 import React, { useMemo, useState } from 'react'
 import Link from 'next/link'
+import { useTranslation } from '@payloadcms/ui'
 import {
+  isVolunteerApplicationStatus,
   volunteerApplicationStatusColors,
-  volunteerApplicationStatusLabels,
   volunteerApplicationStatusOptions,
-  type VolunteerApplicationStatus,
+  volunteerApplicationStatusValues,
 } from '@/lib/volunteer/application-status'
 import {
+  getVolunteerApplicationsAdminCopy,
+  getVolunteerRoleCategoryLabel,
+  resolveAdminLanguage,
+  volunteerApplicationStatusLabels,
+  type AdminLanguage,
+} from '@/i18n/volunteer-applications-admin'
+import {
+  buildMondayBasedCalendarGrid,
+  comparePlanningEntries,
+  countEntriesByRoleCategory,
+  entryOverlapsMonth,
   formatShortDate,
   getBarStyle,
   getDayMarkerStyle,
+  getEntryRoleCategories,
   getMonthMeta,
   getPresencePeriod,
   getProjectId,
   getProjectLabel,
   getRoleLabel,
   getRolesLabel,
+  getWeekdayLabels,
   parseDate,
   type PlanningEntry,
 } from '@/lib/volunteer/planning-dates'
+import { VolunteerRoleCategoryDayCounts, VolunteerRoleCategoryIcons } from './VolunteerRoleCategoryIcons'
 
 type Props = {
   entries: PlanningEntry[]
 }
 
-const statusFilterOptions = [
-  { label: 'Tous les statuts', value: 'all' },
-  ...volunteerApplicationStatusOptions.map((option) => ({
-    label: option.label,
-    value: option.value,
-  })),
-]
-
-function isVolunteerApplicationStatus(value: string): value is VolunteerApplicationStatus {
-  return value in volunteerApplicationStatusLabels
-}
-
 export function VolunteerApplicationsPlanningClient({ entries }: Props) {
+  const { i18n } = useTranslation()
+  const language = resolveAdminLanguage(i18n.language)
+  const copy = (key: Parameters<typeof getVolunteerApplicationsAdminCopy>[1]) =>
+    getVolunteerApplicationsAdminCopy(language, key)
+  const statusLabels = volunteerApplicationStatusLabels[language]
+
   const today = new Date()
   const [expanded, setExpanded] = useState(true)
   const [year, setYear] = useState(today.getFullYear())
@@ -46,7 +55,7 @@ export function VolunteerApplicationsPlanningClient({ entries }: Props) {
   const [projectFilter, setProjectFilter] = useState('all')
   const [statusFilter, setStatusFilter] = useState('all')
 
-  const monthMeta = useMemo(() => getMonthMeta(year, month), [year, month])
+  const monthMeta = useMemo(() => getMonthMeta(year, month, language), [year, month, language])
 
   const projects = useMemo(() => {
     const map = new Map<string, string>()
@@ -55,16 +64,18 @@ export function VolunteerApplicationsPlanningClient({ entries }: Props) {
       if (!id) continue
       map.set(id, getProjectLabel(entry.project))
     }
-    return [...map.entries()].sort((a, b) => a[1].localeCompare(b[1], 'fr'))
-  }, [entries])
+    return [...map.entries()].sort((a, b) => a[1].localeCompare(b[1], language))
+  }, [entries, language])
 
   const filteredEntries = useMemo(() => {
-    return entries.filter((entry) => {
-      if (statusFilter !== 'all' && entry.applicationStatus !== statusFilter) return false
-      if (projectFilter === 'all') return true
-      return getProjectId(entry.project) === projectFilter
-    })
-  }, [entries, projectFilter, statusFilter])
+    return entries
+      .filter((entry) => {
+        if (statusFilter !== 'all' && entry.applicationStatus !== statusFilter) return false
+        if (projectFilter !== 'all' && getProjectId(entry.project) !== projectFilter) return false
+        return entryOverlapsMonth(entry, monthMeta.start, monthMeta.end)
+      })
+      .sort((a, b) => comparePlanningEntries(a, b, language))
+  }, [entries, language, monthMeta.end, monthMeta.start, projectFilter, statusFilter])
 
   const calendarDays = useMemo(() => {
     const days: { date: Date; day: number; entries: PlanningEntry[] }[] = []
@@ -72,21 +83,46 @@ export function VolunteerApplicationsPlanningClient({ entries }: Props) {
       const date = new Date(year, month, day)
       const dayStart = new Date(year, month, day)
       const dayEnd = new Date(year, month, day, 23, 59, 59, 999)
-      const present = filteredEntries.filter((entry) => {
-        const period = getPresencePeriod(entry)
-        if (!period) return false
-        return period.start <= dayEnd && dayStart <= period.end
-      })
+      const present = filteredEntries
+        .filter((entry) => {
+          const period = getPresencePeriod(entry)
+          if (!period) return false
+          return period.start <= dayEnd && dayStart <= period.end
+        })
+        .sort((a, b) => comparePlanningEntries(a, b, language))
       days.push({ date, day, entries: present })
     }
     return days
-  }, [filteredEntries, month, monthMeta.daysInMonth, year])
+  }, [filteredEntries, language, month, monthMeta.daysInMonth, year])
+
+  const weekdayLabels = useMemo(() => getWeekdayLabels(language), [language])
+
+  const calendarGrid = useMemo(
+    () =>
+      buildMondayBasedCalendarGrid(
+        year,
+        month,
+        calendarDays.map(({ day, entries }) => ({ day, entries })),
+      ),
+    [calendarDays, month, year],
+  )
 
   const shiftMonth = (delta: number) => {
     const next = new Date(year, month + delta, 1)
     setYear(next.getFullYear())
     setMonth(next.getMonth())
   }
+
+  const statusFilterOptions = useMemo(
+    () => [
+      { label: copy('allStatuses'), value: 'all' },
+      ...volunteerApplicationStatusOptions.map((option) => ({
+        label: option.label[language],
+        value: option.value,
+      })),
+    ],
+    [language],
+  )
 
   return (
     <section
@@ -116,10 +152,8 @@ export function VolunteerApplicationsPlanningClient({ entries }: Props) {
         }}
       >
         <div>
-          <strong style={{ display: 'block', fontSize: '1rem' }}>Planning des candidatures</strong>
-          <span style={{ fontSize: '0.875rem', opacity: 0.75 }}>
-            Présence sur le terrain, disponibilités souhaitées et dates de candidature
-          </span>
+          <strong style={{ display: 'block', fontSize: '1rem' }}>{copy('planningTitle')}</strong>
+          <span style={{ fontSize: '0.875rem', opacity: 0.75 }}>{copy('planningSubtitle')}</span>
         </div>
         <span aria-hidden="true" style={{ fontSize: '1.25rem' }}>
           {expanded ? '▾' : '▸'}
@@ -138,13 +172,13 @@ export function VolunteerApplicationsPlanningClient({ entries }: Props) {
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <button type="button" onClick={() => shiftMonth(-1)} aria-label="Mois précédent">
+              <button type="button" onClick={() => shiftMonth(-1)} aria-label={copy('previousMonth')}>
                 ◀
               </button>
               <strong style={{ minWidth: '10rem', textAlign: 'center', textTransform: 'capitalize' }}>
                 {monthMeta.label}
               </strong>
-              <button type="button" onClick={() => shiftMonth(1)} aria-label="Mois suivant">
+              <button type="button" onClick={() => shiftMonth(1)} aria-label={copy('nextMonth')}>
                 ▶
               </button>
               <button
@@ -155,14 +189,14 @@ export function VolunteerApplicationsPlanningClient({ entries }: Props) {
                 }}
                 style={{ marginLeft: '0.25rem' }}
               >
-                Aujourd&apos;hui
+                {copy('today')}
               </button>
             </div>
 
             <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <span>Projet</span>
+              <span>{copy('project')}</span>
               <select value={projectFilter} onChange={(event) => setProjectFilter(event.target.value)}>
-                <option value="all">Tous</option>
+                <option value="all">{copy('allProjects')}</option>
                 {projects.map(([id, title]) => (
                   <option key={id} value={id}>
                     {title}
@@ -172,7 +206,7 @@ export function VolunteerApplicationsPlanningClient({ entries }: Props) {
             </label>
 
             <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <span>Statut</span>
+              <span>{copy('status')}</span>
               <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)}>
                 {statusFilterOptions.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -192,17 +226,17 @@ export function VolunteerApplicationsPlanningClient({ entries }: Props) {
               fontSize: '0.8125rem',
             }}
           >
-            {volunteerApplicationStatusOptions.map((option) => (
-              <span key={option.value} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.375rem' }}>
+            {volunteerApplicationStatusValues.map((value) => (
+              <span key={value} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.375rem' }}>
                 <span
                   style={{
                     width: '0.75rem',
                     height: '0.75rem',
                     borderRadius: '999px',
-                    background: volunteerApplicationStatusColors[option.value].border,
+                    background: volunteerApplicationStatusColors[value].border,
                   }}
                 />
-                {option.label}
+                {statusLabels[value]}
               </span>
             ))}
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.375rem' }}>
@@ -215,7 +249,7 @@ export function VolunteerApplicationsPlanningClient({ entries }: Props) {
                   background: 'transparent',
                 }}
               />
-              Disponibilité souhaitée
+              {copy('preferredAvailability')}
             </span>
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.375rem' }}>
               <span
@@ -226,7 +260,7 @@ export function VolunteerApplicationsPlanningClient({ entries }: Props) {
                   background: '#2563eb',
                 }}
               />
-              Date de candidature
+              {copy('applicationDate')}
             </span>
           </div>
 
@@ -234,13 +268,15 @@ export function VolunteerApplicationsPlanningClient({ entries }: Props) {
             <table style={{ width: '100%', minWidth: '960px', borderCollapse: 'collapse', fontSize: '0.875rem' }}>
               <thead>
                 <tr>
-                  <th style={headerCellStyle}>Candidat</th>
-                  <th style={headerCellStyle}>Statut</th>
-                  <th style={headerCellStyle}>Projet</th>
-                  <th style={headerCellStyle}>Selected volunteer roles</th>
-                  <th style={headerCellStyle}>Confirmed volunteer role</th>
+                  <th style={headerCellStyle}>{copy('candidate')}</th>
+                  <th style={headerCellStyle}>{copy('status')}</th>
+                  <th style={headerCellStyle}>{copy('project')}</th>
+                  <th style={headerCellStyle}>{copy('selectedRoles')}</th>
+                  <th style={headerCellStyle}>{copy('confirmedRole')}</th>
                   <th style={{ ...headerCellStyle, minWidth: '420px' }}>
-                    <div style={{ marginBottom: '0.5rem' }}>Période ({monthMeta.label})</div>
+                    <div style={{ marginBottom: '0.5rem' }}>
+                      {copy('period')} ({monthMeta.label})
+                    </div>
                     <div style={{ display: 'grid', gridTemplateColumns: `repeat(${monthMeta.daysInMonth}, 1fr)`, gap: '1px' }}>
                       {Array.from({ length: monthMeta.daysInMonth }, (_, index) => (
                         <span key={index + 1} style={{ fontSize: '0.6875rem', opacity: 0.7, textAlign: 'center' }}>
@@ -255,7 +291,7 @@ export function VolunteerApplicationsPlanningClient({ entries }: Props) {
                 {filteredEntries.length === 0 ? (
                   <tr>
                     <td colSpan={6} style={{ padding: '1rem', opacity: 0.7 }}>
-                      Aucune candidature pour ces filtres.
+                      {copy('noApplicationsForFilters')}
                     </td>
                   </tr>
                 ) : (
@@ -299,7 +335,7 @@ export function VolunteerApplicationsPlanningClient({ entries }: Props) {
                               whiteSpace: 'nowrap',
                             }}
                           >
-                            {volunteerApplicationStatusLabels[status]}
+                            {statusLabels[status]}
                           </span>
                         </td>
                         <td style={bodyCellStyle}>{getProjectLabel(entry.project)}</td>
@@ -316,11 +352,7 @@ export function VolunteerApplicationsPlanningClient({ entries }: Props) {
                           >
                             {barStyle ? (
                               <div
-                                title={
-                                  period?.kind === 'confirmed'
-                                    ? `Présence confirmée : ${formatShortDate(entry.confirmedStartDate)} → ${formatShortDate(entry.confirmedEndDate ?? entry.confirmedStartDate)}`
-                                    : `Disponibilité souhaitée : ${formatShortDate(entry.preferredStartDate)} → ${formatShortDate(entry.preferredEndDate ?? entry.preferredStartDate)}`
-                                }
+                                title={formatPeriodTitle(entry, period, language, copy)}
                                 style={{
                                   position: 'absolute',
                                   top: '0.375rem',
@@ -340,7 +372,7 @@ export function VolunteerApplicationsPlanningClient({ entries }: Props) {
                             ) : null}
                             {applicationMarker ? (
                               <div
-                                title={`Candidature reçue le ${formatShortDate(entry.createdAt)}`}
+                                title={`${copy('applicationReceivedOn')} ${formatShortDate(entry.createdAt, language)}`}
                                 style={{
                                   position: 'absolute',
                                   top: '50%',
@@ -365,21 +397,50 @@ export function VolunteerApplicationsPlanningClient({ entries }: Props) {
             </table>
           </div>
 
-          <h3 style={{ margin: '0 0 0.75rem', fontSize: '0.9375rem' }}>Présence par jour</h3>
+          <h3 style={{ margin: '0 0 0.75rem', fontSize: '0.9375rem' }}>{copy('presenceByDay')}</h3>
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))',
+              gridTemplateColumns: 'repeat(7, minmax(0, 1fr))',
               gap: '0.75rem',
             }}
           >
-            {calendarDays.map(({ day, entries: dayEntries }) => {
+            {weekdayLabels.map((label) => (
+              <div
+                key={label}
+                style={{
+                  fontWeight: 600,
+                  fontSize: '0.75rem',
+                  textAlign: 'center',
+                  color: 'var(--theme-elevation-600, #4b5563)',
+                  paddingBottom: '0.25rem',
+                }}
+              >
+                {label}
+              </div>
+            ))}
+            {calendarGrid.map((cell, index) => {
+              if (cell.day === null) {
+                return (
+                  <div
+                    key={`empty-${index}`}
+                    style={{
+                      minHeight: '120px',
+                      borderRadius: '6px',
+                      background: 'var(--theme-elevation-50, #fafafa)',
+                    }}
+                  />
+                )
+              }
+
               const isToday =
-                day === today.getDate() && month === today.getMonth() && year === today.getFullYear()
+                cell.day === today.getDate() &&
+                month === today.getMonth() &&
+                year === today.getFullYear()
 
               return (
                 <div
-                  key={day}
+                  key={cell.day}
                   style={{
                     minHeight: '120px',
                     padding: '0.625rem',
@@ -390,23 +451,46 @@ export function VolunteerApplicationsPlanningClient({ entries }: Props) {
                     background: 'var(--theme-elevation-0, #fff)',
                   }}
                 >
-                  <div style={{ fontWeight: 600, marginBottom: '0.5rem' }}>{day}</div>
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      gap: '0.375rem',
+                      marginBottom: '0.5rem',
+                    }}
+                  >
+                    <div style={{ fontWeight: 600 }}>{cell.day}</div>
+                    <VolunteerRoleCategoryDayCounts
+                      counts={countEntriesByRoleCategory(cell.entries)}
+                      language={language}
+                    />
+                  </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.375rem' }}>
-                    {dayEntries.length === 0 ? (
+                    {cell.entries.length === 0 ? (
                       <span style={{ fontSize: '0.75rem', opacity: 0.55 }}>—</span>
                     ) : (
-                      dayEntries.map((entry) => {
+                      cell.entries.map((entry) => {
                         const status = isVolunteerApplicationStatus(entry.applicationStatus)
                           ? entry.applicationStatus
                           : 'not_confirmed'
                         const colors = volunteerApplicationStatusColors[status]
+                        const roleCategories = getEntryRoleCategories(entry)
+                        const roleCategoryLabel = roleCategories
+                          .map((category) => getVolunteerRoleCategoryLabel(language, category))
+                          .join(', ')
+                        const title = roleCategoryLabel
+                          ? `${entry.email} — ${roleCategoryLabel}`
+                          : entry.email
                         return (
                           <Link
                             key={entry.id}
                             href={`/admin/collections/volunteer-applications/${entry.id}`}
-                            title={entry.email}
+                            title={title}
                             style={{
-                              display: 'block',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '0.25rem',
                               padding: '0.125rem 0.375rem',
                               borderRadius: '4px',
                               background: colors.bg,
@@ -415,11 +499,22 @@ export function VolunteerApplicationsPlanningClient({ entries }: Props) {
                               fontSize: '0.6875rem',
                               textDecoration: 'none',
                               overflow: 'hidden',
-                              textOverflow: 'ellipsis',
-                              whiteSpace: 'nowrap',
+                              minWidth: 0,
                             }}
                           >
-                            {entry.firstName} {entry.lastName.charAt(0)}.
+                            <VolunteerRoleCategoryIcons
+                              categories={roleCategories}
+                              language={language}
+                            />
+                            <span
+                              style={{
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                                whiteSpace: 'nowrap',
+                              }}
+                            >
+                              {entry.firstName} {entry.lastName.charAt(0)}.
+                            </span>
                           </Link>
                         )
                       })
@@ -433,6 +528,21 @@ export function VolunteerApplicationsPlanningClient({ entries }: Props) {
       ) : null}
     </section>
   )
+}
+
+function formatPeriodTitle(
+  entry: PlanningEntry,
+  period: ReturnType<typeof getPresencePeriod>,
+  language: AdminLanguage,
+  copy: (key: Parameters<typeof getVolunteerApplicationsAdminCopy>[1]) => string,
+): string {
+  if (!period) return ''
+
+  if (period.kind === 'confirmed') {
+    return `${copy('confirmedPresence')}: ${formatShortDate(entry.confirmedStartDate, language)} → ${formatShortDate(entry.confirmedEndDate ?? entry.confirmedStartDate, language)}`
+  }
+
+  return `${copy('preferredAvailabilityRange')}: ${formatShortDate(entry.preferredStartDate, language)} → ${formatShortDate(entry.preferredEndDate ?? entry.preferredStartDate, language)}`
 }
 
 const headerCellStyle: React.CSSProperties = {

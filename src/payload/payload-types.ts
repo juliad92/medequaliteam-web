@@ -453,9 +453,9 @@ export interface VolunteerApplication {
   drivingLicenceOther?: string | null;
   howDidYouHearAboutUs?: string | null;
   /**
-   * Suivi interne : Confirmé, En cours d'échange ou Non confirmé.
+   * Suivi interne : Confirmé, En cours d'échange, Annulé ou Non confirmé.
    */
-  applicationStatus: 'confirmed' | 'in_discussion' | 'not_confirmed';
+  applicationStatus: 'confirmed' | 'in_discussion' | 'not_confirmed' | 'canceled';
   /**
    * Rôle retenu une fois la candidature confirmée.
    */

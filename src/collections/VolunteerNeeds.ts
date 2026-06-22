@@ -9,8 +9,7 @@ export const VolunteerNeeds: CollectionConfig = {
   admin: {
     useAsTitle: 'roleName',
     defaultColumns: ['roleName', 'project', 'duration', 'updatedAt'],
-    description:
-      'Open volunteer roles linked to field projects (e.g. medical coordinator, nurse).',
+    description: 'Open volunteer roles linked to field projects (e.g. medical coordinator, nurse).',
   },
   access: {
     read: () => true,
@@ -27,6 +26,21 @@ export const VolunteerNeeds: CollectionConfig = {
       label: 'Role name',
       admin: {
         description: 'e.g. "Medical coordinator" / "Coordinateur·rice médical·e"',
+      },
+    },
+    {
+      name: 'roleCategory',
+      type: 'select',
+      required: true,
+      localized: true,
+      label: 'Role category',
+      options: [
+        { label: 'Doctor', value: 'doctor' },
+        { label: 'Nurse', value: 'nurse' },
+        { label: 'Helper', value: 'helper' },
+      ],
+      admin: {
+        description: 'Doctor/Nurse/Helper',
       },
     },
     {

@@ -19,25 +19,30 @@ const languageLevelOptions = [
 export const VolunteerApplications: CollectionConfig = {
   slug: 'volunteer-applications',
   labels: {
-    singular: 'Volunteer application',
-    plural: 'Volunteer applications',
+    singular: {
+      en: 'Volunteer application',
+      fr: 'Candidature bénévole',
+    },
+    plural: {
+      en: 'Volunteer applications',
+      fr: 'Candidatures bénévoles',
+    },
   },
   admin: {
     useAsTitle: 'email',
     defaultColumns: [
       'firstName',
       'lastName',
-      'email',
       'selectedRoles',
       'applicationStatus',
       'project',
       'preferredStartDate',
-      'preferredEndDate',
-      'confirmedStartDate',
-      'confirmedEndDate',
       'confirmedVolunteerRole',
     ],
-    description: 'Volunteer recruitment submissions from the website.',
+    description: {
+      en: 'Volunteer recruitment submissions from the website.',
+      fr: 'Candidatures de recrutement bénévole reçues via le site.',
+    },
     components: {
       beforeList: [
         '/src/components/admin/volunteer-applications/VolunteerApplicationsPlanning#VolunteerApplicationsPlanning',
@@ -230,23 +235,35 @@ export const VolunteerApplications: CollectionConfig = {
     {
       name: 'applicationStatus',
       type: 'select',
-      label: 'Statut',
+      label: {
+        en: 'Status',
+        fr: 'Statut',
+      },
       required: true,
       defaultValue: defaultVolunteerApplicationStatus,
       options: [...volunteerApplicationStatusOptions],
       admin: {
         position: 'sidebar',
-        description: "Suivi interne : Confirmé, En cours d'échange, Annulé ou Non confirmé.",
+        description: {
+          en: 'Internal tracking: Confirmed, In discussion, Canceled or Not confirmed.',
+          fr: "Suivi interne : Confirmé, En cours d'échange, Annulé ou Non confirmé.",
+        },
       },
     },
     {
       name: 'confirmedVolunteerRole',
       type: 'relationship',
       relationTo: 'volunteer-needs',
-      label: 'Confirmed volunteer role',
+      label: {
+        en: 'Confirmed volunteer role',
+        fr: 'Rôle bénévole confirmé',
+      },
       admin: {
         position: 'sidebar',
-        description: 'Rôle retenu une fois la candidature confirmée.',
+        description: {
+          en: 'Role retained once the application is confirmed.',
+          fr: 'Rôle retenu une fois la candidature confirmée.',
+        },
       },
     },
     {
@@ -256,16 +273,25 @@ export const VolunteerApplications: CollectionConfig = {
         {
           name: 'confirmedStartDate',
           type: 'date',
-          label: 'Présence confirmée — début',
+          label: {
+            en: 'Confirmed presence — start',
+            fr: 'Présence confirmée — début',
+          },
           admin: {
             date: { pickerAppearance: 'dayOnly' },
-            description: 'Dates réelles une fois la candidature confirmée.',
+            description: {
+              en: 'Actual dates once the application is confirmed.',
+              fr: 'Dates réelles une fois la candidature confirmée.',
+            },
           },
         },
         {
           name: 'confirmedEndDate',
           type: 'date',
-          label: 'Présence confirmée — fin',
+          label: {
+            en: 'Confirmed presence — end',
+            fr: 'Présence confirmée — fin',
+          },
           admin: { date: { pickerAppearance: 'dayOnly' } },
         },
       ],

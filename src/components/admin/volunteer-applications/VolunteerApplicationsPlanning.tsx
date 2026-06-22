@@ -2,6 +2,7 @@ import React from 'react'
 import type { BeforeListServerProps } from 'payload'
 import { VolunteerApplicationsPlanningClient } from './VolunteerApplicationsPlanningClient'
 import type { PlanningEntry } from '@/lib/volunteer/planning-dates'
+import { mapPlanningRole } from '@/lib/volunteer/planning-dates'
 import { defaultVolunteerApplicationStatus } from '@/lib/volunteer/application-status'
 
 export async function VolunteerApplicationsPlanning({ payload, user }: BeforeListServerProps) {
@@ -29,8 +30,10 @@ export async function VolunteerApplicationsPlanning({ payload, user }: BeforeLis
     confirmedStartDate: doc.confirmedStartDate,
     confirmedEndDate: doc.confirmedEndDate,
     project: doc.project,
-    selectedRoles: doc.selectedRoles,
-    confirmedVolunteerRole: doc.confirmedVolunteerRole,
+    selectedRoles: doc.selectedRoles?.map(mapPlanningRole) ?? null,
+    confirmedVolunteerRole: doc.confirmedVolunteerRole
+      ? mapPlanningRole(doc.confirmedVolunteerRole)
+      : null,
   }))
 
   return <VolunteerApplicationsPlanningClient entries={entries} />
