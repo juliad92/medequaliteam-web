@@ -19,11 +19,15 @@ export type GivingEuropeCountryCode = 'BE' | 'CH' | 'GB'
 
 export type LocalPlatformCountryCode = 'US' | 'DE'
 
-export function isGivingEuropeCountry(country: DonateCountryCode): country is GivingEuropeCountryCode {
+export function isGivingEuropeCountry(
+  country: DonateCountryCode,
+): country is GivingEuropeCountryCode {
   return country === 'BE' || country === 'CH' || country === 'GB'
 }
 
-export function isLocalPlatformCountry(country: DonateCountryCode): country is LocalPlatformCountryCode {
+export function isLocalPlatformCountry(
+  country: DonateCountryCode,
+): country is LocalPlatformCountryCode {
   return country === 'US' || country === 'DE'
 }
 
@@ -39,7 +43,7 @@ export const DONATE_COUNTRY_CONFIG: Record<DonateCountryCode, DonateCountryConfi
     symbol: '€',
     deductionRate: 0.66,
     platform: 'HelloAsso',
-    url: 'https://www.helloasso.com/associations/med-equaliteam/formulaires/1',
+    url: 'https://www.helloasso.com/associations/med-equaliteam/formulaires/4',
     dualChannelAlt: null,
   },
   US: {
@@ -87,13 +91,13 @@ export const DONATE_COUNTRY_CONFIG: Record<DonateCountryCode, DonateCountryConfi
     symbol: '€',
     deductionRate: 0,
     platform: 'HelloAsso',
-    url: 'https://www.helloasso.com/associations/med-equaliteam/formulaires/1',
+    url: 'https://www.helloasso.com/associations/med-equaliteam/formulaires/4',
     dualChannelAlt: null,
   },
 }
 
 export const HELLOASSO_FORM_URL =
-  'https://www.helloasso.com/associations/med-equaliteam/formulaires/1'
+  'https://www.helloasso.com/associations/med-equaliteam/formulaires/4'
 
 export function getHelloAssoWidgetUrl(formUrl: string = HELLOASSO_FORM_URL): string {
   return `${formUrl.replace(/\/$/, '')}/widget`
