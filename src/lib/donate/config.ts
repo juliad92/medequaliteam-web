@@ -43,7 +43,7 @@ export const DONATE_COUNTRY_CONFIG: Record<DonateCountryCode, DonateCountryConfi
     symbol: '€',
     deductionRate: 0.66,
     platform: 'HelloAsso',
-    url: 'https://www.helloasso.com/associations/med-equaliteam/formulaires/4',
+    url: 'https://www.helloasso.com/associations/med-equaliteam/formulaires/4/widget?view=form',
     dualChannelAlt: null,
   },
   US: {

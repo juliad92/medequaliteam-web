@@ -1,19 +1,22 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
 import { getHelloAssoWidgetUrl } from '@/lib/donate/config'
 
-const DEFAULT_HEIGHT = 750
-
 export default function HelloAssoWidget({ formUrl }: { formUrl: string }) {
-  const [height, setHeight] = useState(DEFAULT_HEIGHT)
+  const iframeRef = useRef<HTMLIFrameElement>(null)
 
   useEffect(() => {
-    function handleMessage(event: MessageEvent) {
-      const data = event.data
-      if (typeof data === 'object' && data !== null && typeof data.height === 'number') {
-        setHeight(data.height)
+    function handleMessage(e: MessageEvent) {
+      const dataHeight = e.data?.height
+      const haWidgetElement = iframeRef.current
+      if (
+        typeof dataHeight === 'number' &&
+        haWidgetElement &&
+        dataHeight > parseFloat(haWidgetElement.height || '0')
+      ) {
+        haWidgetElement.height = `${dataHeight}px`
       }
     }
 
@@ -23,11 +26,11 @@ export default function HelloAssoWidget({ formUrl }: { formUrl: string }) {
 
   return (
     <iframe
-      id="haWidget"
-      title="HelloAsso"
-      src={getHelloAssoWidgetUrl(formUrl)}
-      className="w-full border-none"
-      style={{ height: `${height}px` }}
+      ref={iframeRef}
+      id="haWidgetLight"
+      allow="payment"
+      src={`${getHelloAssoWidgetUrl(formUrl)}?view=form`}
+      className="block w-full border-0"
     />
   )
 }

@@ -275,20 +275,15 @@ export default function DonationForm({ locale }: { locale: string }) {
         )}
 
         {showHelloAsso && (
-          <section
-            className="mb-8 overflow-hidden rounded-xl border border-[var(--border)] bg-white"
-            aria-label={d.helloAssoTitle}
-          >
-            <div className="border-b border-[var(--border)] bg-[var(--cream)] px-4 py-4">
-              <p className="text-[11px] font-medium tracking-[0.1em] text-[var(--muted)] uppercase">
-                {d.helloAssoTitle}
-              </p>
-              <p className="mt-1 text-[13px] leading-relaxed text-[var(--charcoal)]">
-                {helloAssoNote}
-              </p>
-            </div>
-            <HelloAssoWidget formUrl={HELLOASSO_FORM_URL} />
-          </section>
+          <>
+            <SectionLabel>{d.helloAssoTitle}</SectionLabel>
+            <p className="mb-4 text-[13px] leading-relaxed text-[var(--charcoal)]">
+              {helloAssoNote}
+            </p>
+            <section className="mb-8" aria-label={d.helloAssoTitle}>
+              <HelloAssoWidget formUrl={HELLOASSO_FORM_URL} />
+            </section>
+          </>
         )}
 
         {showGivingEuropePanel && country && isGivingEuropeCountry(country) && (
