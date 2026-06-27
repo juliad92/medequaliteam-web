@@ -9,9 +9,9 @@ export default function MissionSection({ locale }: { locale: string }) {
     { icon: '🤝', title: t.mission.pillar3Title, desc: t.mission.pillar3Desc },
   ]
   return (
-    <section className="bg-[var(--warm-white)] px-8 py-24">
-      <div className="mx-auto grid max-w-7xl grid-cols-2 items-center gap-20">
-        <div className="relative h-[460px]">
+    <section className="bg-[var(--warm-white)] px-4 py-16 sm:px-8 sm:py-24">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-20">
+        <div className="relative mx-auto h-[300px] w-full max-w-lg sm:h-[380px] lg:mx-0 lg:h-[460px] lg:max-w-none">
           <div
             className="absolute inset-0 overflow-hidden rounded-2xl"
             style={{ background: 'linear-gradient(135deg, #c8d9c8, #9ab89a)' }}
@@ -20,12 +20,12 @@ export default function MissionSection({ locale }: { locale: string }) {
               <p className="text-sm text-white/60 italic">{t.mission.photoCaption}</p>
             </div>
           </div>
-          <div className="absolute -right-5 bottom-8 w-44 rounded-xl border-4 border-white bg-[var(--green-pale)] p-5 shadow-lg">
+          <div className="absolute right-2 bottom-6 w-36 rounded-xl border-4 border-white bg-[var(--green-pale)] p-4 shadow-lg sm:-right-5 sm:bottom-8 sm:w-44 sm:p-5">
             <p className="font-serif text-[13px] leading-snug text-[var(--green-dark)] italic">
               &ldquo;{t.mission.quote}&rdquo;
             </p>
           </div>
-          <div className="absolute top-8 -left-4 rounded-xl bg-[var(--green)] p-4 text-center text-white shadow-lg">
+          <div className="absolute top-6 left-2 rounded-xl bg-[var(--green)] p-3 text-center text-white shadow-lg sm:top-8 sm:-left-4 sm:p-4">
             <span className="block font-serif text-3xl leading-none">7+</span>
             <span className="text-[11px] tracking-wider uppercase opacity-80">
               {t.mission.years}

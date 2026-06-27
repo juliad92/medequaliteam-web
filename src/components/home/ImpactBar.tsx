@@ -14,7 +14,7 @@ export default function ImpactBar({ locale, impactStats }: ImpactBarProps) {
 
   return (
     <div className="border-t border-white/6 bg-[var(--charcoal)]">
-      <div className="mx-auto grid max-w-4xl grid-cols-4 gap-6 px-8 py-10">
+      <div className="mx-auto grid max-w-4xl grid-cols-2 gap-x-4 gap-y-8 px-4 py-8 sm:gap-6 sm:px-8 sm:py-10 md:grid-cols-4">
         {impactStats.map((stat, i) => (
           <div key={i} className="text-center">
             <span

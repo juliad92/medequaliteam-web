@@ -11,8 +11,8 @@ export function VolunteerCTA({
 }) {
   const t = getT(locale)
   return (
-    <section className="px-8 py-20" style={{ background: 'var(--green-dark)' }}>
-      <div className="mx-auto grid max-w-7xl grid-cols-[1fr_auto] items-center gap-16">
+    <section className="px-4 py-16 sm:px-8 sm:py-20" style={{ background: 'var(--green-dark)' }}>
+      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-8 md:grid-cols-[1fr_auto] md:gap-16">
         <div>
           <p className="mb-4 text-[11px] font-medium tracking-[0.15em] text-white/40 uppercase">
             {t.volunteerCta.eyebrow}
@@ -25,7 +25,7 @@ export function VolunteerCTA({
           </h2>
           <p className="max-w-lg text-base leading-relaxed text-white/50">{t.volunteerCta.body}</p>
         </div>
-        <div className="flex flex-shrink-0 flex-col gap-3">
+        <div className="flex w-full flex-shrink-0 flex-col gap-3 md:w-auto">
           <Link
             href={volunteerHref}
             className="rounded-lg bg-white px-8 py-3.5 text-center text-sm font-medium text-[var(--green-dark)] transition-colors hover:bg-[var(--cream)]"
@@ -83,9 +83,9 @@ export function NewsSection({ locale, posts }: { locale: string; posts?: any[] }
   const displayPosts = posts && posts.length > 0 ? posts : getPlaceholderPosts(locale)
   const [featured, ...rest] = displayPosts
   return (
-    <section className="bg-white px-8 py-24">
+    <section className="bg-white px-4 py-16 sm:px-8 sm:py-24">
       <div className="mx-auto max-w-7xl">
-        <div className="mb-12 flex items-end justify-between">
+        <div className="mb-10 flex flex-col items-start gap-4 sm:mb-12 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="mb-3 text-[11px] font-medium tracking-[0.15em] text-[var(--green)] uppercase">
               {t.news.eyebrow}
@@ -104,9 +104,9 @@ export function NewsSection({ locale, posts }: { locale: string; posts?: any[] }
             {t.news.viewAll} →
           </Link>
         </div>
-        <div className="grid grid-cols-[2fr_1fr_1fr] gap-6">
-          <div className="cursor-pointer overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--cream)] transition-shadow hover:shadow-lg">
-            <div className="h-56" style={{ background: featured.gradient }} />
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr]">
+          <div className="cursor-pointer overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--cream)] transition-shadow hover:shadow-lg md:col-span-2 lg:col-span-1">
+            <div className="h-48 sm:h-56" style={{ background: featured.gradient }} />
             <div className="p-6">
               <p className="mb-2 text-[10.5px] font-medium tracking-[0.12em] text-[var(--green)] uppercase">
                 {featured.category}

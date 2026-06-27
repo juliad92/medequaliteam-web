@@ -71,9 +71,9 @@ export default function ProjectsSection({
   const t = getT(locale)
   const displayProjects = projects && projects.length > 0 ? projects : getPlaceholders(t)
   return (
-    <section className="bg-[var(--cream)] px-8 py-24">
+    <section className="bg-[var(--cream)] px-4 py-16 sm:px-8 sm:py-24">
       <div className="mx-auto max-w-7xl">
-        <div className="mb-14 flex items-end justify-between">
+        <div className="mb-10 flex flex-col items-start gap-4 sm:mb-14 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="mb-3 text-[11px] font-medium tracking-[0.15em] text-[var(--green)] uppercase">
               {t.projects.eyebrow}
@@ -92,7 +92,7 @@ export default function ProjectsSection({
             {t.projects.viewAll} →
           </Link>
         </div>
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {displayProjects.map((project) => (
             <ProjectCard key={project.slug} project={project} locale={locale} t={t} />
           ))}
