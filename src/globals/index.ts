@@ -188,10 +188,26 @@ export const Homepage: GlobalConfig = {
       ],
     },
     {
-      name: 'missionText',
-      type: 'richText',
-      localized: true,
-      label: 'Mission statement (shown after stats)',
+      name: 'mission',
+      type: 'group',
+      label: 'Our mission section',
+      fields: [
+        {
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media',
+          label: 'Photo',
+          admin: {
+            description: 'Displayed in the "Our mission" section on the homepage.',
+          },
+        },
+        {
+          name: 'missionText',
+          type: 'richText',
+          localized: true,
+          label: 'Mission statement (shown after stats)',
+        },
+      ],
     },
     {
       name: 'featuredProject',

@@ -26,10 +26,12 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const homepageSettings = await payload.findGlobal({
     slug: 'homepage',
     locale: locale as 'en' | 'fr',
+    depth: 1,
   })
   const featuredProject = homepageSettings?.featuredProject
   const heroData = homepageSettings?.hero
   const impactStats = homepageSettings?.impactStats
+  const missionImage = homepageSettings?.mission?.image
 
   const { docs: posts } = await payload.find({
     collection: 'posts',
@@ -47,7 +49,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     <>
       <HeroSection locale={locale} heroData={heroData} project={featuredProject as any} />
       <ImpactBar locale={locale} impactStats={impactStats as any} />
-      <MissionSection locale={locale} />
+      <MissionSection locale={locale} missionImage={missionImage} />
       <ProjectsSection locale={locale} projects={projects as any} />
       <VolunteerCTA locale={locale} volunteerHref={volunteerHref} />
       <NewsSection locale={locale} posts={posts as any} />

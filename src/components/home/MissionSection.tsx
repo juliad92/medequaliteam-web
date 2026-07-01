@@ -1,8 +1,29 @@
 import React from 'react'
 import { getT } from '@/i18n/translations'
+import type { Media } from '@/payload/payload-types'
 
-export default function MissionSection({ locale }: { locale: string }) {
+type MissionImage = string | Media | null | undefined
+
+function getMissionImageUrl(image: MissionImage): string | null {
+  if (!image || typeof image === 'string') return null
+  return image.sizes?.card?.url ?? image.url ?? null
+}
+
+function getMissionImageAlt(image: MissionImage, fallback: string): string {
+  if (!image || typeof image === 'string') return fallback
+  return image.alt ?? fallback
+}
+
+export default function MissionSection({
+  locale,
+  missionImage,
+}: {
+  locale: string
+  missionImage?: MissionImage
+}) {
   const t = getT(locale)
+  const imageUrl = getMissionImageUrl(missionImage)
+  const imageAlt = getMissionImageAlt(missionImage, t.mission.title)
   const pillars = [
     { icon: '🏥', title: t.mission.pillar1Title, desc: t.mission.pillar1Desc },
     { icon: '🌍', title: t.mission.pillar2Title, desc: t.mission.pillar2Desc },
@@ -14,11 +35,23 @@ export default function MissionSection({ locale }: { locale: string }) {
         <div className="relative mx-auto h-[300px] w-full max-w-lg sm:h-[380px] lg:mx-0 lg:h-[460px] lg:max-w-none">
           <div
             className="absolute inset-0 overflow-hidden rounded-2xl"
-            style={{ background: 'linear-gradient(135deg, #c8d9c8, #9ab89a)' }}
+            style={
+              imageUrl
+                ? undefined
+                : { background: 'linear-gradient(135deg, #c8d9c8, #9ab89a)' }
+            }
           >
-            <div className="flex h-full w-full items-end p-6">
-              <p className="text-sm text-white/60 italic">{t.mission.photoCaption}</p>
-            </div>
+            {imageUrl ? (
+              <img
+                src={imageUrl}
+                alt={imageAlt}
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <div className="flex h-full w-full items-end p-6">
+                <p className="text-sm text-white/60 italic">{t.mission.photoCaption}</p>
+              </div>
+            )}
           </div>
           <div className="absolute right-2 bottom-6 w-36 rounded-xl border-4 border-white bg-[var(--green-pale)] p-4 shadow-lg sm:-right-5 sm:bottom-8 sm:w-44 sm:p-5">
             <p className="font-serif text-[13px] leading-snug text-[var(--green-dark)] italic">

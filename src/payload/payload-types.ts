@@ -1169,6 +1169,12 @@ export interface Homepage {
         id?: string | null;
       }[]
     | null;
+  mission?: {
+    /**
+     * Displayed in the "Our mission" section on the homepage.
+     */
+    image?: (string | null) | Media;
+  };
   missionText?: {
     root: {
       type: string;
@@ -1275,6 +1281,11 @@ export interface HomepageSelect<T extends boolean = true> {
         value?: T;
         label?: T;
         id?: T;
+      };
+  mission?:
+    | T
+    | {
+        image?: T;
       };
   missionText?: T;
   featuredProject?: T;
