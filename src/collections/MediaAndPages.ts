@@ -1,5 +1,10 @@
 import type { CollectionConfig, Block } from 'payload'
 
+const mediaStaticDir =
+  process.env.VERCEL || process.env.BLOB_READ_WRITE_TOKEN?.trim()
+    ? undefined
+    : 'public/media'
+
 // ─── Reusable content blocks ────────────────────────────────────────────────
 
 const HeroBlock: Block = {
@@ -94,7 +99,7 @@ export const Media: CollectionConfig = {
     read: () => true,
   },
   upload: {
-    staticDir: 'public/media',
+    ...(mediaStaticDir ? { staticDir: mediaStaticDir } : {}),
     imageSizes: [
       { name: 'thumbnail', width: 400, height: 300, position: 'centre' },
       { name: 'card', width: 800, height: 500, position: 'centre' },

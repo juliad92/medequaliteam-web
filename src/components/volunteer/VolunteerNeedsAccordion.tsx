@@ -67,13 +67,13 @@ export default function VolunteerNeedsAccordion({
     <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
       <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-white">
         <div className="border-b border-[var(--border)] bg-[var(--cream)] px-6 py-5">
-          <p className="text-[11px] font-medium tracking-[0.14em] text-[var(--green)] uppercase">
+          <p className="text-[13px] font-medium tracking-[0.14em] text-[var(--green)] uppercase">
             {strings.eyebrow}
           </p>
           <h2 className="mt-2 font-serif text-2xl font-normal text-[var(--charcoal)]">
             {strings.title}
           </h2>
-          <p className="mt-2 text-[13.5px] leading-relaxed text-[var(--muted)]">
+          <p className="mt-2 text-[16px] leading-relaxed text-[var(--muted)]">
             {strings.hint}
           </p>
         </div>
@@ -90,9 +90,9 @@ export default function VolunteerNeedsAccordion({
                   aria-expanded={isOpen}
                 >
                   <div>
-                    <p className="text-sm font-medium text-[var(--charcoal)]">{need.roleName}</p>
+                    <p className="text-base font-medium text-[var(--charcoal)]">{need.roleName}</p>
                     {need.duration ? (
-                      <p className="mt-1 text-[12.5px] text-[var(--muted)]">
+                      <p className="mt-1 text-[15px] text-[var(--muted)]">
                         {strings.duration}: {need.duration}
                       </p>
                     ) : null}
@@ -114,14 +114,14 @@ export default function VolunteerNeedsAccordion({
         {openNeed ? (
           <>
             <div className="mb-5">
-              <p className="text-[11px] font-medium tracking-[0.14em] text-[var(--green)] uppercase">
+              <p className="text-[13px] font-medium tracking-[0.14em] text-[var(--green)] uppercase">
                 {strings.roleDetails}
               </p>
               <h3 className="mt-2 font-serif text-2xl font-normal text-[var(--charcoal)]">
                 {openNeed.roleName}
               </h3>
               {openNeed.duration ? (
-                <p className="mt-1 text-[13px] text-[var(--muted)]">
+                <p className="mt-1 text-[15px] text-[var(--muted)]">
                   {strings.duration}: {openNeed.duration}
                 </p>
               ) : null}
@@ -129,14 +129,14 @@ export default function VolunteerNeedsAccordion({
 
             <div className="space-y-6">
               <section>
-                <h4 className="mb-2 text-[12px] font-medium tracking-[0.12em] text-[var(--muted)] uppercase">
+                <h4 className="mb-2 text-[14px] font-medium tracking-[0.12em] text-[var(--muted)] uppercase">
                   {strings.jobDescription}
                 </h4>
                 <LexicalRenderer content={openNeed.jobDescription} />
               </section>
 
               <section>
-                <h4 className="mb-2 text-[12px] font-medium tracking-[0.12em] text-[var(--muted)] uppercase">
+                <h4 className="mb-2 text-[14px] font-medium tracking-[0.12em] text-[var(--muted)] uppercase">
                   {strings.required}
                 </h4>
                 <LexicalRenderer content={openNeed.requiredExperienceAndSkills} />
@@ -144,7 +144,7 @@ export default function VolunteerNeedsAccordion({
 
               {openNeed.desiredExperienceAndSkills ? (
                 <section>
-                  <h4 className="mb-2 text-[12px] font-medium tracking-[0.12em] text-[var(--muted)] uppercase">
+                  <h4 className="mb-2 text-[14px] font-medium tracking-[0.12em] text-[var(--muted)] uppercase">
                     {strings.desired}
                   </h4>
                   <LexicalRenderer content={openNeed.desiredExperienceAndSkills} />
@@ -153,7 +153,7 @@ export default function VolunteerNeedsAccordion({
 
               {openNeed.furtherInformation ? (
                 <section>
-                  <h4 className="mb-2 text-[12px] font-medium tracking-[0.12em] text-[var(--muted)] uppercase">
+                  <h4 className="mb-2 text-[14px] font-medium tracking-[0.12em] text-[var(--muted)] uppercase">
                     {strings.further}
                   </h4>
                   <LexicalRenderer content={openNeed.furtherInformation} />
@@ -164,7 +164,7 @@ export default function VolunteerNeedsAccordion({
                 <button
                   type="button"
                   onClick={() => onApplyForRole(openNeed.id)}
-                  className="mt-2 inline-flex h-11 items-center justify-center rounded-lg bg-[var(--green)] px-6 text-sm font-medium text-white transition-colors hover:bg-[var(--green-dark)]"
+                  className="mt-2 inline-flex h-11 items-center justify-center rounded-lg bg-[var(--green)] px-6 text-base font-medium text-white transition-colors hover:bg-[var(--green-dark)]"
                 >
                   {strings.applyForRole}
                 </button>
@@ -173,8 +173,8 @@ export default function VolunteerNeedsAccordion({
           </>
         ) : (
           <div className="flex h-full flex-col items-center justify-center rounded-xl bg-[var(--cream)] p-10 text-center">
-            <p className="text-sm font-medium text-[var(--charcoal)]">{strings.emptyTitle}</p>
-            <p className="mt-2 text-[13.5px] leading-relaxed text-[var(--muted)]">
+            <p className="text-base font-medium text-[var(--charcoal)]">{strings.emptyTitle}</p>
+            <p className="mt-2 text-[16px] leading-relaxed text-[var(--muted)]">
               {strings.emptyBody}
             </p>
           </div>

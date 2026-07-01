@@ -15,13 +15,13 @@ export default function LocalPlatformPanel({
   const d = getT(locale).donate
 
   return (
-    <div className="space-y-4 text-[13px] leading-relaxed text-[var(--charcoal)]">
+    <div className="space-y-4 text-[15px] leading-relaxed text-[var(--charcoal)]">
       <p className="text-[var(--muted)]">{d.localPlatform[country].description}</p>
       <a
         href={url}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-[var(--green)] text-[14px] font-medium text-white transition-colors hover:bg-[var(--green-dark)]"
+        className="flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-[var(--green)] text-[15px] font-medium text-white transition-colors hover:bg-[var(--green-dark)]"
       >
         <svg
           className="h-[16px] w-[16px]"
@@ -33,7 +33,7 @@ export default function LocalPlatformPanel({
         </svg>
         {d.donateNow}
       </a>
-      <p className="text-center text-[11px] text-[var(--muted)]">
+      <p className="text-center text-[13px] text-[var(--muted)]">
         {d.platformNote.replace('{platform}', platform)}
       </p>
     </div>

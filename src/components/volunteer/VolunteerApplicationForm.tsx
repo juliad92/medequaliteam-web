@@ -47,18 +47,18 @@ const STEP_FIELD_ORDER: Record<number, FieldName[]> = {
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 const inputClass =
-  'h-11 rounded-lg border border-[var(--border)] bg-white px-4 text-[14px] text-[var(--charcoal)] outline-none focus:border-[var(--green)] focus:ring-2 focus:ring-[var(--green)]/20'
+  'h-11 rounded-lg border border-[var(--border)] bg-white px-4 text-[15px] text-[var(--charcoal)] outline-none focus:border-[var(--green)] focus:ring-2 focus:ring-[var(--green)]/20'
 const textareaClass =
-  'rounded-lg border border-[var(--border)] bg-white px-4 py-3 text-[14px] text-[var(--charcoal)] outline-none focus:border-[var(--green)] focus:ring-2 focus:ring-[var(--green)]/20'
+  'rounded-lg border border-[var(--border)] bg-white px-4 py-3 text-[15px] text-[var(--charcoal)] outline-none focus:border-[var(--green)] focus:ring-2 focus:ring-[var(--green)]/20'
 const inputErrorClass =
-  'h-11 rounded-lg border border-red-500 bg-white px-4 text-[14px] text-[var(--charcoal)] outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20'
+  'h-11 rounded-lg border border-red-500 bg-white px-4 text-[15px] text-[var(--charcoal)] outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20'
 const textareaErrorClass =
-  'rounded-lg border border-red-500 bg-white px-4 py-3 text-[14px] text-[var(--charcoal)] outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20'
+  'rounded-lg border border-red-500 bg-white px-4 py-3 text-[15px] text-[var(--charcoal)] outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20'
 
 function FieldError({ id, message }: { id: string; message?: string }) {
   if (!message) return null
   return (
-    <p id={id} className="text-[12px] text-red-700" role="alert">
+    <p id={id} className="text-[14px] text-red-700" role="alert">
       {message}
     </p>
   )
@@ -72,7 +72,7 @@ function FieldLabel({
   required?: boolean
 }) {
   return (
-    <span className="text-[12px] font-medium text-[var(--charcoal)]">
+    <span className="text-[14px] font-medium text-[var(--charcoal)]">
       {children}
       {required ? (
         <span className="ml-0.5 text-red-600" title="Required" aria-hidden="true">
@@ -91,7 +91,7 @@ function SectionTitle({
   required?: boolean
 }) {
   return (
-    <h3 className="border-b border-[var(--border)] pt-4 pb-2 text-[12px] font-medium tracking-[0.12em] text-[var(--green)] uppercase first:pt-0">
+    <h3 className="border-b border-[var(--border)] pt-4 pb-2 text-[14px] font-medium tracking-[0.12em] text-[var(--green)] uppercase first:pt-0">
       {children}
       {required ? (
         <span className="ml-1 tracking-normal text-red-600 normal-case" aria-hidden="true">
@@ -120,10 +120,10 @@ function YesNoField({
 
   return (
     <fieldset className="grid gap-2">
-      <legend className="text-[12px] font-medium text-[var(--charcoal)]">{label}</legend>
+      <legend className="text-[14px] font-medium text-[var(--charcoal)]">{label}</legend>
       <div className="flex gap-6">
         {(['yes', 'no'] as const).map((opt) => (
-          <label key={opt} className="flex items-center gap-2 text-[14px] text-[var(--muted)]">
+          <label key={opt} className="flex items-center gap-2 text-[15px] text-[var(--muted)]">
             <input
               type="radio"
               name={name}
@@ -155,12 +155,12 @@ function ProgressBar({
   return (
     <div className="mb-6">
       <div className="mb-2 flex items-center justify-between gap-4">
-        <p className="text-[12px] font-medium text-[var(--charcoal)]">
+        <p className="text-[14px] font-medium text-[var(--charcoal)]">
           {fr
             ? `Étape ${currentStep + 1} sur ${STEP_COUNT} — ${stepLabels[currentStep]}`
             : `Step ${currentStep + 1} of ${STEP_COUNT} — ${stepLabels[currentStep]}`}
         </p>
-        <p className="text-[12px] text-[var(--muted)]">{Math.round(progress)}%</p>
+        <p className="text-[14px] text-[var(--muted)]">{Math.round(progress)}%</p>
       </div>
       <div
         className="h-1.5 overflow-hidden rounded-full bg-[var(--cream)]"
@@ -556,21 +556,21 @@ export default function VolunteerApplicationForm({
 
   return (
     <section className="rounded-2xl border border-[var(--border)] bg-white p-7">
-      <p className="text-[11px] font-medium tracking-[0.14em] text-[var(--green)] uppercase">
+      <p className="text-[13px] font-medium tracking-[0.14em] text-[var(--green)] uppercase">
         {t.eyebrow}
       </p>
       <h2 className="mt-2 font-serif text-2xl font-normal text-[var(--charcoal)]">{t.title}</h2>
-      <p className="mt-2 max-w-2xl text-[13.5px] leading-relaxed text-[var(--muted)]">{t.body}</p>
-      <p className="mt-1 text-[12px] text-[var(--muted)]">{t.estimatedTime}</p>
+      <p className="mt-2 max-w-2xl text-[16px] leading-relaxed text-[var(--muted)]">{t.body}</p>
+      <p className="mt-1 text-[14px] text-[var(--muted)]">{t.estimatedTime}</p>
 
       {status === 'success' ? (
         <div className="mt-6 rounded-xl border border-[var(--border)] bg-[var(--green-pale)] p-5">
-          <p className="text-sm font-medium text-[var(--charcoal)]">{t.successTitle}</p>
-          <p className="mt-1 text-[13.5px] leading-relaxed text-[var(--muted)]">{t.successBody}</p>
+          <p className="text-base font-medium text-[var(--charcoal)]">{t.successTitle}</p>
+          <p className="mt-1 text-[16px] leading-relaxed text-[var(--muted)]">{t.successBody}</p>
         </div>
       ) : (
         <form onSubmit={handleFormSubmit} className="mt-7 grid gap-5">
-          <p className="text-[12px] text-[var(--muted)]">{t.requiredLegend}</p>
+          <p className="text-[14px] text-[var(--muted)]">{t.requiredLegend}</p>
 
           <ProgressBar currentStep={currentStep} stepLabels={t.stepLabels} locale={locale} />
 
@@ -725,7 +725,7 @@ export default function VolunteerApplicationForm({
               {availableRoles.length > 0 ? (
                 <>
                   <SectionTitle required>{t.sections.roles}</SectionTitle>
-                  <p className="text-[13px] text-[var(--muted)]">{t.sections.rolesHint}</p>
+                  <p className="text-[15px] text-[var(--muted)]">{t.sections.rolesHint}</p>
                   <div
                     ref={setFieldRef('selectedRoles')}
                     className={`grid gap-2 rounded-lg ${fieldErrors.selectedRoles ? 'ring-2 ring-red-500/30' : ''}`}
@@ -742,7 +742,7 @@ export default function VolunteerApplicationForm({
                           onChange={() => toggleRole(role.id)}
                           className="h-4 w-4 accent-[var(--green)]"
                         />
-                        <span className="text-[14px] text-[var(--charcoal)]">{role.roleName}</span>
+                        <span className="text-[15px] text-[var(--charcoal)]">{role.roleName}</span>
                       </label>
                     ))}
                   </div>
@@ -950,7 +950,7 @@ export default function VolunteerApplicationForm({
           {currentStep === 3 ? (
             <>
               <SectionTitle>{t.sections.languages}</SectionTitle>
-              <p className="text-[13px] text-[var(--muted)]">{t.fields.languageLevel}</p>
+              <p className="text-[15px] text-[var(--muted)]">{t.fields.languageLevel}</p>
               <div className="grid gap-4 md:grid-cols-3">
                 {(
                   [
@@ -978,14 +978,14 @@ export default function VolunteerApplicationForm({
 
               <SectionTitle>{t.sections.driving}</SectionTitle>
               <fieldset className="grid gap-2">
-                <legend className="text-[12px] font-medium text-[var(--charcoal)]">
+                <legend className="text-[14px] font-medium text-[var(--charcoal)]">
                   {t.fields.drivingLicence}
                 </legend>
                 <div className="flex flex-wrap gap-6">
                   {(['yes', 'no', 'other'] as const).map((opt) => (
                     <label
                       key={opt}
-                      className="flex items-center gap-2 text-[14px] text-[var(--muted)]"
+                      className="flex items-center gap-2 text-[15px] text-[var(--muted)]"
                     >
                       <input
                         type="radio"
@@ -1039,14 +1039,14 @@ export default function VolunteerApplicationForm({
             </>
           ) : null}
 
-          {status === 'error' ? <p className="text-[13px] text-red-700">{t.error}</p> : null}
+          {status === 'error' ? <p className="text-[15px] text-red-700">{t.error}</p> : null}
 
           <div className="mt-2 flex flex-wrap gap-3">
             {currentStep > 0 ? (
               <button
                 type="button"
                 onClick={goPrevious}
-                className="inline-flex h-11 items-center justify-center rounded-lg border border-[var(--border)] bg-white px-6 text-sm font-medium text-[var(--charcoal)] transition-colors hover:bg-[var(--cream)]"
+                className="inline-flex h-11 items-center justify-center rounded-lg border border-[var(--border)] bg-white px-6 text-base font-medium text-[var(--charcoal)] transition-colors hover:bg-[var(--cream)]"
               >
                 {t.nav.previous}
               </button>
@@ -1056,7 +1056,7 @@ export default function VolunteerApplicationForm({
                 type="button"
                 onClick={goNext}
                 onMouseDown={(e) => e.preventDefault()}
-                className="inline-flex h-11 items-center justify-center rounded-lg bg-[var(--green)] px-8 text-sm font-medium text-white transition-colors hover:bg-[var(--green-dark)]"
+                className="inline-flex h-11 items-center justify-center rounded-lg bg-[var(--green)] px-8 text-base font-medium text-white transition-colors hover:bg-[var(--green-dark)]"
               >
                 {t.nav.next}
               </button>
@@ -1065,7 +1065,7 @@ export default function VolunteerApplicationForm({
                 type="button"
                 onClick={() => void submitApplication()}
                 disabled={status === 'sending'}
-                className="inline-flex h-11 items-center justify-center rounded-lg bg-[var(--green)] px-8 text-sm font-medium text-white transition-colors hover:bg-[var(--green-dark)] disabled:cursor-not-allowed disabled:opacity-70"
+                className="inline-flex h-11 items-center justify-center rounded-lg bg-[var(--green)] px-8 text-base font-medium text-white transition-colors hover:bg-[var(--green-dark)] disabled:cursor-not-allowed disabled:opacity-70"
               >
                 {status === 'sending' ? t.sending : t.submit}
               </button>

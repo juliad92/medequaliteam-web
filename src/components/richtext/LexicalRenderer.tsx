@@ -41,7 +41,7 @@ function renderNode(node: LexicalNode): React.ReactNode {
 
   if (type === 'paragraph') {
     return (
-      <p className="mb-4 text-[14.5px] leading-relaxed text-[var(--muted)]" style={getTextAlign(node)}>
+      <p className="mb-4 text-[17px] leading-relaxed text-[var(--muted)]" style={getTextAlign(node)}>
         {renderChildren(node.children)}
       </p>
     )
@@ -71,7 +71,7 @@ function renderNode(node: LexicalNode): React.ReactNode {
 
   if (type === 'listitem') {
     return (
-      <li className="mb-1.5 text-[14.5px] leading-relaxed">
+      <li className="mb-1.5 text-[17px] leading-relaxed">
         {renderChildren(node.children)}
       </li>
     )

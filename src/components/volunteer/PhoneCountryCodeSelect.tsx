@@ -6,7 +6,7 @@ import {
 } from '@/lib/phoneCountryCodes'
 
 const baseClass =
-  'h-11 rounded-lg border bg-white px-3 text-[14px] text-[var(--charcoal)] outline-none focus:ring-2'
+  'h-11 rounded-lg border bg-white px-3 text-[15px] text-[var(--charcoal)] outline-none focus:ring-2'
 
 export default function PhoneCountryCodeSelect({
   value,

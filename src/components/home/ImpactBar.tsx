@@ -23,7 +23,7 @@ export default function ImpactBar({ locale, impactStats }: ImpactBarProps) {
             >
               {stat.value}
             </span>
-            <span className="text-[11px] tracking-[0.12em] text-white/40 uppercase">
+            <span className="text-[13px] tracking-[0.12em] text-white/40 uppercase">
               {stat.label}
             </span>
           </div>

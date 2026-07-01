@@ -114,7 +114,7 @@ export default async function VolunteerProjectPage({
           }}
         />
         <div className="relative mx-auto max-w-7xl">
-          <p className="mb-4 flex items-center gap-3 text-[11px] font-medium tracking-[0.16em] text-[var(--green-light)] uppercase">
+          <p className="mb-4 flex items-center gap-3 text-[13px] font-medium tracking-[0.16em] text-[var(--green-light)] uppercase">
             <span className="h-px w-8 bg-[var(--green-light)]" />
             {copy.subtitle}
           </p>
@@ -124,7 +124,7 @@ export default async function VolunteerProjectPage({
           >
             {copy.title}
           </h1>
-          <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-white/55">
+          <p className="mt-4 max-w-2xl text-[16px] leading-relaxed text-white/55">
             {copy.contact}{' '}
             <a
               className="text-white underline decoration-white/30 underline-offset-4"
@@ -146,21 +146,21 @@ export default async function VolunteerProjectPage({
           >
             <div>
               {copy.intro.map((p) => (
-                <p key={p} className="mb-4 text-[15px] leading-relaxed text-[var(--muted)]">
+                <p key={p} className="mb-4 text-[16px] leading-relaxed text-[var(--muted)]">
                   {p}
                 </p>
               ))}
             </div>
 
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--cream)] p-7">
-              <p className="text-[11px] font-medium tracking-[0.14em] text-[var(--green)] uppercase">
+              <p className="text-[13px] font-medium tracking-[0.14em] text-[var(--green)] uppercase">
                 {copy.whyTitle}
               </p>
               <ul className="mt-4 space-y-3">
                 {copy.why.map((item) => (
                   <li
                     key={item}
-                    className="flex gap-3 text-[14px] leading-relaxed text-[var(--muted)]"
+                    className="flex gap-3 text-[15px] leading-relaxed text-[var(--muted)]"
                   >
                     <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[var(--green)]" />
                     <span>{item}</span>
@@ -181,16 +181,16 @@ export default async function VolunteerProjectPage({
             }))}
             afterTimeline={
               <div className="rounded-2xl border border-[var(--border)] bg-[var(--cream)] p-7">
-                <p className="text-[11px] font-medium tracking-[0.14em] text-[var(--green)] uppercase">
+                <p className="text-[13px] font-medium tracking-[0.14em] text-[var(--green)] uppercase">
                   {copy.afterTitle}
                 </p>
                 <ol className="mt-4 space-y-3">
                   {copy.after.map((item, idx) => (
                     <li
                       key={item}
-                      className="flex gap-3 text-[14px] leading-relaxed text-[var(--muted)]"
+                      className="flex gap-3 text-[15px] leading-relaxed text-[var(--muted)]"
                     >
-                      <span className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-lg bg-white text-[12px] font-medium text-[var(--green-dark)]">
+                      <span className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-lg bg-white text-[14px] font-medium text-[var(--green-dark)]">
                         {idx + 1}
                       </span>
                       <span>{item}</span>

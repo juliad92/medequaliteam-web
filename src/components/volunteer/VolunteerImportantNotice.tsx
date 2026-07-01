@@ -22,15 +22,15 @@ export default function VolunteerImportantNotice({ locale }: { locale: string })
       role="note"
       className="mb-8 rounded-2xl border border-amber-200/80 bg-amber-50 px-6 py-5"
     >
-      <p className="text-[11px] font-medium tracking-[0.14em] text-amber-800 uppercase">
+      <p className="text-[13px] font-medium tracking-[0.14em] text-amber-800 uppercase">
         {copy.title}
       </p>
       <ul className="mt-3 space-y-2">
-        <li className="flex gap-3 text-[14px] leading-relaxed text-amber-950/85">
+        <li className="flex gap-3 text-[15px] leading-relaxed text-amber-950/85">
           <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-amber-600" aria-hidden="true" />
           <span>{copy.visa}</span>
         </li>
-        <li className="flex gap-3 text-[14px] leading-relaxed text-amber-950/85">
+        <li className="flex gap-3 text-[15px] leading-relaxed text-amber-950/85">
           <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-amber-600" aria-hidden="true" />
           <span>{copy.accommodation}</span>
         </li>

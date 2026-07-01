@@ -58,7 +58,8 @@ export default function HeroSection({
           className="animate-fade-up opacity-0"
           style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}
         >
-          <p className="mb-5 flex items-center gap-3 text-[11px] font-medium tracking-[0.16em] text-[var(--green)] uppercase">
+          {' '}
+          <p className="mb-5 flex items-center gap-3 text-[13px] font-medium tracking-[0.16em] text-[var(--green)] uppercase">
             <span className="h-px w-8 bg-[var(--green)]" />
             {t.hero.eyebrow}
           </p>
@@ -80,13 +81,13 @@ export default function HeroSection({
           <div className="flex flex-wrap gap-4">
             <Link
               href={`/${locale}/donate`}
-              className="inline-flex items-center gap-2 rounded-lg bg-[var(--green)] px-7 py-3.5 text-sm font-medium tracking-wide text-white transition-all hover:-translate-y-0.5 hover:bg-[var(--green-dark)]"
+              className="inline-flex items-center gap-2 rounded-lg bg-[var(--green)] px-7 py-3.5 text-base font-medium tracking-wide text-white transition-all hover:-translate-y-0.5 hover:bg-[var(--green-dark)]"
             >
               {t.hero.donateCta}
             </Link>
             <Link
               href={`/${locale}/volunteer`}
-              className="inline-flex items-center gap-2 rounded-lg border border-white/30 px-7 py-3.5 text-sm font-medium text-white/80 transition-all hover:border-white/60 hover:text-white"
+              className="inline-flex items-center gap-2 rounded-lg border border-white/30 px-7 py-3.5 text-base font-medium text-white/80 transition-all hover:border-white/60 hover:text-white"
             >
               {t.hero.volunteerCta}
             </Link>
@@ -97,24 +98,24 @@ export default function HeroSection({
           style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}
         >
           <div className="rounded-2xl border border-white/10 bg-white/6 p-6 backdrop-blur-sm sm:p-8">
-            <p className="mb-4 flex items-center gap-2 text-[10px] font-medium tracking-[0.18em] text-[var(--green)] uppercase">
+            <p className="mb-4 flex items-center gap-2 text-[12px] font-medium tracking-[0.18em] text-[var(--green)] uppercase">
               <span className="h-px w-5 bg-[var(--green)]" />
               {t.hero.currentProject}
             </p>
             <h2 className="mb-3 font-serif text-2xl leading-snug font-normal text-white">
               {project?.title}
             </h2>
-            <div className="mb-5 flex gap-4 text-[12px] text-white/40">
+            <div className="mb-5 flex gap-4 text-[14px] text-white/40">
               <span className="flex items-center gap-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-[var(--green)]" />
                 {project?.location}
               </span>
               <span>{locale === 'fr' ? 'Actif depuis 2023' : 'Active since 2023'}</span>
             </div>
-            <p className="mb-6 text-[13.5px] leading-relaxed text-white/55">{project?.summary}</p>
+            <p className="mb-6 text-[16px] leading-relaxed text-white/55">{project?.summary}</p>
             <Link
               href={`/${locale}/projects/northern-greece`}
-              className="group inline-flex items-center gap-1.5 text-[13px] font-medium text-[var(--green)] transition-colors hover:text-white"
+              className="group inline-flex items-center gap-1.5 text-[15px] font-medium text-[var(--green)] transition-colors hover:text-white"
             >
               {t.hero.learnMore}
               <span className="transition-transform group-hover:translate-x-1">→</span>
@@ -123,7 +124,7 @@ export default function HeroSection({
         </div>
       </div>
       <div className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 opacity-30 sm:flex">
-        <span className="text-[10px] tracking-widest text-white uppercase">{t.hero.scroll}</span>
+        <span className="text-[12px] tracking-widest text-white uppercase">{t.hero.scroll}</span>
         <div className="h-8 w-px bg-white/50" />
       </div>
     </section>

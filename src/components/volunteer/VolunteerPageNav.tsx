@@ -22,7 +22,7 @@ export default function VolunteerPageNav({ locale }: { locale: string }) {
           <a
             key={section.id}
             href={`#${section.id}`}
-            className="shrink-0 rounded-lg px-4 py-2 text-[13px] font-medium text-[var(--muted)] transition-colors hover:bg-[var(--green-pale)] hover:text-[var(--green-dark)]"
+            className="shrink-0 rounded-lg px-4 py-2 text-[15px] font-medium text-[var(--muted)] transition-colors hover:bg-[var(--green-pale)] hover:text-[var(--green-dark)]"
           >
             {fr ? section.fr : section.en}
           </a>

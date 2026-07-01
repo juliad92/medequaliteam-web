@@ -56,6 +56,12 @@ import { Users } from './src/collections/Users.ts'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
+if (process.env.VERCEL && !process.env.BLOB_READ_WRITE_TOKEN?.trim()) {
+  throw new Error(
+    'BLOB_READ_WRITE_TOKEN is required on Vercel. In the Vercel dashboard: Project → Storage → Create → Blob, then redeploy.',
+  )
+}
+
 export default buildConfig({
   // ── Secret ─────────────────────────────────────────────────────────────────
   secret: process.env.PAYLOAD_SECRET || '',
@@ -135,7 +141,6 @@ export default buildConfig({
   // On Vercel, add Blob storage in the project dashboard — Vercel sets the token.
   plugins: [
     vercelBlobStorage({
-      enabled: Boolean(process.env.BLOB_READ_WRITE_TOKEN),
       collections: {
         media: true,
       },

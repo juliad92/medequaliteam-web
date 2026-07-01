@@ -30,7 +30,7 @@ export default function InstagramFeed({
     <div className="mt-14 border-t border-[var(--border)] pt-12 sm:mt-16 sm:pt-14">
       <div className="mb-8 flex flex-col items-start gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="mb-3 text-[11px] font-medium tracking-[0.15em] text-[var(--green)] uppercase">
+          <p className="mb-3 text-[13px] font-medium tracking-[0.15em] text-[var(--green)] uppercase">
             Instagram
           </p>
           <h3
@@ -44,7 +44,7 @@ export default function InstagramFeed({
           href={INSTAGRAM_PROFILE}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 border-b border-[var(--border)] pb-0.5 text-[13.5px] font-medium text-[var(--muted)] transition-colors hover:border-[var(--charcoal)] hover:text-[var(--charcoal)]"
+          className="inline-flex items-center gap-2 border-b border-[var(--border)] pb-0.5 text-[16px] font-medium text-[var(--muted)] transition-colors hover:border-[var(--charcoal)] hover:text-[var(--charcoal)]"
         >
           <InstagramIcon />
           {t.news.instagramFollow}
@@ -72,14 +72,14 @@ export default function InstagramFeed({
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
             <div className="absolute inset-x-0 bottom-0 p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
               {post.caption ? (
-                <p className="mb-1 line-clamp-2 text-[11px] leading-snug text-white/90">
+                <p className="mb-1 line-clamp-2 text-[13px] leading-snug text-white/90">
                   {truncateCaption(post.caption, 80)}
                 </p>
               ) : null}
-              <p className="text-[10px] text-white/60">{formatPostDate(post.timestamp, locale)}</p>
+              <p className="text-[12px] text-white/60">{formatPostDate(post.timestamp, locale)}</p>
             </div>
             {post.mediaType === 'VIDEO' ? (
-              <span className="absolute top-2 right-2 rounded-full bg-black/50 px-2 py-0.5 text-[10px] font-medium text-white">
+              <span className="absolute top-2 right-2 rounded-full bg-black/50 px-2 py-0.5 text-[12px] font-medium text-white">
                 {t.news.instagramVideo}
               </span>
             ) : null}

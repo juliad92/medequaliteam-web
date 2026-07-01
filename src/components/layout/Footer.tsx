@@ -44,13 +44,13 @@ export default function Footer({
               <p className="mb-3 font-serif text-lg text-white">
                 Med&apos;<span className="text-[var(--green-light)]">Equali</span>Team
               </p>
-              <p className="mb-5 text-[13px] leading-relaxed">{t.footer.tagline}</p>
+              <p className="mb-5 text-[15px] leading-relaxed">{t.footer.tagline}</p>
               <div className="flex gap-2">
                 {['f', 'tw', 'ig'].map((s) => (
                   <a
                     key={s}
                     href="#"
-                    className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/6 text-[11px] transition-all hover:bg-white/12 hover:text-white"
+                    className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/6 text-[13px] transition-all hover:bg-white/12 hover:text-white"
                   >
                     {s}
                   </a>
@@ -61,7 +61,7 @@ export default function Footer({
             {/* Link columns — 2-col grid on mobile/tablet, individual cols on desktop */}
             {Object.entries(footerLinks).map(([section, links]) => (
               <div key={section}>
-                <p className="mb-4 text-[11px] font-medium tracking-[0.12em] text-white/60 uppercase">
+                <p className="mb-4 text-[13px] font-medium tracking-[0.12em] text-white/60 uppercase">
                   {section}
                 </p>
                 <ul className="flex flex-col gap-2.5">
@@ -69,7 +69,7 @@ export default function Footer({
                     <li key={link.href}>
                       <Link
                         href={`/${locale}${link.href}`}
-                        className="text-[13px] text-white/40 transition-colors hover:text-white/80"
+                        className="text-[15px] text-white/40 transition-colors hover:text-white/80"
                       >
                         {link.label}
                       </Link>
@@ -82,7 +82,7 @@ export default function Footer({
         </div>
 
         {/* Bottom bar — stacks on mobile */}
-        <div className="flex flex-col gap-4 text-[12px] sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-4 text-[14px] sm:flex-row sm:items-center sm:justify-between">
           <p className="leading-relaxed">
             © 2026 Med&apos;EqualiTeam. {t.footer.rights} · {t.footer.charity} W102001158 · 867
             route de Dorjon, 74490 Megevette, France

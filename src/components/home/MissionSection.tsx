@@ -49,24 +49,24 @@ export default function MissionSection({
               />
             ) : (
               <div className="flex h-full w-full items-end p-6">
-                <p className="text-sm text-white/60 italic">{t.mission.photoCaption}</p>
+                <p className="text-base text-white/60 italic">{t.mission.photoCaption}</p>
               </div>
             )}
           </div>
           <div className="absolute right-2 bottom-6 w-36 rounded-xl border-4 border-white bg-[var(--green-pale)] p-4 shadow-lg sm:-right-5 sm:bottom-8 sm:w-44 sm:p-5">
-            <p className="font-serif text-[13px] leading-snug text-[var(--green-dark)] italic">
+            <p className="font-serif text-[15px] leading-snug text-[var(--green-dark)] italic">
               &ldquo;{t.mission.quote}&rdquo;
             </p>
           </div>
           <div className="absolute top-6 left-2 rounded-xl bg-[var(--green)] p-3 text-center text-white shadow-lg sm:top-8 sm:-left-4 sm:p-4">
             <span className="block font-serif text-3xl leading-none">7+</span>
-            <span className="text-[11px] tracking-wider uppercase opacity-80">
+            <span className="text-[13px] tracking-wider uppercase opacity-80">
               {t.mission.years}
             </span>
           </div>
         </div>
         <div>
-          <p className="mb-4 text-[11px] font-medium tracking-[0.15em] text-[var(--green)] uppercase">
+          <p className="mb-4 text-[13px] font-medium tracking-[0.15em] text-[var(--green)] uppercase">
             {t.mission.eyebrow}
           </p>
           <h2
@@ -88,8 +88,8 @@ export default function MissionSection({
                   {p.icon}
                 </div>
                 <div>
-                  <p className="mb-0.5 text-sm font-medium text-[var(--charcoal)]">{p.title}</p>
-                  <p className="text-[13px] leading-snug text-[var(--muted)]">{p.desc}</p>
+                  <p className="mb-0.5 text-base font-medium text-[var(--charcoal)]">{p.title}</p>
+                  <p className="text-[15px] leading-snug text-[var(--muted)]">{p.desc}</p>
                 </div>
               </div>
             ))}

@@ -16,7 +16,7 @@ export function VolunteerCTA({
     <section className="px-4 py-16 sm:px-8 sm:py-20" style={{ background: 'var(--green-dark)' }}>
       <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-8 md:grid-cols-[1fr_auto] md:gap-16">
         <div>
-          <p className="mb-4 text-[11px] font-medium tracking-[0.15em] text-white/40 uppercase">
+          <p className="mb-4 text-[13px] font-medium tracking-[0.15em] text-white/40 uppercase">
             {t.volunteerCta.eyebrow}
           </p>
           <h2
@@ -30,13 +30,13 @@ export function VolunteerCTA({
         <div className="flex w-full flex-shrink-0 flex-col gap-3 md:w-auto">
           <Link
             href={volunteerHref}
-            className="rounded-lg bg-white px-8 py-3.5 text-center text-sm font-medium text-[var(--green-dark)] transition-colors hover:bg-[var(--cream)]"
+            className="rounded-lg bg-white px-8 py-3.5 text-center text-base font-medium text-[var(--green-dark)] transition-colors hover:bg-[var(--cream)]"
           >
             {t.volunteerCta.primary}
           </Link>
           <Link
             href={`/${locale}/volunteer/stories`}
-            className="rounded-lg border border-white/25 px-8 py-3.5 text-center text-sm font-medium text-white/70 transition-colors hover:border-white/60 hover:text-white"
+            className="rounded-lg border border-white/25 px-8 py-3.5 text-center text-base font-medium text-white/70 transition-colors hover:border-white/60 hover:text-white"
           >
             {t.volunteerCta.secondary}
           </Link>
@@ -97,7 +97,7 @@ export function NewsSection({
       <div className="mx-auto max-w-7xl">
         <div className="mb-10 flex flex-col items-start gap-4 sm:mb-12 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="mb-3 text-[11px] font-medium tracking-[0.15em] text-[var(--green)] uppercase">
+            <p className="mb-3 text-[13px] font-medium tracking-[0.15em] text-[var(--green)] uppercase">
               {t.news.eyebrow}
             </p>
             <h2
@@ -109,7 +109,7 @@ export function NewsSection({
           </div>
           <Link
             href={`/${locale}/news`}
-            className="border-b border-[var(--border)] pb-0.5 text-[13.5px] font-medium text-[var(--muted)] transition-colors hover:border-[var(--charcoal)] hover:text-[var(--charcoal)]"
+            className="border-b border-[var(--border)] pb-0.5 text-[16px] font-medium text-[var(--muted)] transition-colors hover:border-[var(--charcoal)] hover:text-[var(--charcoal)]"
           >
             {t.news.viewAll} →
           </Link>
@@ -118,18 +118,18 @@ export function NewsSection({
           <div className="cursor-pointer overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--cream)] transition-shadow hover:shadow-lg md:col-span-2 lg:col-span-1">
             <div className="h-48 sm:h-56" style={{ background: featured.gradient }} />
             <div className="p-6">
-              <p className="mb-2 text-[10.5px] font-medium tracking-[0.12em] text-[var(--green)] uppercase">
+              <p className="mb-2 text-[14px] font-medium tracking-[0.12em] text-[var(--green)] uppercase">
                 {featured.category}
               </p>
               <h3 className="mb-3 font-serif text-xl leading-snug font-normal text-[var(--charcoal)]">
                 {featured.title}
               </h3>
               {featured.excerpt && (
-                <p className="mb-3 text-[13.5px] leading-relaxed text-[var(--muted)]">
+                <p className="mb-3 text-[16px] leading-relaxed text-[var(--muted)]">
                   {featured.excerpt}
                 </p>
               )}
-              <p className="text-[12px] text-[var(--muted)]">{featured.date}</p>
+              <p className="text-[14px] text-[var(--muted)]">{featured.date}</p>
             </div>
           </div>
           {rest.map((post: any) => (
@@ -139,13 +139,13 @@ export function NewsSection({
             >
               <div className="h-32" style={{ background: post.gradient }} />
               <div className="p-5">
-                <p className="mb-2 text-[10.5px] font-medium tracking-[0.12em] text-[var(--green)] uppercase">
+                <p className="mb-2 text-[14px] font-medium tracking-[0.12em] text-[var(--green)] uppercase">
                   {post.category}
                 </p>
-                <h3 className="mb-3 font-serif text-[16px] leading-snug font-normal text-[var(--charcoal)]">
+                <h3 className="mb-3 font-serif text-[17px] leading-snug font-normal text-[var(--charcoal)]">
                   {post.title}
                 </h3>
-                <p className="text-[12px] text-[var(--muted)]">{post.date}</p>
+                <p className="text-[14px] text-[var(--muted)]">{post.date}</p>
               </div>
             </div>
           ))}

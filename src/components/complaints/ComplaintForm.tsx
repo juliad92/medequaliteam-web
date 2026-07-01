@@ -21,18 +21,18 @@ type FieldErrors = Partial<Record<FieldName, string>>
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 const inputClass =
-  'h-11 w-full rounded-lg border border-[var(--border)] bg-white px-4 text-[14px] text-[var(--charcoal)] outline-none focus:border-[var(--green)] focus:ring-2 focus:ring-[var(--green)]/20'
+  'h-11 w-full rounded-lg border border-[var(--border)] bg-white px-4 text-[15px] text-[var(--charcoal)] outline-none focus:border-[var(--green)] focus:ring-2 focus:ring-[var(--green)]/20'
 const textareaClass =
-  'w-full rounded-lg border border-[var(--border)] bg-white px-4 py-3 text-[14px] text-[var(--charcoal)] outline-none focus:border-[var(--green)] focus:ring-2 focus:ring-[var(--green)]/20'
+  'w-full rounded-lg border border-[var(--border)] bg-white px-4 py-3 text-[15px] text-[var(--charcoal)] outline-none focus:border-[var(--green)] focus:ring-2 focus:ring-[var(--green)]/20'
 const inputErrorClass =
-  'h-11 w-full rounded-lg border border-red-500 bg-white px-4 text-[14px] text-[var(--charcoal)] outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20'
+  'h-11 w-full rounded-lg border border-red-500 bg-white px-4 text-[15px] text-[var(--charcoal)] outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20'
 const textareaErrorClass =
-  'w-full rounded-lg border border-red-500 bg-white px-4 py-3 text-[14px] text-[var(--charcoal)] outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20'
+  'w-full rounded-lg border border-red-500 bg-white px-4 py-3 text-[15px] text-[var(--charcoal)] outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20'
 
 function FieldError({ id, message }: { id: string; message?: string }) {
   if (!message) return null
   return (
-    <p id={id} className="text-[12px] text-red-700" role="alert">
+    <p id={id} className="text-[14px] text-red-700" role="alert">
       {message}
     </p>
   )
@@ -48,7 +48,7 @@ function FieldLabel({
   htmlFor?: string
 }) {
   return (
-    <label htmlFor={htmlFor} className="text-[12px] font-medium text-[var(--charcoal)]">
+    <label htmlFor={htmlFor} className="text-[14px] font-medium text-[var(--charcoal)]">
       {children}
       {required ? (
         <span className="ml-0.5 text-red-600" title="Required" aria-hidden="true">
@@ -61,7 +61,7 @@ function FieldLabel({
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
-    <h3 className="border-b border-[var(--border)] pt-6 pb-2 text-[12px] font-medium tracking-[0.12em] text-[var(--green)] uppercase first:pt-0">
+    <h3 className="border-b border-[var(--border)] pt-6 pb-2 text-[14px] font-medium tracking-[0.12em] text-[var(--green)] uppercase first:pt-0">
       {children}
     </h3>
   )
@@ -116,12 +116,12 @@ export default function ComplaintForm({ locale }: { locale: string }) {
   return (
     <form onSubmit={handleSubmit} className="mt-8 border-t border-[var(--border)] pt-8" noValidate>
       <fieldset className="grid gap-3">
-        <legend className="text-[13px] leading-relaxed text-[var(--charcoal)]">
+        <legend className="text-[15px] leading-relaxed text-[var(--charcoal)]">
           {f.sensitiveLabel}
         </legend>
         <div className="flex gap-6">
           {(['yes', 'no'] as const).map((opt) => (
-            <label key={opt} className="flex items-center gap-2 text-[14px] text-[var(--muted)]">
+            <label key={opt} className="flex items-center gap-2 text-[15px] text-[var(--muted)]">
               <input
                 type="radio"
                 name="isSensitive"
@@ -263,7 +263,7 @@ export default function ComplaintForm({ locale }: { locale: string }) {
       <div className="mt-8">
         <button
           type="submit"
-          className="h-11 rounded-lg bg-[var(--green)] px-6 text-[14px] font-medium text-white transition-colors hover:bg-[var(--green-dark)]"
+          className="h-11 rounded-lg bg-[var(--green)] px-6 text-[15px] font-medium text-white transition-colors hover:bg-[var(--green-dark)]"
         >
           {f.submit}
         </button>
