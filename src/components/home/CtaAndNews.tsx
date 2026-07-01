@@ -1,6 +1,8 @@
 import React from 'react'
 import Link from 'next/link'
 import { getT } from '@/i18n/translations'
+import InstagramFeed from '@/components/home/InstagramFeed'
+import type { InstagramPost } from '@/lib/instagram'
 
 export function VolunteerCTA({
   locale,
@@ -78,7 +80,15 @@ const getPlaceholderPosts = (locale: string) => [
   },
 ]
 
-export function NewsSection({ locale, posts }: { locale: string; posts?: any[] }) {
+export function NewsSection({
+  locale,
+  posts,
+  instagramPosts = [],
+}: {
+  locale: string
+  posts?: any[]
+  instagramPosts?: InstagramPost[]
+}) {
   const t = getT(locale)
   const displayPosts = posts && posts.length > 0 ? posts : getPlaceholderPosts(locale)
   const [featured, ...rest] = displayPosts
@@ -140,6 +150,7 @@ export function NewsSection({ locale, posts }: { locale: string; posts?: any[] }
             </div>
           ))}
         </div>
+        <InstagramFeed locale={locale} posts={instagramPosts} />
       </div>
     </section>
   )

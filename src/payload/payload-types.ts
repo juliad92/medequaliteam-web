@@ -1174,22 +1174,22 @@ export interface Homepage {
      * Displayed in the "Our mission" section on the homepage.
      */
     image?: (string | null) | Media;
-  };
-  missionText?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
+    missionText?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
         version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
+      };
+      [k: string]: unknown;
+    } | null;
+  };
   featuredProject?: (string | null) | Project;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -1286,8 +1286,8 @@ export interface HomepageSelect<T extends boolean = true> {
     | T
     | {
         image?: T;
+        missionText?: T;
       };
-  missionText?: T;
   featuredProject?: T;
   updatedAt?: T;
   createdAt?: T;

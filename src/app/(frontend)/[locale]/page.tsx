@@ -8,6 +8,7 @@ import MissionSection from '@/components/home/MissionSection'
 import ProjectsSection from '@/components/home/ProjectsSection'
 import { VolunteerCTA, NewsSection } from '@/components/home/CtaAndNews'
 import { getProjectsWithVolunteerNeeds } from '@/lib/volunteer'
+import { getInstagramPosts } from '@/lib/instagram'
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
@@ -41,6 +42,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   })
 
   const volunteerProjects = await getProjectsWithVolunteerNeeds(payload, locale as 'en' | 'fr')
+  const instagramPosts = await getInstagramPosts(6)
   const volunteerHref = volunteerProjects[0]
     ? `/${locale}/volunteer/${volunteerProjects[0].slug}`
     : `/${locale}/volunteer/stories`
@@ -52,7 +54,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <MissionSection locale={locale} missionImage={missionImage} />
       <ProjectsSection locale={locale} projects={projects as any} />
       <VolunteerCTA locale={locale} volunteerHref={volunteerHref} />
-      <NewsSection locale={locale} posts={posts as any} />
+      <NewsSection locale={locale} posts={posts as any} instagramPosts={instagramPosts} />
     </>
   )
 }

@@ -78,6 +78,10 @@ export const translations = {
       eyebrow: 'Latest updates',
       title: 'News from the field',
       viewAll: 'All news',
+      instagramTitle: 'Follow us on Instagram',
+      instagramFollow: 'Follow @medequaliteam',
+      instagramPost: 'Instagram post',
+      instagramVideo: 'Video',
     },
 
     // Donate
@@ -404,6 +408,10 @@ export const translations = {
       eyebrow: 'Dernières nouvelles',
       title: 'Actualités du terrain',
       viewAll: 'Toutes les actualités',
+      instagramTitle: 'Suivez-nous sur Instagram',
+      instagramFollow: 'Suivre @medequaliteam',
+      instagramPost: 'Publication Instagram',
+      instagramVideo: 'Vidéo',
     },
 
     // Donate
