@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { getT } from '@/i18n/translations'
+import type { Homepage, Media } from '@/payload/payload-types'
 
 type Project = {
   slug: string
@@ -11,23 +12,41 @@ type Project = {
   gradient: string
 }
 
+type HeroImage = string | Media | null | undefined
+
+function getHeroImageUrl(image: HeroImage): string | null {
+  if (!image || typeof image === 'string') return null
+  return image.sizes?.hero?.url ?? image.url ?? null
+}
+
 export default function HeroSection({
   locale,
   heroData,
   project,
 }: {
   locale: string
-  heroData?: any
+  heroData?: Homepage['hero']
   project?: Project
 }) {
   const t = getT(locale)
+  const imageUrl = getHeroImageUrl(heroData?.image)
 
   return (
     <section className="relative flex min-h-[calc(100svh-7rem)] items-end overflow-hidden bg-[var(--charcoal)] lg:min-h-[88vh]">
+      {imageUrl ? (
+        <img
+          src={imageUrl}
+          alt=""
+          aria-hidden
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+      ) : null}
       <div
         className="absolute inset-0"
         style={{
-          background: 'linear-gradient(135deg, #1a2e20 0%, #0f1f14 40%, #1c2818 100%)',
+          background: imageUrl
+            ? 'linear-gradient(135deg, rgba(15,31,20,0.82) 0%, rgba(15,31,20,0.72) 40%, rgba(28,40,24,0.78) 100%)'
+            : 'linear-gradient(135deg, #1a2e20 0%, #0f1f14 40%, #1c2818 100%)',
         }}
       />
       <div
