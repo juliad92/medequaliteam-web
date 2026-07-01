@@ -47,7 +47,6 @@ import { Projects } from './src/collections/Projects.ts'
 import { Posts } from './src/collections/Posts.ts'
 import { VolunteerNeeds } from './src/collections/VolunteerNeeds.ts'
 import { VolunteerApplications } from './src/collections/VolunteerApplications.ts'
-import { DonationInquiries } from './src/collections/DonationInquiries.ts'
 import { TeamMembers, Testimonials } from './src/collections/People.ts'
 import { Media, Pages } from './src/collections/MediaAndPages.ts'
 import { Navigation, SiteInfo, Homepage } from './src/globals/index.ts'
@@ -101,7 +100,6 @@ export default buildConfig({
     Projects,
     VolunteerNeeds,
     VolunteerApplications,
-    DonationInquiries,
     Testimonials,
     Users, // Admin users
     Pages, // Flexible block-based pages (About, Volunteer, Legal…)
