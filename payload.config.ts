@@ -35,6 +35,7 @@
 
 import { en } from '@payloadcms/translations/languages/en'
 import { fr } from '@payloadcms/translations/languages/fr'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { buildConfig } from 'payload'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
@@ -128,4 +129,17 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(__dirname, 'src/payload/payload-types.ts'),
   },
+
+  // ── File storage (Vercel Blob) ───────────────────────────────────────────────
+  // Local dev without BLOB_READ_WRITE_TOKEN keeps using public/media (staticDir).
+  // On Vercel, add Blob storage in the project dashboard — Vercel sets the token.
+  plugins: [
+    vercelBlobStorage({
+      enabled: Boolean(process.env.BLOB_READ_WRITE_TOKEN),
+      collections: {
+        media: true,
+      },
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+    }),
+  ],
 })
