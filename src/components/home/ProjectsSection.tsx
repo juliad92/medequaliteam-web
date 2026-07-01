@@ -10,7 +10,7 @@ const getPlaceholders = (t: ReturnType<typeof getT>) => [
     title: t.nav.projectsActive,
     summary:
       'Providing basic medical care to displaced populations in the Thessaloniki region since December 2023.',
-    gradient: 'linear-gradient(135deg, #7db87d, #5a9e5a)',
+    gradient: 'var(--gradient-card)',
   },
 ]
 

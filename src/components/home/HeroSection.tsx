@@ -44,16 +44,13 @@ export default function HeroSection({
       <div
         className="absolute inset-0"
         style={{
-          background: imageUrl
-            ? 'linear-gradient(135deg, rgba(15,31,20,0.82) 0%, rgba(15,31,20,0.72) 40%, rgba(28,40,24,0.78) 100%)'
-            : 'linear-gradient(135deg, #1a2e20 0%, #0f1f14 40%, #1c2818 100%)',
+          background: imageUrl ? 'var(--gradient-hero-overlay)' : 'var(--gradient-hero)',
         }}
       />
       <div
         className="pointer-events-none absolute inset-0"
         style={{
-          background:
-            'radial-gradient(circle at 15% 60%, rgba(61,140,79,0.18) 0%, transparent 50%), radial-gradient(circle at 85% 20%, rgba(61,140,79,0.08) 0%, transparent 40%)',
+          background: 'var(--gradient-hero-glow)',
         }}
       />
       <div className="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-1 items-end gap-10 px-4 pt-28 pb-16 sm:px-8 sm:pb-20 lg:grid-cols-2 lg:gap-16 lg:pt-0">
@@ -61,8 +58,8 @@ export default function HeroSection({
           className="animate-fade-up opacity-0"
           style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}
         >
-          <p className="mb-5 flex items-center gap-3 text-[11px] font-medium tracking-[0.16em] text-[var(--green-light)] uppercase">
-            <span className="h-px w-8 bg-[var(--green-light)]" />
+          <p className="mb-5 flex items-center gap-3 text-[11px] font-medium tracking-[0.16em] text-[var(--green)] uppercase">
+            <span className="h-px w-8 bg-[var(--green)]" />
             {t.hero.eyebrow}
           </p>
           <h1
@@ -74,7 +71,10 @@ export default function HeroSection({
               Team
             </em>
           </h1>
-          <p className="mb-8 font-serif text-lg text-white/55 sm:mb-10 sm:text-xl" style={{ fontStyle: 'italic' }}>
+          <p
+            className="mb-8 font-serif text-lg text-white/55 sm:mb-10 sm:text-xl"
+            style={{ fontStyle: 'italic' }}
+          >
             {heroData?.tagline}
           </p>
           <div className="flex flex-wrap gap-4">
@@ -97,8 +97,8 @@ export default function HeroSection({
           style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}
         >
           <div className="rounded-2xl border border-white/10 bg-white/6 p-6 backdrop-blur-sm sm:p-8">
-            <p className="mb-4 flex items-center gap-2 text-[10px] font-medium tracking-[0.18em] text-[var(--green-light)] uppercase">
-              <span className="h-px w-5 bg-[var(--green-light)]" />
+            <p className="mb-4 flex items-center gap-2 text-[10px] font-medium tracking-[0.18em] text-[var(--green)] uppercase">
+              <span className="h-px w-5 bg-[var(--green)]" />
               {t.hero.currentProject}
             </p>
             <h2 className="mb-3 font-serif text-2xl leading-snug font-normal text-white">
@@ -106,7 +106,7 @@ export default function HeroSection({
             </h2>
             <div className="mb-5 flex gap-4 text-[12px] text-white/40">
               <span className="flex items-center gap-1.5">
-                <span className="h-1.5 w-1.5 rounded-full bg-[var(--green-light)]" />
+                <span className="h-1.5 w-1.5 rounded-full bg-[var(--green)]" />
                 {project?.location}
               </span>
               <span>{locale === 'fr' ? 'Actif depuis 2023' : 'Active since 2023'}</span>
@@ -114,7 +114,7 @@ export default function HeroSection({
             <p className="mb-6 text-[13.5px] leading-relaxed text-white/55">{project?.summary}</p>
             <Link
               href={`/${locale}/projects/northern-greece`}
-              className="group inline-flex items-center gap-1.5 text-[13px] font-medium text-[var(--green-light)] transition-colors hover:text-white"
+              className="group inline-flex items-center gap-1.5 text-[13px] font-medium text-[var(--green)] transition-colors hover:text-white"
             >
               {t.hero.learnMore}
               <span className="transition-transform group-hover:translate-x-1">→</span>

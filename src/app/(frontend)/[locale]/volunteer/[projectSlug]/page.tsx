@@ -104,14 +104,13 @@ export default async function VolunteerProjectPage({
         <div
           className="absolute inset-0"
           style={{
-            background: 'linear-gradient(135deg, #1a2e20 0%, #0f1f14 45%, #1c2818 100%)',
+            background: 'var(--gradient-hero)',
           }}
         />
         <div
           className="pointer-events-none absolute inset-0"
           style={{
-            background:
-              'radial-gradient(circle at 15% 40%, rgba(61,140,79,0.18) 0%, transparent 55%), radial-gradient(circle at 85% 25%, rgba(61,140,79,0.08) 0%, transparent 40%)',
+            background: 'var(--gradient-hero-glow)',
           }}
         />
         <div className="relative mx-auto max-w-7xl">

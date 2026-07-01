@@ -38,7 +38,7 @@ export default function MissionSection({
             style={
               imageUrl
                 ? undefined
-                : { background: 'linear-gradient(135deg, #c8d9c8, #9ab89a)' }
+                : { background: 'var(--gradient-mission)' }
             }
           >
             {imageUrl ? (
