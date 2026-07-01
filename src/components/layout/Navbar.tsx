@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { getT } from '@/i18n/translations'
 import type { VolunteerProjectNavItem } from '@/lib/volunteer'
@@ -151,13 +152,15 @@ export default function Navbar({
             </button>
 
             {/* Logo */}
-            <Link href={`/${locale}`} className="flex min-w-0 items-center gap-2 sm:gap-3">
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--charcoal)] text-lg">
-                🌍
-              </div>
-              <span className="hidden truncate font-serif text-[19px] leading-none font-semibold text-[var(--charcoal)] min-[400px]:inline">
-                Med&apos;<span className="text-[var(--green)]">Equali</span>Team
-              </span>
+            <Link href={`/${locale}`} className="flex min-w-0 items-center">
+              <Image
+                src="/logo.png"
+                alt="Med'EqualiTeam"
+                width={155}
+                height={36}
+                className="h-9 w-auto max-w-[min(155px,50vw)] shrink-0 object-contain object-left"
+                priority
+              />
             </Link>
           </div>
 
