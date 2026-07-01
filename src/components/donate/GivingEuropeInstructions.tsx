@@ -4,8 +4,8 @@ import { GIVING_EUROPE_URL, type GivingEuropeCountryCode } from '@/lib/donate/co
 function DetailRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="py-1">
-      <p className="text-[12px] text-[var(--muted)]">{label}</p>
-      <p className="mt-0.5 text-[13px] leading-relaxed text-[var(--charcoal)]">{value}</p>
+      <p className="text-[14px] text-[var(--muted)]">{label}</p>
+      <p className="mt-0.5 text-[15px] leading-relaxed text-[var(--charcoal)]">{value}</p>
     </div>
   )
 }
@@ -20,7 +20,7 @@ function ContactLine({
   phone: string
 }) {
   return (
-    <p className="text-[13px] leading-relaxed text-[var(--charcoal)]">
+    <p className="text-[15px] leading-relaxed text-[var(--charcoal)]">
       {name && <span className="font-medium">{name}: </span>}
       <a href={`mailto:${email}`} className="text-[var(--green-dark)] hover:underline">
         {email}
@@ -68,7 +68,7 @@ export default function GivingEuropeInstructions({
   if (country === 'BE') {
     const content = ge.BE
     return (
-      <div className="space-y-4 text-[13px] leading-relaxed text-[var(--charcoal)]">
+      <div className="space-y-4 text-[15px] leading-relaxed text-[var(--charcoal)]">
         <ProfileLink label={ge.profileLink} />
         <ContactLine
           name={content.contact.name}
@@ -85,7 +85,7 @@ export default function GivingEuropeInstructions({
           <DetailRow label={content.bank.bic} value={content.bank.bicValue} />
         </div>
         <p className="text-[var(--muted)]">{content.communicationNote}</p>
-        <p className="rounded-lg border border-[var(--green)]/30 bg-[var(--green-pale)] px-3 py-2 font-mono text-[12px] text-[var(--green-dark)]">
+        <p className="rounded-lg border border-[var(--green)]/30 bg-[var(--green-pale)] px-3 py-2 font-mono text-[14px] text-[var(--green-dark)]">
           {content.communication}
         </p>
       </div>
@@ -95,7 +95,7 @@ export default function GivingEuropeInstructions({
   if (country === 'CH') {
     const content = ge.CH
     return (
-      <div className="space-y-4 text-[13px] leading-relaxed text-[var(--charcoal)]">
+      <div className="space-y-4 text-[15px] leading-relaxed text-[var(--charcoal)]">
         <p className="text-[var(--muted)]">{content.intro}</p>
         <ContactLine email={content.contact.email} phone={content.contact.phone} />
       </div>
@@ -104,7 +104,7 @@ export default function GivingEuropeInstructions({
 
   const content = ge.GB
   return (
-    <div className="space-y-4 text-[13px] leading-relaxed text-[var(--charcoal)]">
+    <div className="space-y-4 text-[15px] leading-relaxed text-[var(--charcoal)]">
       <ProfileLink label={ge.profileLink} />
       <p className="text-[var(--muted)]">{content.intro}</p>
       <ContactLine

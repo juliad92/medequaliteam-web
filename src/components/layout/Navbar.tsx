@@ -76,7 +76,7 @@ export default function Navbar({
   return (
     <>
       {/* Top bar — always visible */}
-      <div className="flex items-center justify-between gap-2 bg-[var(--charcoal)] px-4 py-2 text-[10px] tracking-wider text-white/50 sm:px-8 sm:text-[11px]">
+      <div className="flex items-center justify-between gap-2 bg-[var(--charcoal)] px-4 py-2 text-[12px] tracking-wider text-white/50 sm:px-8 sm:text-[13px]">
         <div className="flex gap-2 sm:gap-4">
           <a
             href="https://facebook.com"
@@ -170,10 +170,10 @@ export default function Navbar({
             >
               <Link
                 href={`/${locale}${volunteerNav.href}`}
-                className="rounded-lg px-2 py-1.5 text-[12px] font-medium text-[var(--muted)] transition-all hover:bg-[var(--cream)] hover:text-[var(--charcoal)] sm:px-3 sm:py-2 sm:text-[13.5px]"
+                className="rounded-lg px-2 py-1.5 text-[14px] font-medium text-[var(--muted)] transition-all hover:bg-[var(--cream)] hover:text-[var(--charcoal)] sm:px-3 sm:py-2 sm:text-[16px]"
               >
                 {volunteerNav.label}
-                <span className="ml-0.5 hidden text-[10px] opacity-50 md:inline">▾</span>
+                <span className="ml-0.5 hidden text-[12px] opacity-50 md:inline">▾</span>
               </Link>
               <button
                 type="button"
@@ -182,7 +182,7 @@ export default function Navbar({
                     openDropdown === volunteerNav.label ? null : volunteerNav.label,
                   )
                 }
-                className="flex h-8 w-7 items-center justify-center rounded-lg text-[10px] text-[var(--muted)] hover:bg-[var(--cream)] md:hidden"
+                className="flex h-8 w-7 items-center justify-center rounded-lg text-[12px] text-[var(--muted)] hover:bg-[var(--cream)] md:hidden"
                 aria-expanded={openDropdown === volunteerNav.label}
                 aria-label={`${openDropdown === volunteerNav.label ? 'Collapse' : 'Expand'} ${volunteerNav.label}`}
               >
@@ -195,7 +195,7 @@ export default function Navbar({
                       key={child.href}
                       href={`/${locale}${child.href}`}
                       onClick={() => setOpenDropdown(null)}
-                      className="block px-4 py-2.5 text-[13px] text-[var(--muted)] transition-colors hover:bg-[var(--cream)] hover:text-[var(--charcoal)]"
+                      className="block px-4 py-2.5 text-[15px] text-[var(--muted)] transition-colors hover:bg-[var(--cream)] hover:text-[var(--charcoal)]"
                     >
                       {child.label}
                     </Link>
@@ -205,7 +205,7 @@ export default function Navbar({
             </div>
             <Link
               href={`/${locale}/donate`}
-              className="rounded-lg bg-[var(--green)] px-3 py-1.5 text-[12px] font-medium text-white transition-colors hover:bg-[var(--green-dark)] sm:ml-1 sm:px-5 sm:py-2 sm:text-[13.5px]"
+              className="rounded-lg bg-[var(--green)] px-3 py-1.5 text-[14px] font-medium text-white transition-colors hover:bg-[var(--green-dark)] sm:ml-1 sm:px-5 sm:py-2 sm:text-[16px]"
             >
               {t.nav.donate}
             </Link>
@@ -262,7 +262,7 @@ export default function Navbar({
                   <Link
                     href={`/${locale}${item.href}`}
                     onClick={closeMenu}
-                    className="flex-1 py-3.5 text-[15px] font-medium text-[var(--charcoal)]"
+                    className="flex-1 py-3.5 text-[16px] font-medium text-[var(--charcoal)]"
                   >
                     {item.label}
                   </Link>
@@ -277,7 +277,7 @@ export default function Navbar({
                       aria-label={`${menuDropdown === item.label ? 'Collapse' : 'Expand'} ${item.label}`}
                     >
                       <span
-                        className={`block text-[11px] transition-transform duration-200 ${menuDropdown === item.label ? 'rotate-180' : ''}`}
+                        className={`block text-[13px] transition-transform duration-200 ${menuDropdown === item.label ? 'rotate-180' : ''}`}
                       >
                         ▾
                       </span>
@@ -291,7 +291,7 @@ export default function Navbar({
                         key={child.href}
                         href={`/${locale}${child.href}`}
                         onClick={closeMenu}
-                        className="py-2 text-[13.5px] text-[var(--muted)] transition-colors hover:text-[var(--charcoal)]"
+                        className="py-2 text-[16px] text-[var(--muted)] transition-colors hover:text-[var(--charcoal)]"
                       >
                         {child.label}
                       </Link>

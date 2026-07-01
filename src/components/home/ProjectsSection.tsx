@@ -36,22 +36,22 @@ function ProjectCard({
     <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
       <div className="relative h-44" style={{ background: project.gradient }}>
         <span
-          className={`absolute top-3 left-3 rounded-full px-3 py-1 text-[10.5px] font-medium tracking-wide uppercase ${project.status === 'active' ? 'bg-[var(--green)]/90 text-white' : 'bg-black/40 text-white/80'}`}
+          className={`absolute top-3 left-3 rounded-full px-3 py-1 text-[14px] font-medium tracking-wide uppercase ${project.status === 'active' ? 'bg-[var(--green)]/90 text-white' : 'bg-black/40 text-white/80'}`}
         >
           {project.status === 'active' ? t.projects.active : t.projects.past}
         </span>
       </div>
       <div className="p-6">
-        <p className="mb-2 text-[11px] font-medium tracking-[0.12em] text-[var(--green)] uppercase">
+        <p className="mb-2 text-[13px] font-medium tracking-[0.12em] text-[var(--green)] uppercase">
           📍 {project.location}
         </p>
         <h3 className="mb-3 font-serif text-lg leading-snug font-normal text-[var(--charcoal)]">
           {project.title}
         </h3>
-        <p className="mb-5 text-[13.5px] leading-relaxed text-[var(--muted)]">{project.summary}</p>
+        <p className="mb-5 text-[16px] leading-relaxed text-[var(--muted)]">{project.summary}</p>
         <Link
           href={`/${locale}/projects/${project.slug}`}
-          className="group inline-flex items-center gap-1 text-[13px] font-medium text-[var(--green)]"
+          className="group inline-flex items-center gap-1 text-[15px] font-medium text-[var(--green)]"
         >
           {t.projects.learnMore}
           <span className="transition-transform group-hover:translate-x-1">→</span>
@@ -75,7 +75,7 @@ export default function ProjectsSection({
       <div className="mx-auto max-w-7xl">
         <div className="mb-10 flex flex-col items-start gap-4 sm:mb-14 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="mb-3 text-[11px] font-medium tracking-[0.15em] text-[var(--green)] uppercase">
+            <p className="mb-3 text-[13px] font-medium tracking-[0.15em] text-[var(--green)] uppercase">
               {t.projects.eyebrow}
             </p>
             <h2
@@ -87,7 +87,7 @@ export default function ProjectsSection({
           </div>
           <Link
             href={`/${locale}/projects`}
-            className="border-b border-[var(--border)] pb-0.5 text-[13.5px] font-medium text-[var(--muted)] transition-colors hover:border-[var(--charcoal)] hover:text-[var(--charcoal)]"
+            className="border-b border-[var(--border)] pb-0.5 text-[16px] font-medium text-[var(--muted)] transition-colors hover:border-[var(--charcoal)] hover:text-[var(--charcoal)]"
           >
             {t.projects.viewAll} →
           </Link>

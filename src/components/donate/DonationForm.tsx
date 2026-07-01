@@ -33,7 +33,7 @@ const COUNTRY_FLAGS: Record<DonateCountryCode, string> = {
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <p className="mb-3 text-[11px] font-medium tracking-[0.1em] text-[var(--muted)] uppercase">
+    <p className="mb-3 text-[13px] font-medium tracking-[0.1em] text-[var(--muted)] uppercase">
       {children}
     </p>
   )
@@ -42,7 +42,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 function TaxBanner({ message }: { message: string }) {
   return (
     <div
-      className="mb-6 flex gap-2.5 rounded-lg border border-[var(--green)]/30 bg-[var(--green-pale)] px-4 py-3 text-[13px] leading-relaxed text-[var(--green-dark)]"
+      className="mb-6 flex gap-2.5 rounded-lg border border-[var(--green)]/30 bg-[var(--green-pale)] px-4 py-3 text-[15px] leading-relaxed text-[var(--green-dark)]"
       role="status"
     >
       <svg
@@ -174,13 +174,13 @@ export default function DonationForm({ locale }: { locale: string }) {
   return (
     <div className="mx-auto w-full max-w-lg px-4 pt-6 pb-10 sm:px-6 sm:pt-8 sm:pb-14">
       <header className="mb-8 border-b border-[var(--border)] pb-8 text-center">
-        <p className="mb-3 text-[11px] font-medium tracking-[0.12em] text-[var(--muted)] uppercase">
+        <p className="mb-3 text-[13px] font-medium tracking-[0.12em] text-[var(--muted)] uppercase">
           {d.eyebrow}
         </p>
         <h1 className="mb-3 font-serif text-[28px] leading-tight font-normal text-[var(--charcoal)]">
           {d.title}
         </h1>
-        <p className="mx-auto max-w-md text-[14px] leading-relaxed text-[var(--muted)]">
+        <p className="mx-auto max-w-md text-[15px] leading-relaxed text-[var(--muted)]">
           {d.subtitle}
         </p>
       </header>
@@ -189,7 +189,7 @@ export default function DonationForm({ locale }: { locale: string }) {
         {(['consultation', 'medicine', 'kit'] as const).map((key) => (
           <div key={key} className="bg-white px-3 py-4 text-center">
             <p className="font-serif text-[20px] text-[var(--charcoal)]">{d.impact[key].value}</p>
-            <p className="mt-1 text-[11px] leading-snug text-[var(--muted)]">{d.impact[key].label}</p>
+            <p className="mt-1 text-[13px] leading-snug text-[var(--muted)]">{d.impact[key].label}</p>
           </div>
         ))}
       </div>
@@ -205,7 +205,7 @@ export default function DonationForm({ locale }: { locale: string }) {
               setDonationChannel('local')
             }
           }}
-          className="h-11 w-full cursor-pointer appearance-none rounded-lg border border-[var(--border)] bg-white px-4 pr-10 text-[14px] text-[var(--charcoal)] outline-none focus:border-[var(--green)] focus:ring-2 focus:ring-[var(--green)]/20"
+          className="h-11 w-full cursor-pointer appearance-none rounded-lg border border-[var(--border)] bg-white px-4 pr-10 text-[15px] text-[var(--charcoal)] outline-none focus:border-[var(--green)] focus:ring-2 focus:ring-[var(--green)]/20"
           aria-label={d.countryLabel}
         >
           <option value="">{d.countryPlaceholder}</option>
@@ -232,7 +232,7 @@ export default function DonationForm({ locale }: { locale: string }) {
       )}
 
       {showDualChannel && (
-        <p className="mb-4 text-center text-[11px] text-[var(--muted)]">{d.dualChannelNote}</p>
+        <p className="mb-4 text-center text-[13px] text-[var(--muted)]">{d.dualChannelNote}</p>
       )}
 
       <div ref={paymentMethodsRef}>
@@ -257,11 +257,11 @@ export default function DonationForm({ locale }: { locale: string }) {
                         : 'border-[var(--border)] bg-white text-[var(--muted)] hover:border-[var(--green)]/40'
                     }`}
                   >
-                    <span className={`block text-[13px] ${active ? 'font-medium' : ''}`}>
+                    <span className={`block text-[15px] ${active ? 'font-medium' : ''}`}>
                       {copy.label}
                     </span>
                     <span
-                      className={`mt-0.5 block text-[11px] ${
+                      className={`mt-0.5 block text-[13px] ${
                         active ? 'text-[var(--green-dark)]/80' : 'text-[var(--muted)]'
                       }`}
                     >
@@ -277,7 +277,7 @@ export default function DonationForm({ locale }: { locale: string }) {
         {showHelloAsso && (
           <>
             <SectionLabel>{d.helloAssoTitle}</SectionLabel>
-            <p className="mb-4 text-[13px] leading-relaxed text-[var(--charcoal)]">
+            <p className="mb-4 text-[15px] leading-relaxed text-[var(--charcoal)]">
               {helloAssoNote}
             </p>
             <section className="mb-8" aria-label={d.helloAssoTitle}>
@@ -288,7 +288,7 @@ export default function DonationForm({ locale }: { locale: string }) {
 
         {showGivingEuropePanel && country && isGivingEuropeCountry(country) && (
           <div className="rounded-xl border border-[var(--border)] bg-[var(--cream)] p-6">
-            <p className="text-[11px] font-medium tracking-[0.1em] text-[var(--green)] uppercase">
+            <p className="text-[13px] font-medium tracking-[0.1em] text-[var(--green)] uppercase">
               {d.givingEurope.title}
             </p>
             <div className="mt-4">
@@ -299,7 +299,7 @@ export default function DonationForm({ locale }: { locale: string }) {
 
         {showLocalPlatformPanel && country && isLocalPlatformCountry(country) && config?.url && (
           <div className="rounded-xl border border-[var(--border)] bg-[var(--cream)] p-6">
-            <p className="text-[11px] font-medium tracking-[0.1em] text-[var(--green)] uppercase">
+            <p className="text-[13px] font-medium tracking-[0.1em] text-[var(--green)] uppercase">
               {config.platform}
             </p>
             <div className="mt-4">
@@ -323,7 +323,7 @@ export default function DonationForm({ locale }: { locale: string }) {
             key={freq}
             type="button"
             onClick={() => setFrequency(freq)}
-            className={`rounded-lg border px-2 py-2 text-[13px] transition-colors ${
+            className={`rounded-lg border px-2 py-2 text-[15px] transition-colors ${
               frequency === freq
                 ? 'border-[var(--green)] bg-[var(--green-pale)] font-medium text-[var(--green-dark)]'
                 : 'border-[var(--border)] bg-white text-[var(--muted)] hover:border-[var(--green)]/40'
@@ -343,7 +343,7 @@ export default function DonationForm({ locale }: { locale: string }) {
               key={amount}
               type="button"
               onClick={() => selectAmount(amount)}
-              className={`rounded-lg border px-2 py-2.5 text-center text-[14px] font-medium transition-colors ${
+              className={`rounded-lg border px-2 py-2.5 text-center text-[15px] font-medium transition-colors ${
                 active
                   ? 'border-[var(--green)] bg-[var(--green-pale)] text-[var(--green-dark)]'
                   : 'border-[var(--border)] bg-white text-[var(--charcoal)] hover:border-[var(--green)]/40'
@@ -352,7 +352,7 @@ export default function DonationForm({ locale }: { locale: string }) {
               {symbol}
               {amount}
               <span
-                className={`mt-0.5 block text-[11px] font-normal ${
+                className={`mt-0.5 block text-[13px] font-normal ${
                   active ? 'text-[var(--green-dark)]/80' : 'text-[var(--muted)]'
                 }`}
               >
@@ -364,7 +364,7 @@ export default function DonationForm({ locale }: { locale: string }) {
       </div>
 
       <div className="relative mb-6">
-        <span className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-[14px] text-[var(--muted)]">
+        <span className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-[15px] text-[var(--muted)]">
           {symbol.trim()}
         </span>
         <input
@@ -373,13 +373,13 @@ export default function DonationForm({ locale }: { locale: string }) {
           value={customValue}
           onChange={(e) => handleCustomInput(e.target.value)}
           placeholder={d.customPlaceholder}
-          className="h-11 w-full rounded-lg border border-[var(--border)] bg-white py-0 pr-4 pl-7 text-[14px] text-[var(--charcoal)] outline-none focus:border-[var(--green)] focus:ring-2 focus:ring-[var(--green)]/20"
+          className="h-11 w-full rounded-lg border border-[var(--border)] bg-white py-0 pr-4 pl-7 text-[15px] text-[var(--charcoal)] outline-none focus:border-[var(--green)] focus:ring-2 focus:ring-[var(--green)]/20"
           aria-label={d.customPlaceholder}
         />
       </div>
 
       {isDeductible && (
-        <div className="mb-6 rounded-lg bg-[var(--cream)] px-4 py-3 text-[13px]">
+        <div className="mb-6 rounded-lg bg-[var(--cream)] px-4 py-3 text-[15px]">
           <div className="flex items-center justify-between py-1">
             <span className="text-[var(--muted)]">{d.netCost.donation}</span>
             <span className="text-[var(--muted)]">
@@ -399,7 +399,7 @@ export default function DonationForm({ locale }: { locale: string }) {
           <hr className="my-1.5 border-[var(--border)]" />
           <div className="flex items-center justify-between py-1">
             <span className="font-medium text-[var(--charcoal)]">{d.netCost.actual}</span>
-            <span className="text-[16px] font-medium text-[var(--green-dark)]">
+            <span className="text-[17px] font-medium text-[var(--green-dark)]">
               {symbol}
               {netCost}
             </span>
@@ -416,7 +416,7 @@ export default function DonationForm({ locale }: { locale: string }) {
           onClick={handleDonate}
           disabled={!country}
           aria-describedby={!country ? 'donate-country-hint' : undefined}
-          className="flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-[var(--green)] text-[15px] font-medium text-white transition-colors hover:bg-[var(--green-dark)] disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-[var(--border)] disabled:text-[var(--muted)] disabled:hover:bg-[var(--border)]"
+          className="flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-[var(--green)] text-[16px] font-medium text-white transition-colors hover:bg-[var(--green-dark)] disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-[var(--border)] disabled:text-[var(--muted)] disabled:hover:bg-[var(--border)]"
         >
           <svg
             className="h-[18px] w-[18px]"
@@ -438,7 +438,7 @@ export default function DonationForm({ locale }: { locale: string }) {
       )}
 
       <div className="mt-8">
-        <p className="mb-3 text-center text-[11px] font-medium tracking-[0.08em] text-[var(--muted)] uppercase">
+        <p className="mb-3 text-center text-[13px] font-medium tracking-[0.08em] text-[var(--muted)] uppercase">
           {d.otherWays}
         </p>
         <div className="grid grid-cols-2 gap-2">
@@ -457,8 +457,8 @@ export default function DonationForm({ locale }: { locale: string }) {
               <path d="M7.076 21.337H2.47a.641.641 0 01-.633-.74L4.944 3.72A.77.77 0 015.7 3h6.52c2.17 0 3.68.55 4.49 1.64.76 1.02.87 2.45.32 4.25-.02.07-.05.14-.08.21l-.01.03c-.96 3.12-2.87 4.7-5.68 4.7H9.28l-.77 4.86a.64.64 0 01-.633.54z" />
             </svg>
             <div>
-              <p className="text-[12px] font-medium text-[var(--charcoal)]">{d.paypal}</p>
-              <p className="text-[11px] text-[var(--muted)]">{d.paypalNote}</p>
+              <p className="text-[14px] font-medium text-[var(--charcoal)]">{d.paypal}</p>
+              <p className="text-[13px] text-[var(--muted)]">{d.paypalNote}</p>
             </div>
           </a>
           <a
@@ -477,8 +477,8 @@ export default function DonationForm({ locale }: { locale: string }) {
               <path d="M2 10h20" />
             </svg>
             <div>
-              <p className="text-[12px] font-medium text-[var(--charcoal)]">{d.bankTransfer}</p>
-              <p className="text-[11px] text-[var(--muted)]">{d.bankNote}</p>
+              <p className="text-[14px] font-medium text-[var(--charcoal)]">{d.bankTransfer}</p>
+              <p className="text-[13px] text-[var(--muted)]">{d.bankNote}</p>
             </div>
           </a>
         </div>
@@ -488,7 +488,7 @@ export default function DonationForm({ locale }: { locale: string }) {
         {(['charity', 'secure', 'operations'] as const).map((key) => (
           <span
             key={key}
-            className="flex items-center gap-1.5 text-[11px] text-[var(--muted)]"
+            className="flex items-center gap-1.5 text-[13px] text-[var(--muted)]"
           >
             <svg
               className="h-3.5 w-3.5"
