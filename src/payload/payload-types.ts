@@ -73,7 +73,6 @@ export interface Config {
     projects: Project;
     'volunteer-needs': VolunteerNeed;
     'volunteer-applications': VolunteerApplication;
-    'donation-inquiries': DonationInquiry;
     testimonials: Testimonial;
     users: User;
     pages: Page;
@@ -90,7 +89,6 @@ export interface Config {
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
     'volunteer-needs': VolunteerNeedsSelect<false> | VolunteerNeedsSelect<true>;
     'volunteer-applications': VolunteerApplicationsSelect<false> | VolunteerApplicationsSelect<true>;
-    'donation-inquiries': DonationInquiriesSelect<false> | DonationInquiriesSelect<true>;
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
@@ -475,22 +473,6 @@ export interface VolunteerApplication {
   createdAt: string;
 }
 /**
- * Giving Europe donation inquiries from the website (legacy).
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "donation-inquiries".
- */
-export interface DonationInquiry {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  country: string;
-  locale?: ('en' | 'fr') | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
  * Quotes from volunteers, shown on the Volunteer page.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -669,10 +651,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'volunteer-applications';
         value: string | VolunteerApplication;
-      } | null)
-    | ({
-        relationTo: 'donation-inquiries';
-        value: string | DonationInquiry;
       } | null)
     | ({
         relationTo: 'testimonials';
@@ -909,19 +887,6 @@ export interface VolunteerApplicationsSelect<T extends boolean = true> {
   confirmedStartDate?: T;
   confirmedEndDate?: T;
   project?: T;
-  locale?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "donation-inquiries_select".
- */
-export interface DonationInquiriesSelect<T extends boolean = true> {
-  firstName?: T;
-  lastName?: T;
-  email?: T;
-  country?: T;
   locale?: T;
   updatedAt?: T;
   createdAt?: T;
