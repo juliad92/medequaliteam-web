@@ -2,14 +2,14 @@ export const translations = {
   en: {
     // Nav
     nav: {
-      about: 'About',
+      about: 'About us',
       aboutWhy: 'Why we exist',
       aboutOrg: 'The organisation',
       aboutTeam: 'Meet the team',
-      projects: 'Projects',
+      projects: 'Our projects',
       projectsActive: 'Northern Greece',
       projectsPast: 'Past projects',
-      volunteer: 'Volunteer',
+      volunteer: 'Volunteer with us',
       volunteerGreece: 'Volunteer in Greece',
       volunteerStories: 'Volunteer stories',
       news: 'News',
@@ -331,14 +331,14 @@ export const translations = {
   fr: {
     // Nav
     nav: {
-      about: 'À propos',
+      about: 'À propos de nous',
       aboutWhy: 'Pourquoi nous existons',
       aboutOrg: "L'organisation",
       aboutTeam: "L'équipe",
-      projects: 'Projets',
+      projects: 'Nos Projets',
       projectsActive: 'Grèce du Nord',
       projectsPast: 'Projets passés',
-      volunteer: 'Bénévolat',
+      volunteer: 'Bénévolat avec nous',
       volunteerGreece: 'Bénévolat en Grèce',
       volunteerStories: 'Témoignages',
       news: 'Actualités',
