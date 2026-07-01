@@ -99,7 +99,7 @@ export default function HeroSection({
           <div className="rounded-2xl border border-white/10 bg-white/6 p-6 backdrop-blur-sm sm:p-8">
             <p className="mb-4 flex items-center gap-2 text-[10px] font-medium tracking-[0.18em] text-[var(--green-light)] uppercase">
               <span className="h-px w-5 bg-[var(--green-light)]" />
-              {t.hero.latestProject}
+              {t.hero.currentProject}
             </p>
             <h2 className="mb-3 font-serif text-2xl leading-snug font-normal text-white">
               {project?.title}
