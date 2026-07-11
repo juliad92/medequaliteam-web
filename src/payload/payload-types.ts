@@ -73,6 +73,7 @@ export interface Config {
     projects: Project;
     'volunteer-needs': VolunteerNeed;
     'volunteer-applications': VolunteerApplication;
+    'newsletter-subscribers': NewsletterSubscriber;
     testimonials: Testimonial;
     users: User;
     pages: Page;
@@ -89,6 +90,7 @@ export interface Config {
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
     'volunteer-needs': VolunteerNeedsSelect<false> | VolunteerNeedsSelect<true>;
     'volunteer-applications': VolunteerApplicationsSelect<false> | VolunteerApplicationsSelect<true>;
+    'newsletter-subscribers': NewsletterSubscribersSelect<false> | NewsletterSubscribersSelect<true>;
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
@@ -473,6 +475,20 @@ export interface VolunteerApplication {
   createdAt: string;
 }
 /**
+ * Newsletter sign-ups from the website.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "newsletter-subscribers".
+ */
+export interface NewsletterSubscriber {
+  id: string;
+  firstName: string;
+  email: string;
+  locale: 'en' | 'fr';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * Quotes from volunteers, shown on the Volunteer page.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -651,6 +667,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'volunteer-applications';
         value: string | VolunteerApplication;
+      } | null)
+    | ({
+        relationTo: 'newsletter-subscribers';
+        value: string | NewsletterSubscriber;
       } | null)
     | ({
         relationTo: 'testimonials';
@@ -887,6 +907,17 @@ export interface VolunteerApplicationsSelect<T extends boolean = true> {
   confirmedStartDate?: T;
   confirmedEndDate?: T;
   project?: T;
+  locale?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "newsletter-subscribers_select".
+ */
+export interface NewsletterSubscribersSelect<T extends boolean = true> {
+  firstName?: T;
+  email?: T;
   locale?: T;
   updatedAt?: T;
   createdAt?: T;
