@@ -36,6 +36,7 @@
 import { en } from '@payloadcms/translations/languages/en'
 import { fr } from '@payloadcms/translations/languages/fr'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+import { importExportPlugin } from '@payloadcms/plugin-import-export'
 import { buildConfig } from 'payload'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
@@ -145,6 +146,29 @@ export default buildConfig({
         media: true,
       },
       token: process.env.BLOB_READ_WRITE_TOKEN,
+    }),
+    importExportPlugin({
+      collections: [
+        {
+          slug: 'newsletter-subscribers',
+          import: false,
+          export: {
+            format: 'csv',
+            disableJobsQueue: true,
+            disableSave: true,
+          },
+        },
+      ],
+      overrideExportCollection: ({ collection }) => {
+        collection.access = {
+          ...collection.access,
+          create: ({ req }) => Boolean(req.user),
+          read: ({ req }) => Boolean(req.user),
+          update: ({ req }) => Boolean(req.user),
+          delete: ({ req }) => Boolean(req.user),
+        }
+        return collection
+      },
     }),
   ],
 })
