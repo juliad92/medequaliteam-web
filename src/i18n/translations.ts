@@ -317,6 +317,23 @@ export const translations = {
       },
     },
 
+    // Newsletter
+    newsletter: {
+      eyebrow: 'Stay informed',
+      title: 'Subscribe to our newsletter',
+      body: 'Receive news from the field and updates on our projects, a few times a year.',
+      firstName: 'First name',
+      email: 'Email',
+      submit: 'Subscribe',
+      submitting: 'Subscribing…',
+      success: 'Thank you! You are now subscribed to our newsletter.',
+      error: 'Something went wrong. Please try again.',
+      fieldErrors: {
+        required: 'This field is required.',
+        invalidEmail: 'Please enter a valid email address.',
+      },
+    },
+
     // Footer
     footer: {
       tagline:
@@ -644,6 +661,23 @@ export const translations = {
           required: 'Ce champ est obligatoire.',
           email: 'Veuillez saisir une adresse e-mail valide.',
         },
+      },
+    },
+
+    // Newsletter
+    newsletter: {
+      eyebrow: 'Rester informé·e',
+      title: 'S’inscrire à la newsletter',
+      body: 'Recevez les nouvelles du terrain et les actualités de nos projets, quelques fois par an.',
+      firstName: 'Prénom',
+      email: 'E-mail',
+      submit: 'S’inscrire',
+      submitting: 'Inscription…',
+      success: 'Merci ! Vous êtes maintenant inscrit·e à notre newsletter.',
+      error: 'Une erreur est survenue. Veuillez réessayer.',
+      fieldErrors: {
+        required: 'Ce champ est obligatoire.',
+        invalidEmail: 'Veuillez saisir une adresse e-mail valide.',
       },
     },
 

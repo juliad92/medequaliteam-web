@@ -5,6 +5,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 
 import Navbar from '@/components/layout/Navbar'
+import NewsletterBanner from '@/components/layout/NewsletterBanner'
 import Footer from '@/components/layout/Footer'
 import { getProjectsWithVolunteerNeeds } from '@/lib/volunteer'
 
@@ -36,6 +37,7 @@ export default async function LocaleLayout({
       <body>
         <Navbar locale={locale} volunteerProjects={volunteerProjects} />
         {children}
+        <NewsletterBanner locale={locale} />
         <Footer locale={locale} volunteerProjects={volunteerProjects} />
         <Analytics />
       </body>
