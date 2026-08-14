@@ -211,7 +211,6 @@ export default function VolunteerApplicationForm({
         rolesHint: fr
           ? 'Sélectionne un ou plusieurs rôles pour lesquels tu souhaites postuler.'
           : 'Select one or more roles you would like to apply for.',
-        emergency: fr ? 'Contact d’urgence' : 'Emergency contact',
         experience: fr ? 'Expérience' : 'Experience',
         availability: fr ? 'Disponibilités' : 'Availability',
         workEnv: fr ? 'Environnement de travail' : 'Work environment',
@@ -236,19 +235,9 @@ export default function VolunteerApplicationForm({
         nationality: fr ? 'Nationalité' : 'Nationality',
         phoneCountryCode: fr ? 'Indicatif téléphonique' : 'Phone country code',
         phone: fr ? 'Numéro de téléphone' : 'Phone number',
-        emergencyFirstName: fr ? 'Prénom' : 'First name',
-        emergencyLastName: fr ? 'Nom' : 'Last name',
-        emergencyRelation: fr ? 'Relation' : 'Relationship',
-        emergencyPhoneCountryCode: fr ? 'Indicatif téléphonique' : 'Phone country code',
-        emergencyPhone: fr ? 'Numéro de téléphone' : 'Phone number',
         relevantWorkAcademicExperience: fr
-          ? 'Expérience professionnelle et académique pertinente'
-          : 'Relevant work and academic experience',
-        volunteerExperience: fr ? 'Expérience bénévole' : 'Volunteer experience',
-        experienceWithRefugees: fr
-          ? 'Expérience avec les réfugié·e·s'
-          : 'Experience working with refugees',
-        otherExperience: fr ? 'Autre expérience' : 'Other experience',
+          ? 'Expérience professionnelle et académique pertinente, Expérience bénévole, Expérience avec les réfugié·e·s, Expérience à l’étranger, Autre expérience'
+          : 'Relevant work and academic experience, Volunteer experience, Experience working with refugees, Experience working abroad, Other experience',
         medicalGraduationDate: fr
           ? 'Date de diplôme (personnel médical)'
           : 'Graduation date (medical staff)',
@@ -267,7 +256,6 @@ export default function VolunteerApplicationForm({
           : 'Do you possess a visa allowing you to volunteer in Greece?',
         greeceVisaComments: fr ? 'Commentaires (visa)' : 'Visa comments',
         visaExpiryDate: fr ? 'Date d’expiration du visa' : 'Visa expiry date',
-        experienceWorkingAbroad: fr ? 'Expérience à l’étranger' : 'Experience working abroad',
         languageLevel: fr
           ? 'Niveau (base / intermédiaire / fluent)'
           : 'Level (basic / intermediate / fluent)',
@@ -316,16 +304,7 @@ export default function VolunteerApplicationForm({
   const [phoneCountryCode, setPhoneCountryCode] = useState('')
   const [phone, setPhone] = useState('')
 
-  const [emergencyFirstName, setEmergencyFirstName] = useState('')
-  const [emergencyLastName, setEmergencyLastName] = useState('')
-  const [emergencyRelation, setEmergencyRelation] = useState('')
-  const [emergencyPhoneCountryCode, setEmergencyPhoneCountryCode] = useState('')
-  const [emergencyPhone, setEmergencyPhone] = useState('')
-
   const [relevantWorkAcademicExperience, setRelevantWorkAcademicExperience] = useState('')
-  const [volunteerExperience, setVolunteerExperience] = useState('')
-  const [experienceWithRefugees, setExperienceWithRefugees] = useState('')
-  const [otherExperience, setOtherExperience] = useState('')
   const [medicalGraduationDate, setMedicalGraduationDate] = useState('')
 
   const [preferredStartDate, setPreferredStartDate] = useState('')
@@ -338,7 +317,6 @@ export default function VolunteerApplicationForm({
   const [greeceVisa, setGreeceVisa] = useState<YesNo>('')
   const [greeceVisaComments, setGreeceVisaComments] = useState('')
   const [visaExpiryDate, setVisaExpiryDate] = useState('')
-  const [experienceWorkingAbroad, setExperienceWorkingAbroad] = useState('')
 
   const [languageGreek, setLanguageGreek] = useState<LanguageLevel>('')
   const [languageArabic, setLanguageArabic] = useState<LanguageLevel>('')
@@ -494,15 +472,7 @@ export default function VolunteerApplicationForm({
           phoneCountryCode,
           phone,
           selectedRoles: selectedRoleIds,
-          emergencyFirstName,
-          emergencyLastName,
-          emergencyRelation,
-          emergencyPhoneCountryCode,
-          emergencyPhone,
           relevantWorkAcademicExperience,
-          volunteerExperience,
-          experienceWithRefugees,
-          otherExperience,
           medicalGraduationDate: showMedicalGraduation
             ? medicalGraduationDate || undefined
             : undefined,
@@ -515,7 +485,6 @@ export default function VolunteerApplicationForm({
           greeceVisa: showVisaFields ? greeceVisa || undefined : undefined,
           greeceVisaComments: showVisaFields ? greeceVisaComments : undefined,
           visaExpiryDate: showVisaFields && visaExpiryDate ? visaExpiryDate : undefined,
-          experienceWorkingAbroad,
           languageGreek: languageGreek || undefined,
           languageArabic: languageArabic || undefined,
           languageFarsi: languageFarsi || undefined,
@@ -754,52 +723,6 @@ export default function VolunteerApplicationForm({
 
           {currentStep === 1 ? (
             <>
-              <SectionTitle>{t.sections.emergency}</SectionTitle>
-              <div className="grid gap-4 md:grid-cols-2">
-                <label className="grid gap-2">
-                  <FieldLabel>{t.fields.emergencyFirstName}</FieldLabel>
-                  <input
-                    value={emergencyFirstName}
-                    onChange={(e) => setEmergencyFirstName(e.target.value)}
-                    className={inputClass}
-                  />
-                </label>
-                <label className="grid gap-2">
-                  <FieldLabel>{t.fields.emergencyLastName}</FieldLabel>
-                  <input
-                    value={emergencyLastName}
-                    onChange={(e) => setEmergencyLastName(e.target.value)}
-                    className={inputClass}
-                  />
-                </label>
-              </div>
-              <label className="grid gap-2">
-                <FieldLabel>{t.fields.emergencyRelation}</FieldLabel>
-                <input
-                  value={emergencyRelation}
-                  onChange={(e) => setEmergencyRelation(e.target.value)}
-                  className={inputClass}
-                />
-              </label>
-              <div className="grid gap-4 md:grid-cols-[minmax(160px,0.45fr)_1fr]">
-                <label className="grid gap-2">
-                  <FieldLabel>{t.fields.emergencyPhoneCountryCode}</FieldLabel>
-                  <PhoneCountryCodeSelect
-                    value={emergencyPhoneCountryCode}
-                    onChange={setEmergencyPhoneCountryCode}
-                    locale={locale}
-                  />
-                </label>
-                <label className="grid gap-2">
-                  <FieldLabel>{t.fields.emergencyPhone}</FieldLabel>
-                  <input
-                    value={emergencyPhone}
-                    onChange={(e) => setEmergencyPhone(e.target.value)}
-                    className={inputClass}
-                  />
-                </label>
-              </div>
-
               <SectionTitle>{t.sections.experience}</SectionTitle>
               {(
                 [
@@ -808,13 +731,6 @@ export default function VolunteerApplicationForm({
                     relevantWorkAcademicExperience,
                     setRelevantWorkAcademicExperience,
                   ],
-                  [t.fields.volunteerExperience, volunteerExperience, setVolunteerExperience],
-                  [
-                    t.fields.experienceWithRefugees,
-                    experienceWithRefugees,
-                    setExperienceWithRefugees,
-                  ],
-                  [t.fields.otherExperience, otherExperience, setOtherExperience],
                 ] as const
               ).map(([label, value, setter]) => (
                 <label key={label} className="grid gap-2">
@@ -935,15 +851,6 @@ export default function VolunteerApplicationForm({
                   </label>
                 </>
               ) : null}
-              <label className="grid gap-2">
-                <FieldLabel>{t.fields.experienceWorkingAbroad}</FieldLabel>
-                <textarea
-                  value={experienceWorkingAbroad}
-                  onChange={(e) => setExperienceWorkingAbroad(e.target.value)}
-                  rows={3}
-                  className={textareaClass}
-                />
-              </label>
             </>
           ) : null}
 
@@ -1027,9 +934,7 @@ export default function VolunteerApplicationForm({
                   aria-describedby={
                     fieldErrors.howDidYouHearAboutUs ? 'howDidYouHearAboutUs-error' : undefined
                   }
-                  className={
-                    fieldErrors.howDidYouHearAboutUs ? textareaErrorClass : textareaClass
-                  }
+                  className={fieldErrors.howDidYouHearAboutUs ? textareaErrorClass : textareaClass}
                 />
                 <FieldError
                   id="howDidYouHearAboutUs-error"

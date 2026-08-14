@@ -90,38 +90,13 @@ export const VolunteerApplications: CollectionConfig = {
       label: 'Selected volunteer roles',
     },
 
-    // ── Emergency contact ──────────────────────────────────────────────────────
-    {
-      type: 'collapsible',
-      label: 'Emergency contact',
-      fields: [
-        {
-          type: 'row',
-          fields: [
-            { name: 'emergencyFirstName', type: 'text', label: 'First name' },
-            { name: 'emergencyLastName', type: 'text', label: 'Last name' },
-          ],
-        },
-        { name: 'emergencyRelation', type: 'text', label: 'Relationship' },
-        {
-          type: 'row',
-          fields: [
-            { name: 'emergencyPhoneCountryCode', type: 'text', label: 'Phone country code' },
-            { name: 'emergencyPhone', type: 'text', label: 'Phone number' },
-          ],
-        },
-      ],
-    },
-
     // ── Experience ─────────────────────────────────────────────────────────────
     {
       name: 'relevantWorkAcademicExperience',
       type: 'textarea',
-      label: 'Relevant work and academic experience',
+      label:
+        'Relevant work and academic experience, Volunteer experience, Experience working with refugees, Experience working abroad, Other experience',
     },
-    { name: 'volunteerExperience', type: 'textarea', label: 'Volunteer experience' },
-    { name: 'experienceWithRefugees', type: 'textarea', label: 'Experience working with refugees' },
-    { name: 'otherExperience', type: 'textarea', label: 'Other experience' },
     {
       name: 'medicalGraduationDate',
       type: 'date',
@@ -180,11 +155,6 @@ export const VolunteerApplications: CollectionConfig = {
       type: 'date',
       label: 'Visa expiry date',
       admin: { date: { pickerAppearance: 'dayOnly' } },
-    },
-    {
-      name: 'experienceWorkingAbroad',
-      type: 'textarea',
-      label: 'Experience working abroad',
     },
 
     // ── Languages ────────────────────────────────────────────────────────────────
