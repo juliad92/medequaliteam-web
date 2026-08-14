@@ -98,6 +98,15 @@ export const VolunteerApplications: CollectionConfig = {
         'Relevant work and academic experience, Volunteer experience, Experience working with refugees, Experience working abroad, Other experience',
     },
     {
+      name: 'cv',
+      type: 'upload',
+      relationTo: 'volunteer-cvs',
+      label: {
+        en: 'CV',
+        fr: 'CV',
+      },
+    },
+    {
       name: 'medicalGraduationDate',
       type: 'date',
       label: 'Graduation date (medical staff)',
@@ -119,6 +128,35 @@ export const VolunteerApplications: CollectionConfig = {
           type: 'date',
           label: 'Preferred end date',
           admin: { date: { pickerAppearance: 'dayOnly' } },
+        },
+      ],
+    },
+    {
+      name: 'datesFlexible',
+      type: 'select',
+      label: 'Are your dates flexible?',
+      options: yesNoOptions,
+    },
+    {
+      type: 'row',
+      fields: [
+        {
+          name: 'flexibleFromDate',
+          type: 'date',
+          label: 'Flexible from',
+          admin: {
+            date: { pickerAppearance: 'dayOnly' },
+            condition: (_data, siblingData) => siblingData?.datesFlexible === 'yes',
+          },
+        },
+        {
+          name: 'flexibleToDate',
+          type: 'date',
+          label: 'Flexible until',
+          admin: {
+            date: { pickerAppearance: 'dayOnly' },
+            condition: (_data, siblingData) => siblingData?.datesFlexible === 'yes',
+          },
         },
       ],
     },
@@ -194,6 +232,12 @@ export const VolunteerApplications: CollectionConfig = {
       ],
     },
     { name: 'drivingLicenceOther', type: 'text', label: 'Driving licence (other)' },
+    {
+      name: 'comfortableDriving9SeatVan',
+      type: 'select',
+      label: 'Do you feel comfortable driving a 9 seat van?',
+      options: yesNoOptions,
+    },
 
     // ── Referral ─────────────────────────────────────────────────────────────────
     {

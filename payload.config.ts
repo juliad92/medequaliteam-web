@@ -48,6 +48,7 @@ import { Projects } from './src/collections/Projects.ts'
 import { Posts } from './src/collections/Posts.ts'
 import { VolunteerNeeds } from './src/collections/VolunteerNeeds.ts'
 import { VolunteerApplications } from './src/collections/VolunteerApplications.ts'
+import { VolunteerCVs } from './src/collections/VolunteerCVs.ts'
 import { NewsletterSubscribers } from './src/collections/NewsletterSubscribers.ts'
 import { TeamMembers, Testimonials } from './src/collections/People.ts'
 import { Media, Pages } from './src/collections/MediaAndPages.ts'
@@ -102,6 +103,7 @@ export default buildConfig({
     Projects,
     VolunteerNeeds,
     VolunteerApplications,
+    VolunteerCVs,
     NewsletterSubscribers,
     Testimonials,
     Users, // Admin users
@@ -144,6 +146,7 @@ export default buildConfig({
     vercelBlobStorage({
       collections: {
         media: true,
+        'volunteer-cvs': true,
       },
       token: process.env.BLOB_READ_WRITE_TOKEN,
     }),

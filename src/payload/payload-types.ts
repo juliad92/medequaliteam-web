@@ -73,6 +73,7 @@ export interface Config {
     projects: Project;
     'volunteer-needs': VolunteerNeed;
     'volunteer-applications': VolunteerApplication;
+    'volunteer-cvs': VolunteerCv;
     'newsletter-subscribers': NewsletterSubscriber;
     testimonials: Testimonial;
     users: User;
@@ -93,6 +94,7 @@ export interface Config {
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
     'volunteer-needs': VolunteerNeedsSelect<false> | VolunteerNeedsSelect<true>;
     'volunteer-applications': VolunteerApplicationsSelect<false> | VolunteerApplicationsSelect<true>;
+    'volunteer-cvs': VolunteerCvsSelect<false> | VolunteerCvsSelect<true>;
     'newsletter-subscribers': NewsletterSubscribersSelect<false> | NewsletterSubscribersSelect<true>;
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -443,18 +445,14 @@ export interface VolunteerApplication {
   phoneCountryCode?: string | null;
   phone?: string | null;
   selectedRoles?: (string | VolunteerNeed)[] | null;
-  emergencyFirstName?: string | null;
-  emergencyLastName?: string | null;
-  emergencyRelation?: string | null;
-  emergencyPhoneCountryCode?: string | null;
-  emergencyPhone?: string | null;
   relevantWorkAcademicExperience?: string | null;
-  volunteerExperience?: string | null;
-  experienceWithRefugees?: string | null;
-  otherExperience?: string | null;
+  cv?: (string | null) | VolunteerCv;
   medicalGraduationDate?: string | null;
   preferredStartDate?: string | null;
   preferredEndDate?: string | null;
+  datesFlexible?: ('yes' | 'no') | null;
+  flexibleFromDate?: string | null;
+  flexibleToDate?: string | null;
   motivation: string;
   happyStressfulEnvironment?: ('yes' | 'no') | null;
   goodEnglishLevel?: ('yes' | 'no') | null;
@@ -462,12 +460,12 @@ export interface VolunteerApplication {
   greeceVisa?: ('yes' | 'no') | null;
   greeceVisaComments?: string | null;
   visaExpiryDate?: string | null;
-  experienceWorkingAbroad?: string | null;
   languageGreek?: ('' | 'basic' | 'intermediate' | 'fluent') | null;
   languageArabic?: ('' | 'basic' | 'intermediate' | 'fluent') | null;
   languageFarsi?: ('' | 'basic' | 'intermediate' | 'fluent') | null;
   drivingLicence?: ('yes' | 'no' | 'other') | null;
   drivingLicenceOther?: string | null;
+  comfortableDriving9SeatVan?: ('yes' | 'no') | null;
   howDidYouHearAboutUs?: string | null;
   /**
    * Internal tracking: Confirmed, In discussion, Canceled or Not confirmed.
@@ -486,6 +484,26 @@ export interface VolunteerApplication {
   locale: 'en' | 'fr';
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * CVs uploaded with volunteer applications. Visible from each application.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "volunteer-cvs".
+ */
+export interface VolunteerCv {
+  id: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * Newsletter sign-ups from the website.
@@ -849,6 +867,10 @@ export interface PayloadLockedDocument {
         value: string | VolunteerApplication;
       } | null)
     | ({
+        relationTo: 'volunteer-cvs';
+        value: string | VolunteerCv;
+      } | null)
+    | ({
         relationTo: 'newsletter-subscribers';
         value: string | NewsletterSubscriber;
       } | null)
@@ -1056,18 +1078,14 @@ export interface VolunteerApplicationsSelect<T extends boolean = true> {
   phoneCountryCode?: T;
   phone?: T;
   selectedRoles?: T;
-  emergencyFirstName?: T;
-  emergencyLastName?: T;
-  emergencyRelation?: T;
-  emergencyPhoneCountryCode?: T;
-  emergencyPhone?: T;
   relevantWorkAcademicExperience?: T;
-  volunteerExperience?: T;
-  experienceWithRefugees?: T;
-  otherExperience?: T;
+  cv?: T;
   medicalGraduationDate?: T;
   preferredStartDate?: T;
   preferredEndDate?: T;
+  datesFlexible?: T;
+  flexibleFromDate?: T;
+  flexibleToDate?: T;
   motivation?: T;
   happyStressfulEnvironment?: T;
   goodEnglishLevel?: T;
@@ -1075,12 +1093,12 @@ export interface VolunteerApplicationsSelect<T extends boolean = true> {
   greeceVisa?: T;
   greeceVisaComments?: T;
   visaExpiryDate?: T;
-  experienceWorkingAbroad?: T;
   languageGreek?: T;
   languageArabic?: T;
   languageFarsi?: T;
   drivingLicence?: T;
   drivingLicenceOther?: T;
+  comfortableDriving9SeatVan?: T;
   howDidYouHearAboutUs?: T;
   applicationStatus?: T;
   confirmedVolunteerRole?: T;
@@ -1090,6 +1108,23 @@ export interface VolunteerApplicationsSelect<T extends boolean = true> {
   locale?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "volunteer-cvs_select".
+ */
+export interface VolunteerCvsSelect<T extends boolean = true> {
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1585,6 +1620,7 @@ export interface TaskCreateCollectionExport {
       | 'projects'
       | 'volunteer-needs'
       | 'volunteer-applications'
+      | 'volunteer-cvs'
       | 'newsletter-subscribers'
       | 'testimonials'
       | 'users'

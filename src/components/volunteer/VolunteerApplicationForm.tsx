@@ -4,6 +4,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react'
 
 import PhoneCountryCodeSelect from '@/components/volunteer/PhoneCountryCodeSelect'
 import { isMedicalVolunteerRole } from '@/lib/volunteer'
+import { CV_ACCEPT, isAllowedCvFile } from '@/lib/volunteer/cv-upload'
 
 type AvailableRole = { id: string; roleName: string }
 
@@ -212,6 +213,9 @@ export default function VolunteerApplicationForm({
           ? 'Sélectionne un ou plusieurs rôles pour lesquels tu souhaites postuler.'
           : 'Select one or more roles you would like to apply for.',
         experience: fr ? 'Expérience' : 'Experience',
+        experienceHint: fr
+          ? 'Décris ton expérience ci-dessous, ou télécharge ton CV à la place.'
+          : 'Describe your experience below, or upload your CV instead.',
         availability: fr ? 'Disponibilités' : 'Availability',
         workEnv: fr ? 'Environnement de travail' : 'Work environment',
         qualities: fr ? 'Qualités personnelles' : 'Personal qualities',
@@ -238,11 +242,21 @@ export default function VolunteerApplicationForm({
         relevantWorkAcademicExperience: fr
           ? 'Expérience professionnelle et académique pertinente, Expérience bénévole, Expérience avec les réfugié·e·s, Expérience à l’étranger, Autre expérience'
           : 'Relevant work and academic experience, Volunteer experience, Experience working with refugees, Experience working abroad, Other experience',
+        cv: fr ? 'Télécharger ton CV' : 'Upload your CV',
+        cvOr: fr ? 'ou' : 'or',
+        cvHint: fr ? 'PDF, DOC ou DOCX, 4 Mo maximum.' : 'PDF, DOC or DOCX, 4 MB maximum.',
+        cvInvalid: fr
+          ? 'Fichier invalide. Utilise un PDF, DOC ou DOCX de 4 Mo maximum.'
+          : 'Invalid file. Please use a PDF, DOC or DOCX of 4 MB or less.',
+        cvRemove: fr ? 'Retirer le fichier' : 'Remove file',
         medicalGraduationDate: fr
           ? 'Date de diplôme (personnel médical)'
           : 'Graduation date (medical staff)',
         preferredStartDate: fr ? 'Date de début souhaitée' : 'Preferred start date',
         preferredEndDate: fr ? 'Date de fin souhaitée' : 'Preferred end date',
+        datesFlexible: fr ? 'Tes dates sont-elles flexibles ?' : 'Are your dates flexible?',
+        flexibleFromDate: fr ? 'Du' : 'From',
+        flexibleToDate: fr ? 'Au' : 'Until',
         motivation: fr ? 'Motivation' : 'Motivation',
         happyStressfulEnvironment: fr
           ? 'Je suis à l’aise dans un environnement stressant, chaotique et émotionnellement exigeant'
@@ -264,6 +278,9 @@ export default function VolunteerApplicationForm({
         farsi: 'Farsi',
         drivingLicence: fr ? 'Permis de conduire catégorie B' : 'Do you hold a B-Driving licence?',
         drivingOther: fr ? 'Précise (autre)' : 'Please specify (other)',
+        comfortableDriving9SeatVan: fr
+          ? 'Es-tu à l’aise pour conduire un van 9 places ?'
+          : 'Do you feel comfortable driving a 9 seat van?',
         howDidYouHearAboutUs: fr ? 'Comment nous as-tu connu ?' : 'How did you hear about us?',
         drivingYes: fr ? 'Oui' : 'Yes',
         drivingNo: fr ? 'Non' : 'No',
@@ -305,10 +322,16 @@ export default function VolunteerApplicationForm({
   const [phone, setPhone] = useState('')
 
   const [relevantWorkAcademicExperience, setRelevantWorkAcademicExperience] = useState('')
+  const [cvFile, setCvFile] = useState<File | null>(null)
+  const [cvError, setCvError] = useState('')
+  const cvInputRef = useRef<HTMLInputElement>(null)
   const [medicalGraduationDate, setMedicalGraduationDate] = useState('')
 
   const [preferredStartDate, setPreferredStartDate] = useState('')
   const [preferredEndDate, setPreferredEndDate] = useState('')
+  const [datesFlexible, setDatesFlexible] = useState<YesNo>('')
+  const [flexibleFromDate, setFlexibleFromDate] = useState('')
+  const [flexibleToDate, setFlexibleToDate] = useState('')
   const [motivation, setMotivation] = useState('')
 
   const [happyStressfulEnvironment, setHappyStressfulEnvironment] = useState<YesNo>('')
@@ -324,6 +347,7 @@ export default function VolunteerApplicationForm({
 
   const [drivingLicence, setDrivingLicence] = useState<DrivingLicence>('')
   const [drivingLicenceOther, setDrivingLicenceOther] = useState('')
+  const [comfortableDriving9SeatVan, setComfortableDriving9SeatVan] = useState<YesNo>('')
 
   const [howDidYouHearAboutUs, setHowDidYouHearAboutUs] = useState('')
 
@@ -350,6 +374,13 @@ export default function VolunteerApplicationForm({
       setMedicalGraduationDate('')
     }
   }, [showMedicalGraduation])
+
+  useEffect(() => {
+    if (datesFlexible !== 'yes') {
+      setFlexibleFromDate('')
+      setFlexibleToDate('')
+    }
+  }, [datesFlexible])
 
   const setFieldRef = (name: FieldName) => (el: HTMLElement | null) => {
     if (el) fieldRefs.current[name] = el
@@ -457,10 +488,10 @@ export default function VolunteerApplicationForm({
     if (!validateStep(currentStep)) return
     setStatus('sending')
     try {
-      const res = await fetch('/api/volunteer-application', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
+      const formData = new FormData()
+      formData.append(
+        'payload',
+        JSON.stringify({
           locale,
           project: projectId,
           firstName,
@@ -478,6 +509,10 @@ export default function VolunteerApplicationForm({
             : undefined,
           preferredStartDate: preferredStartDate || undefined,
           preferredEndDate: preferredEndDate || undefined,
+          datesFlexible: datesFlexible || undefined,
+          flexibleFromDate:
+            datesFlexible === 'yes' && flexibleFromDate ? flexibleFromDate : undefined,
+          flexibleToDate: datesFlexible === 'yes' && flexibleToDate ? flexibleToDate : undefined,
           motivation,
           happyStressfulEnvironment: happyStressfulEnvironment || undefined,
           goodEnglishLevel: goodEnglishLevel || undefined,
@@ -490,8 +525,15 @@ export default function VolunteerApplicationForm({
           languageFarsi: languageFarsi || undefined,
           drivingLicence: drivingLicence || undefined,
           drivingLicenceOther,
+          comfortableDriving9SeatVan: comfortableDriving9SeatVan || undefined,
           howDidYouHearAboutUs,
         }),
+      )
+      if (cvFile) formData.append('cv', cvFile)
+
+      const res = await fetch('/api/volunteer-application', {
+        method: 'POST',
+        body: formData,
       })
       if (!res.ok) throw new Error('bad response')
       setStatus('success')
@@ -724,25 +766,66 @@ export default function VolunteerApplicationForm({
           {currentStep === 1 ? (
             <>
               <SectionTitle>{t.sections.experience}</SectionTitle>
-              {(
-                [
-                  [
-                    t.fields.relevantWorkAcademicExperience,
-                    relevantWorkAcademicExperience,
-                    setRelevantWorkAcademicExperience,
-                  ],
-                ] as const
-              ).map(([label, value, setter]) => (
-                <label key={label} className="grid gap-2">
-                  <FieldLabel>{label}</FieldLabel>
-                  <textarea
-                    value={value}
-                    onChange={(e) => setter(e.target.value)}
-                    rows={3}
-                    className={textareaClass}
+              <p className="text-[15px] text-[var(--muted)]">{t.sections.experienceHint}</p>
+              <label className="grid gap-2">
+                <FieldLabel>{t.fields.relevantWorkAcademicExperience}</FieldLabel>
+                <textarea
+                  value={relevantWorkAcademicExperience}
+                  onChange={(e) => setRelevantWorkAcademicExperience(e.target.value)}
+                  rows={3}
+                  className={textareaClass}
+                />
+              </label>
+              <div className="relative my-1 flex items-center gap-3" aria-hidden="true">
+                <div className="h-px flex-1 bg-[var(--border)]" />
+                <span className="text-[13px] text-[var(--muted)]">{t.fields.cvOr}</span>
+                <div className="h-px flex-1 bg-[var(--border)]" />
+              </div>
+              <div className="grid gap-2">
+                <label className="grid gap-2">
+                  <FieldLabel>{t.fields.cv}</FieldLabel>
+                  <span className="text-[14px] text-[var(--muted)]">{t.fields.cvHint}</span>
+                  <input
+                    ref={cvInputRef}
+                    type="file"
+                    accept={CV_ACCEPT}
+                    onChange={(e) => {
+                      const file = e.target.files?.[0] ?? null
+                      if (!file) {
+                        setCvFile(null)
+                        setCvError('')
+                        return
+                      }
+                      if (!isAllowedCvFile(file.name, file.type, file.size)) {
+                        setCvFile(null)
+                        setCvError(t.fields.cvInvalid)
+                        e.target.value = ''
+                        return
+                      }
+                      setCvError('')
+                      setCvFile(file)
+                    }}
+                    className={`${inputClass} py-2 file:mr-4 file:rounded-md file:border-0 file:bg-[var(--green-pale)] file:px-3 file:py-1.5 file:text-[13px] file:font-medium file:text-[var(--green)]`}
                   />
                 </label>
-              ))}
+                {cvFile ? (
+                  <div className="flex flex-wrap items-center gap-3">
+                    <p className="text-[14px] text-[var(--charcoal)]">{cvFile.name}</p>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setCvFile(null)
+                        setCvError('')
+                        if (cvInputRef.current) cvInputRef.current.value = ''
+                      }}
+                      className="text-[14px] font-medium text-[var(--green)] underline-offset-2 hover:underline"
+                    >
+                      {t.fields.cvRemove}
+                    </button>
+                  </div>
+                ) : null}
+                <FieldError id="cv-error" message={cvError} />
+              </div>
               {showMedicalGraduation ? (
                 <label className="grid gap-2">
                   <FieldLabel>{t.fields.medicalGraduationDate}</FieldLabel>
@@ -780,6 +863,35 @@ export default function VolunteerApplicationForm({
                   />
                 </label>
               </div>
+              <YesNoField
+                label={t.fields.datesFlexible}
+                name="datesFlexible"
+                value={datesFlexible}
+                onChange={setDatesFlexible}
+                locale={locale}
+              />
+              {datesFlexible === 'yes' ? (
+                <div className="grid gap-4 md:grid-cols-2">
+                  <label className="grid gap-2">
+                    <FieldLabel>{t.fields.flexibleFromDate}</FieldLabel>
+                    <input
+                      type="date"
+                      value={flexibleFromDate}
+                      onChange={(e) => setFlexibleFromDate(e.target.value)}
+                      className={inputClass}
+                    />
+                  </label>
+                  <label className="grid gap-2">
+                    <FieldLabel>{t.fields.flexibleToDate}</FieldLabel>
+                    <input
+                      type="date"
+                      value={flexibleToDate}
+                      onChange={(e) => setFlexibleToDate(e.target.value)}
+                      className={inputClass}
+                    />
+                  </label>
+                </div>
+              ) : null}
               <label className="grid gap-2">
                 <FieldLabel required>{t.fields.motivation}</FieldLabel>
                 <textarea
@@ -917,6 +1029,13 @@ export default function VolunteerApplicationForm({
                   />
                 </label>
               ) : null}
+              <YesNoField
+                label={t.fields.comfortableDriving9SeatVan}
+                name="comfortableDriving9SeatVan"
+                value={comfortableDriving9SeatVan}
+                onChange={setComfortableDriving9SeatVan}
+                locale={locale}
+              />
 
               <SectionTitle required>{t.sections.referral}</SectionTitle>
               <label className="grid gap-2">
