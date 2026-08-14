@@ -47,4 +47,5 @@ next-env.d.ts
 .vscode/
 public/fonts/*
 public/media/*
+/storage/
 scripts/

@@ -39,13 +39,22 @@ export async function fillAndSubmitVolunteerApplication(
 
   // Step 3 — Availability
   await expect(form.getByText('Step 3 of 4 — Availability')).toBeVisible()
-  await form.getByLabel(/^Motivation/).fill(
-    'I want to contribute my medical skills to support displaced people.',
-  )
+  await form.getByLabel(/^Preferred start date/).fill('2026-09-01')
+  await form.getByLabel(/^Preferred end date/).fill('2026-09-30')
+  await form.getByRole('group', { name: 'Are your dates flexible?' }).getByLabel('Yes').check()
+  await form.getByLabel(/^From$/).fill('2026-08-15')
+  await form.getByLabel(/^Until$/).fill('2026-10-15')
+  await form
+    .getByLabel(/^Motivation/)
+    .fill('I want to contribute my medical skills to support displaced people.')
   await form.getByRole('button', { name: 'Next' }).click()
 
   // Step 4 — Final details
   await expect(form.getByText('Step 4 of 4 — Final details')).toBeVisible()
+  await form
+    .getByRole('group', { name: 'Do you feel comfortable driving a 9 seat van?' })
+    .getByLabel('Yes')
+    .check()
   await form.getByLabel(/^How did you hear about us/).fill('E2E test')
 
   const [response] = await Promise.all([
