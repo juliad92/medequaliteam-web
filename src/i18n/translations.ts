@@ -73,6 +73,27 @@ export const translations = {
       secondary: 'Read volunteer stories',
     },
 
+    // Volunteer stories
+    volunteerStories: {
+      metaTitle: 'Volunteer stories',
+      metaDescription:
+        'Read firsthand accounts from doctors, nurses, and other volunteers who worked with Med’EqualiTeam in Thessaloniki.',
+      eyebrow: 'Volunteer with us',
+      title: 'Volunteer stories',
+      subtitle: 'Some stories from our volunteers in Thessaloniki',
+      by: 'by Med’EqualiTeam',
+      readStory: 'Read story',
+      backToStories: 'All stories',
+      meet: 'Meet',
+      from: 'from',
+      pullQuoteLabel: 'In their words',
+      ctaEyebrow: 'Join the team',
+      ctaTitle: 'Ready to write your own story?',
+      ctaBody:
+        'Our teams need doctors, nurses, and coordinators. If you want to make a direct impact on the ground, we want to hear from you.',
+      ctaPrimary: 'Volunteer in Greece',
+    },
+
     // News
     news: {
       eyebrow: 'Latest updates',
@@ -418,6 +439,27 @@ export const translations = {
       body: 'Nos équipes sont petites, dévouées et internationales. Si vous avez des compétences médicales ou organisationnelles et souhaitez avoir un impact direct, contactez-nous.',
       primary: 'Bénévolat en Grèce',
       secondary: 'Lire les témoignages',
+    },
+
+    // Volunteer stories
+    volunteerStories: {
+      metaTitle: 'Témoignages de bénévoles',
+      metaDescription:
+        'Découvrez les retours d’expérience de médecins, infirmiers et autres bénévoles qui ont travaillé avec Med’EqualiTeam à Thessalonique.',
+      eyebrow: 'Bénévolat avec nous',
+      title: 'Témoignages',
+      subtitle: 'Nos volontaires à Thessalonique racontent leur expérience',
+      by: 'par Med’EqualiTeam',
+      readStory: 'Lire le témoignage',
+      backToStories: 'Tous les témoignages',
+      meet: 'Rencontrez',
+      from: 'de',
+      pullQuoteLabel: 'En leurs mots',
+      ctaEyebrow: "Rejoindre l'équipe",
+      ctaTitle: 'Prêt·e à écrire votre propre histoire ?',
+      ctaBody:
+        'Nos équipes ont besoin de médecins, d’infirmiers et de coordinateurs. Si vous souhaitez avoir un impact direct sur le terrain, contactez-nous.',
+      ctaPrimary: 'Bénévolat en Grèce',
     },
 
     // News

@@ -520,7 +520,7 @@ export interface NewsletterSubscriber {
   createdAt: string;
 }
 /**
- * Quotes from volunteers, shown on the Volunteer page.
+ * Volunteer stories and short quotes. Full stories appear on /volunteer/stories; featured quotes can appear on the Volunteer page.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "testimonials".
@@ -529,11 +529,44 @@ export interface Testimonial {
   id: string;
   name: string;
   /**
-   * e.g. "Doctor, Samos 2020"
+   * URL slug for the story page, e.g. "nurse" or "doctor".
+   */
+  slug: string;
+  /**
+   * e.g. "Nurse" / "Infirmière"
    */
   role?: string | null;
+  /**
+   * e.g. "Freiburg, Germany" / "Fribourg, Allemagne"
+   */
+  location?: string | null;
   photo?: (string | null) | Media;
+  /**
+   * Short preview shown on the Volunteer stories listing (1–2 sentences).
+   */
+  excerpt?: string | null;
+  /**
+   * Opening paragraph on the story detail page.
+   */
+  intro?: string | null;
+  /**
+   * Interview questions and answers shown on the story page.
+   */
+  sections?:
+    | {
+        question: string;
+        answer: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Pull quote highlighted on the story page (also usable as a short testimonial).
+   */
   quote: string;
+  /**
+   * Controls the display date and sort order on the stories listing.
+   */
+  publishedAt?: string | null;
   project?: (string | null) | Project;
   featured?: boolean | null;
   updatedAt: string;
@@ -1143,9 +1176,21 @@ export interface NewsletterSubscribersSelect<T extends boolean = true> {
  */
 export interface TestimonialsSelect<T extends boolean = true> {
   name?: T;
+  slug?: T;
   role?: T;
+  location?: T;
   photo?: T;
+  excerpt?: T;
+  intro?: T;
+  sections?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
   quote?: T;
+  publishedAt?: T;
   project?: T;
   featured?: T;
   updatedAt?: T;
