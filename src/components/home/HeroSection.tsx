@@ -93,7 +93,7 @@ export default function HeroSection({
             </Link>
           </div>
         </div>
-        <div
+        {/* <div
           className="animate-fade-up opacity-0"
           style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}
         >
@@ -121,7 +121,7 @@ export default function HeroSection({
               <span className="transition-transform group-hover:translate-x-1">→</span>
             </Link>
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 opacity-30 sm:flex">
         <span className="text-[12px] tracking-widest text-white uppercase">{t.hero.scroll}</span>
