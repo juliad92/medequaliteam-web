@@ -345,6 +345,8 @@ export const translations = {
       body: 'Receive news from the field and updates on our projects, a few times a year.',
       firstName: 'First name',
       email: 'Email',
+      pixelTrackingConsent:
+        'I agree that newsletter emails may include a tracking pixel to measure opens and engagement.',
       submit: 'Subscribe',
       submitting: 'Subscribing…',
       success: 'Thank you! You are now subscribed to our newsletter.',
@@ -713,6 +715,8 @@ export const translations = {
       body: 'Recevez les nouvelles du terrain et les actualités de nos projets, quelques fois par an.',
       firstName: 'Prénom',
       email: 'E-mail',
+      pixelTrackingConsent:
+        'J’accepte que les e-mails de la newsletter puissent contenir un pixel de suivi pour mesurer les ouvertures et l’engagement.',
       submit: 'S’inscrire',
       submitting: 'Inscription…',
       success: 'Merci ! Vous êtes maintenant inscrit·e à notre newsletter.',

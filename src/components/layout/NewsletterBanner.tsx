@@ -19,6 +19,7 @@ export default function NewsletterBanner({ locale }: { locale: string }) {
   const t = getT(locale).newsletter
   const [firstName, setFirstName] = useState('')
   const [email, setEmail] = useState('')
+  const [pixelTrackingConsent, setPixelTrackingConsent] = useState(false)
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({})
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
 
@@ -57,6 +58,7 @@ export default function NewsletterBanner({ locale }: { locale: string }) {
           firstName: firstName.trim(),
           email: email.trim(),
           locale,
+          pixelTrackingConsent,
         }),
       })
       const data = await res.json()
@@ -67,6 +69,7 @@ export default function NewsletterBanner({ locale }: { locale: string }) {
       setStatus('success')
       setFirstName('')
       setEmail('')
+      setPixelTrackingConsent(false)
     } catch {
       setStatus('error')
     }
@@ -157,6 +160,21 @@ export default function NewsletterBanner({ locale }: { locale: string }) {
                 )}
               </div>
             </div>
+
+            <label
+              htmlFor="newsletter-pixel-tracking"
+              className="flex cursor-pointer items-start gap-3 text-[14px] leading-relaxed text-[var(--muted)]"
+            >
+              <input
+                id="newsletter-pixel-tracking"
+                type="checkbox"
+                name="pixelTrackingConsent"
+                checked={pixelTrackingConsent}
+                onChange={(e) => setPixelTrackingConsent(e.target.checked)}
+                className="mt-0.5 h-4 w-4 shrink-0 accent-[var(--green)]"
+              />
+              <span>{t.pixelTrackingConsent}</span>
+            </label>
 
             <button
               type="submit"

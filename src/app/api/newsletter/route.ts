@@ -15,6 +15,7 @@ export async function POST(req: Request) {
     const firstName = str(body?.firstName)
     const email = str(body?.email)?.toLowerCase()
     const locale = body?.locale === 'fr' ? 'fr' : 'en'
+    const pixelTrackingConsent = Boolean(body?.pixelTrackingConsent)
 
     if (!firstName || !email) {
       return Response.json({ ok: false, error: 'Missing required fields.' }, { status: 400 })
@@ -43,6 +44,7 @@ export async function POST(req: Request) {
         firstName,
         email,
         locale,
+        pixelTrackingConsent,
       },
     })
 

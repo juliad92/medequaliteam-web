@@ -35,18 +35,10 @@ export default function MissionSection({
         <div className="relative mx-auto h-[300px] w-full max-w-lg sm:h-[380px] lg:mx-0 lg:h-[460px] lg:max-w-none">
           <div
             className="absolute inset-0 overflow-hidden rounded-2xl"
-            style={
-              imageUrl
-                ? undefined
-                : { background: 'var(--gradient-mission)' }
-            }
+            style={imageUrl ? undefined : { background: 'var(--gradient-mission)' }}
           >
             {imageUrl ? (
-              <img
-                src={imageUrl}
-                alt={imageAlt}
-                className="h-full w-full object-cover"
-              />
+              <img src={imageUrl} alt={imageAlt} className="h-full w-full object-cover" />
             ) : (
               <div className="flex h-full w-full items-end p-6">
                 <p className="text-base text-white/60 italic">{t.mission.photoCaption}</p>
@@ -57,12 +49,6 @@ export default function MissionSection({
             <p className="font-serif text-[15px] leading-snug text-[var(--green-dark)] italic">
               &ldquo;{t.mission.quote}&rdquo;
             </p>
-          </div>
-          <div className="absolute top-6 left-2 rounded-xl bg-[var(--green)] p-3 text-center text-white shadow-lg sm:top-8 sm:-left-4 sm:p-4">
-            <span className="block font-serif text-3xl leading-none">7+</span>
-            <span className="text-[13px] tracking-wider uppercase opacity-80">
-              {t.mission.years}
-            </span>
           </div>
         </div>
         <div>

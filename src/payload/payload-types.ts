@@ -515,6 +515,10 @@ export interface NewsletterSubscriber {
   id: string;
   firstName: string;
   email: string;
+  /**
+   * Whether the subscriber agreed to tracking pixels in newsletter emails.
+   */
+  pixelTrackingConsent?: boolean | null;
   locale: 'en' | 'fr';
   updatedAt: string;
   createdAt: string;
@@ -1166,6 +1170,7 @@ export interface VolunteerCvsSelect<T extends boolean = true> {
 export interface NewsletterSubscribersSelect<T extends boolean = true> {
   firstName?: T;
   email?: T;
+  pixelTrackingConsent?: T;
   locale?: T;
   updatedAt?: T;
   createdAt?: T;
