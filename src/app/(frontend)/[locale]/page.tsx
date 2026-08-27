@@ -20,6 +20,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     where: { featured: { equals: true }, _status: { equals: 'published' } },
     locale: locale as 'en' | 'fr',
     fallbackLocale: 'en',
+    depth: 1,
     limit: 3,
   })
 
