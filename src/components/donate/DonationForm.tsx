@@ -39,7 +39,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   )
 }
 
-function TaxBanner({ message }: { message: string }) {
+function TaxBanner({ message, calculation }: { message: string; calculation: string }) {
   return (
     <div
       className="mb-6 flex gap-2.5 rounded-lg border border-[var(--green)]/30 bg-[var(--green-pale)] px-4 py-3 text-[15px] leading-relaxed text-[var(--green-dark)]"
@@ -56,7 +56,10 @@ function TaxBanner({ message }: { message: string }) {
         <path d="M9 14l2 2 4-4" />
         <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
-      <p>{message}</p>
+      <div>
+        <p>{message}</p>
+        <p className="mt-1.5 font-medium">{calculation}</p>
+      </div>
     </div>
   )
 }
@@ -69,6 +72,10 @@ function formatTaxMessage(
 ): string {
   const net = selectedAmount - Math.round(selectedAmount * deductionRate)
   return template.replace('{net}', `${symbol}${net}`)
+}
+
+function formatTaxCalculation(template: string, deductionRate: number): string {
+  return template.replace('{rate}', `${Math.round(deductionRate * 100)}`)
 }
 
 function getLocalChannelCopy(
@@ -101,23 +108,21 @@ export default function DonationForm({ locale }: { locale: string }) {
   const config = country ? DONATE_COUNTRY_CONFIG[country] : null
   const showDualChannel = Boolean(country && offersDualDonationChannel(country))
   const showHelloAsso =
-    country === 'FR' ||
-    country === 'OTHER' ||
-    (showDualChannel && donationChannel === 'helloasso')
+    country === 'FR' || country === 'OTHER' || (showDualChannel && donationChannel === 'helloasso')
   const showGivingEuropePanel = Boolean(
     country &&
-      showDualChannel &&
-      donationChannel === 'local' &&
-      config?.dualChannelAlt === 'givingEurope' &&
-      isGivingEuropeCountry(country),
+    showDualChannel &&
+    donationChannel === 'local' &&
+    config?.dualChannelAlt === 'givingEurope' &&
+    isGivingEuropeCountry(country),
   )
   const showLocalPlatformPanel = Boolean(
     country &&
-      showDualChannel &&
-      donationChannel === 'local' &&
-      config?.dualChannelAlt === 'platform' &&
-      config.url &&
-      isLocalPlatformCountry(country),
+    showDualChannel &&
+    donationChannel === 'local' &&
+    config?.dualChannelAlt === 'platform' &&
+    config.url &&
+    isLocalPlatformCountry(country),
   )
 
   const symbol = config?.symbol ?? '€'
@@ -142,6 +147,11 @@ export default function DonationForm({ locale }: { locale: string }) {
           deductionRate,
         )
       : ''
+  const taxCalculation =
+    country && config
+      ? formatTaxCalculation(isDeductible ? d.taxCalculation.deductible : '', deductionRate)
+      : ''
+  const impactAmounts = { consultation: 15, medicine: 50, kit: 100 }
 
   const helloAssoNote = country === 'FR' ? d.helloAssoNote : d.helloAssoNoteInternational
 
@@ -191,7 +201,17 @@ export default function DonationForm({ locale }: { locale: string }) {
         {(['consultation', 'medicine', 'kit'] as const).map((key) => (
           <div key={key} className="bg-white px-3 py-4 text-center">
             <p className="font-serif text-[20px] text-[var(--charcoal)]">{d.impact[key].value}</p>
-            <p className="mt-1 text-[13px] leading-snug text-[var(--muted)]">{d.impact[key].label}</p>
+            <p className="mt-1 text-[13px] leading-snug text-[var(--muted)]">
+              {d.impact[key].label}
+            </p>
+            {country && config && (
+              <p className="mt-2 text-[11px] leading-snug font-medium text-[var(--green-dark)]">
+                {d.impact.afterDeduction.replace(
+                  '{amount}',
+                  `${symbol}${impactAmounts[key] - Math.round(impactAmounts[key] * deductionRate)}`,
+                )}
+              </p>
+            )}
           </div>
         ))}
       </div>
@@ -229,9 +249,7 @@ export default function DonationForm({ locale }: { locale: string }) {
         </svg>
       </div>
 
-      {country && config && (
-        <TaxBanner message={taxMessage} />
-      )}
+      {country && config && <TaxBanner message={taxMessage} calculation={taxCalculation} />}
 
       {showDualChannel && (
         <p className="mb-4 text-center text-[13px] text-[var(--muted)]">{d.dualChannelNote}</p>
@@ -316,8 +334,6 @@ export default function DonationForm({ locale }: { locale: string }) {
         )}
       </div>
 
-      {!country && (
-        <>
       <SectionLabel>{d.frequencyLabel}</SectionLabel>
       <div className="mb-6 grid grid-cols-3 gap-1.5">
         {(['once', 'monthly', 'yearly'] as const).map((freq) => (
@@ -380,7 +396,7 @@ export default function DonationForm({ locale }: { locale: string }) {
         />
       </div>
 
-      {isDeductible && (
+      {country && (
         <div className="mb-6 rounded-lg bg-[var(--cream)] px-4 py-3 text-[15px]">
           <div className="flex items-center justify-between py-1">
             <span className="text-[var(--muted)]">{d.netCost.donation}</span>
@@ -391,11 +407,17 @@ export default function DonationForm({ locale }: { locale: string }) {
           </div>
           <div className="flex items-center justify-between py-1">
             <span className="text-[var(--muted)]">
-              {d.netCost.deduction} (~{Math.round(deductionRate * 100)}%)
+              {isDeductible ? `${d.netCost.deduction} (~${Math.round(deductionRate * 100)}%)` : ''}
             </span>
-            <span className="text-[var(--green-dark)]">
-              −{symbol}
-              {deduction}
+            <span className={isDeductible ? 'text-[var(--green-dark)]' : 'text-[var(--muted)]'}>
+              {isDeductible ? (
+                <>
+                  −{symbol}
+                  {deduction}
+                </>
+              ) : (
+                '—'
+              )}
             </span>
           </div>
           <hr className="my-1.5 border-[var(--border)]" />
@@ -436,9 +458,6 @@ export default function DonationForm({ locale }: { locale: string }) {
           </span>
         )}
       </span>
-        </>
-      )}
-
       <div className="mt-8">
         <p className="mb-3 text-center text-[13px] font-medium tracking-[0.08em] text-[var(--muted)] uppercase">
           {d.otherWays}
@@ -488,10 +507,7 @@ export default function DonationForm({ locale }: { locale: string }) {
 
       <div className="mt-6 flex flex-wrap justify-center gap-x-4 gap-y-2">
         {(['charity', 'secure', 'operations'] as const).map((key) => (
-          <span
-            key={key}
-            className="flex items-center gap-1.5 text-[13px] text-[var(--muted)]"
-          >
+          <span key={key} className="flex items-center gap-1.5 text-[13px] text-[var(--muted)]">
             <svg
               className="h-3.5 w-3.5"
               viewBox="0 0 24 24"
@@ -500,7 +516,9 @@ export default function DonationForm({ locale }: { locale: string }) {
               strokeWidth="2"
               aria-hidden="true"
             >
-              {key === 'charity' && <path d="M9 14l2 2 4-4M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />}
+              {key === 'charity' && (
+                <path d="M9 14l2 2 4-4M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              )}
               {key === 'secure' && (
                 <>
                   <rect x="3" y="11" width="18" height="11" rx="2" />

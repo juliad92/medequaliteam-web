@@ -120,6 +120,7 @@ export const translations = {
         consultation: { value: '€15', label: '1 consultation funded' },
         medicine: { value: '€50', label: '1 week of medicine for a child' },
         kit: { value: '€100', label: 'Pharmacy cost for one full clinic day' },
+        afterDeduction: 'Actual cost after estimated tax deduction: {amount}',
       },
       countryLabel: 'Your country',
       countryPlaceholder: '— Select your country —',
@@ -192,7 +193,7 @@ export const translations = {
         operations: '100% to operations',
       },
       tax: {
-        FR: 'French tax residents: 66% tax deduction on your income tax (up to 20% of taxable income). A €50 donation costs you just {net} after deduction.',
+        FR: 'French tax residents: 66% tax deduction on your income tax (up to 20% of taxable income).',
         US: 'US taxpayers: donate online via HelloAsso, or via Friends of Fondation de France for full IRS 501(c)(3) tax deduction.',
         DE: 'German taxpayers: donate online via HelloAsso, or via Maecenata for local tax deduction.',
         BE: 'Belgian residents: donate online via HelloAsso, or via Giving Europe for local tax deduction (bank transfer).',
@@ -200,6 +201,9 @@ export const translations = {
         GB: 'UK taxpayers: donate online via HelloAsso, or via Giving Europe for Gift Aid and higher-rate relief.',
         OTHER:
           'We accept donations from anywhere in the world. Tax deductions for donations to our association are available in some countries - please select above -',
+      },
+      taxCalculation: {
+        deductible: 'Estimated tax deduction rate in this country: {rate}%.',
       },
       givingEurope: {
         title: 'Giving Europe',
@@ -490,6 +494,7 @@ export const translations = {
         consultation: { value: '15 €', label: '1 consultation financée' },
         medicine: { value: '50 €', label: '1 semaine de médicaments pour un enfant' },
         kit: { value: '100 €', label: 'Frais de pharmacie pour une journée complète de clinique' },
+        afterDeduction: 'Coût réel après déduction fiscale estimée : {amount}',
       },
       countryLabel: 'Votre pays',
       countryPlaceholder: '— Sélectionnez votre pays —',
@@ -562,7 +567,7 @@ export const translations = {
         operations: '100 % sur le terrain',
       },
       tax: {
-        FR: "Résidents fiscaux français : déduction de 66 % de l'impôt sur le revenu (dans la limite de 20 % du revenu imposable). Un don de 50 € ne vous coûte que {net} après déduction.",
+        FR: "Résidents fiscaux français : déduction de 66 % de l'impôt sur le revenu (dans la limite de 20 % du revenu imposable).",
         US: 'Contribuables américains : don en ligne via HelloAsso, ou via Friends of Fondation de France pour la déduction fiscale IRS 501(c)(3).',
         DE: 'Contribuables allemands : don en ligne via HelloAsso, ou via Maecenata pour la déduction fiscale locale.',
         BE: 'Résidents belges : don en ligne via HelloAsso, ou via Giving Europe pour la déduction fiscale locale (virement bancaire).',
@@ -570,6 +575,9 @@ export const translations = {
         GB: 'Contribuables britanniques : don en ligne via HelloAsso, ou via Giving Europe pour le Gift Aid et la déduction au taux supérieur.',
         OTHER:
           'Nous acceptons les dons du monde entier. Les déductions fiscales pour les dons à notre association sont disponibles dans certains pays — veuillez sélectionner ci-dessus -.',
+      },
+      taxCalculation: {
+        deductible: 'Taux de déduction fiscale estimé pour ce pays : {rate} %.',
       },
       givingEurope: {
         title: 'Giving Europe',
