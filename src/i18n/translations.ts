@@ -108,14 +108,12 @@ export const translations = {
     // Donate
     donate: {
       metaTitle: 'Donate',
-      metaDescription:
-        "Support Med'EqualiTeam with a donation. 100% of funds go to medicines and medical supplies.",
+      metaDescription: "Support Med'EqualiTeam with a donation. 100% of funds go to operations.",
       srTitle:
         "Med'EqualiTeam donation page — select your country to see tax deduction options and donate online.",
       eyebrow: "Med'EqualiTeam — Free healthcare for vulnerable and displaced populations",
       title: 'Every donation saves lives',
-      subtitle:
-        '100% of funds go to medicines & medical supplies. We depend entirely on your generosity.',
+      subtitle: '100% of funds go to operations. We depend entirely on your generosity.',
       impact: {
         consultation: { value: '€15', label: '1 consultation funded' },
         medicine: { value: '€50', label: '1 week of medicine for a child' },
@@ -482,14 +480,13 @@ export const translations = {
     // Donate
     donate: {
       metaTitle: 'Faire un don',
-      metaDescription:
-        "Soutenez Med'EqualiTeam par un don. 100 % des fonds vont aux médicaments et au matériel médical.",
+      metaDescription: "Soutenez Med'EqualiTeam par un don. 100 % des fonds vont aux opérations.",
       srTitle:
         "Page de don Med'EqualiTeam — sélectionnez votre pays pour voir les options de déduction fiscale et faire un don en ligne.",
       eyebrow: "Med'EqualiTeam — Soins gratuits pour les populations vulnérables et déplacées",
       title: 'Chaque don sauve des vies',
       subtitle:
-        '100 % des fonds vont aux médicaments et au matériel médical. Nous dépendons entièrement de votre générosité.',
+        '100 % des fonds vont aux opérations. Nous dépendons entièrement de votre générosité.',
       impact: {
         consultation: { value: '15 €', label: '1 consultation financée' },
         medicine: { value: '50 €', label: '1 semaine de médicaments pour un enfant' },
