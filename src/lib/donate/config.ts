@@ -43,7 +43,7 @@ export const DONATE_COUNTRY_CONFIG: Record<DonateCountryCode, DonateCountryConfi
     symbol: '€',
     deductionRate: 0.66,
     platform: 'HelloAsso',
-    url: 'https://www.helloasso.com/associations/med-equaliteam/formulaires/4/widget?view=form',
+    url: 'https://www.helloasso.com/associations/med-equaliteam/formulaires/1/widget?view=form',
     dualChannelAlt: null,
   },
   US: {
@@ -91,20 +91,19 @@ export const DONATE_COUNTRY_CONFIG: Record<DonateCountryCode, DonateCountryConfi
     symbol: '€',
     deductionRate: 0,
     platform: 'HelloAsso',
-    url: 'https://www.helloasso.com/associations/med-equaliteam/formulaires/4',
+    url: 'https://www.helloasso.com/associations/med-equaliteam/formulaires/1',
     dualChannelAlt: null,
   },
 }
 
 export const HELLOASSO_FORM_URL =
-  'https://www.helloasso.com/associations/med-equaliteam/formulaires/4'
+  'https://www.helloasso.com/associations/med-equaliteam/formulaires/1'
 
 export function getHelloAssoWidgetUrl(formUrl: string = HELLOASSO_FORM_URL): string {
   return `${formUrl.replace(/\/$/, '')}/widget`
 }
 
-export const PAYPAL_URL =
-  'https://www.paypal.com/donate?token=SLZ07JDHY5MqlqcCMbLj81syk3K4c-PjYl8iDYepQSx9JdgnG96bzP5WwrlXAXNRAZvyfRiC1N5YmHOe'
+export const PAYPAL_URL = 'https://www.paypal.com/donate/?hosted_button_id=HKFPNYYSLY8PG'
 export const DONATE_EMAIL = 'donate@medequali.team'
 
 export function getImpactLabel(amount: number, locale: string): string {

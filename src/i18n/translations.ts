@@ -109,17 +109,17 @@ export const translations = {
     donate: {
       metaTitle: 'Donate',
       metaDescription:
-        "Support Med'EqualiTeam with a donation. 100% of funds go to medicines and medical supplies in Northern Greece.",
+        "Support Med'EqualiTeam with a donation. 100% of funds go to medicines and medical supplies.",
       srTitle:
         "Med'EqualiTeam donation page — select your country to see tax deduction options and donate online.",
-      eyebrow: "Med'EqualiTeam — Free healthcare for refugees",
+      eyebrow: "Med'EqualiTeam — Free healthcare for vulnerable and displaced populations",
       title: 'Every donation saves lives',
       subtitle:
-        '100% of funds go to medicines & medical supplies in Northern Greece. We depend entirely on your generosity.',
+        '100% of funds go to medicines & medical supplies. We depend entirely on your generosity.',
       impact: {
         consultation: { value: '€15', label: '1 consultation funded' },
         medicine: { value: '€50', label: '1 week of medicine for a child' },
-        kit: { value: '€200', label: 'Emergency medical kit' },
+        kit: { value: '€100', label: 'Pharmacy cost for one full clinic day' },
       },
       countryLabel: 'Your country',
       countryPlaceholder: '— Select your country —',
@@ -199,7 +199,7 @@ export const translations = {
         CH: 'Swiss residents: donate online via HelloAsso, or via Giving Europe for donations of at least 500 CHF (local tax deduction).',
         GB: 'UK taxpayers: donate online via HelloAsso, or via Giving Europe for Gift Aid and higher-rate relief.',
         OTHER:
-          'We accept donations from anywhere in the world. Tax deductibility depends on your local legislation — check with your tax authority.',
+          'We accept donations from anywhere in the world. Tax deductions for donations to our association are available in some countries - please select above -',
       },
       givingEurope: {
         title: 'Giving Europe',
@@ -479,17 +479,17 @@ export const translations = {
     donate: {
       metaTitle: 'Faire un don',
       metaDescription:
-        "Soutenez Med'EqualiTeam par un don. 100 % des fonds vont aux médicaments et au matériel médical en Grèce du Nord.",
+        "Soutenez Med'EqualiTeam par un don. 100 % des fonds vont aux médicaments et au matériel médical.",
       srTitle:
         "Page de don Med'EqualiTeam — sélectionnez votre pays pour voir les options de déduction fiscale et faire un don en ligne.",
-      eyebrow: "Med'EqualiTeam — Soins gratuits pour les réfugiés",
+      eyebrow: "Med'EqualiTeam — Soins gratuits pour les populations vulnérables et déplacées",
       title: 'Chaque don sauve des vies',
       subtitle:
-        '100 % des fonds vont aux médicaments et au matériel médical en Grèce du Nord. Nous dépendons entièrement de votre générosité.',
+        '100 % des fonds vont aux médicaments et au matériel médical. Nous dépendons entièrement de votre générosité.',
       impact: {
         consultation: { value: '15 €', label: '1 consultation financée' },
         medicine: { value: '50 €', label: '1 semaine de médicaments pour un enfant' },
-        kit: { value: '200 €', label: "Kit médical d'urgence" },
+        kit: { value: '100 €', label: 'Frais de pharmacie pour une journée complète de clinique' },
       },
       countryLabel: 'Votre pays',
       countryPlaceholder: '— Sélectionnez votre pays —',
@@ -569,7 +569,7 @@ export const translations = {
         CH: "Résidents suisses : don en ligne via HelloAsso, ou via Giving Europe pour les dons d'au moins 500 CHF (déduction fiscale locale).",
         GB: 'Contribuables britanniques : don en ligne via HelloAsso, ou via Giving Europe pour le Gift Aid et la déduction au taux supérieur.',
         OTHER:
-          'Nous acceptons les dons du monde entier. La déductibilité fiscale dépend de la législation locale — renseignez-vous auprès de votre administration fiscale.',
+          'Nous acceptons les dons du monde entier. Les déductions fiscales pour les dons à notre association sont disponibles dans certains pays — veuillez sélectionner ci-dessus -.',
       },
       givingEurope: {
         title: 'Giving Europe',
