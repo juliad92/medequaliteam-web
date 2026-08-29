@@ -87,7 +87,9 @@ export default function DonationForm({ locale }: { locale: string }) {
   const t = getT(locale)
   const d = t.donate
 
-  const [country, setCountry] = useState<DonateCountryCode | ''>(locale === 'fr' ? 'FR' : '')
+  const [country, setCountry] = useState<DonateCountryCode | ''>(
+    locale === 'fr' ? 'FR' : locale === 'en' ? 'OTHER' : '',
+  )
   const [frequency, setFrequency] = useState<DonateFrequency>('once')
   const [selectedAmount, setSelectedAmount] = useState(50)
   const [customMode, setCustomMode] = useState(false)
