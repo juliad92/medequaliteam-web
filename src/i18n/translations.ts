@@ -293,7 +293,7 @@ export const translations = {
       privacyPolicyLabel: 'Privacy Policy',
       reportTitle: 'What should be reported?',
       reportIntro:
-        "Med'EqualiTeam is interested in receiving information relating to potential criminal offences, safeguarding concerns, or otherwise unacceptable behaviour by representatives of the organisation, its partners, or volunteers.",
+        "Med'EqualiTeam encourages anyone to report any information regarding potential criminal offenses, issues related to the protection of individuals, or any other unacceptable behavior on the part of the organization's representatives, partners, or volunteers",
       reportExamplesIntro: 'Examples of complaints include but are not limited to:',
       reportExamples: [
         'Failure to comply with a legal obligation or internal governance guidelines',
@@ -327,6 +327,11 @@ export const translations = {
         complaintDetails: 'Complaint details',
         complaintDetailsLabel: 'Please detail your complaint here:',
         submit: 'Submit form',
+        submitting: 'Sending…',
+        successTitle: 'Complaint submitted',
+        successBody:
+          'Thank you. Your complaint has been sent confidentially to our safeguarding team.',
+        error: 'Something went wrong. Please try again.',
         fieldErrors: {
           required: 'This field is required.',
           email: 'Please enter a valid email address.',
@@ -660,7 +665,7 @@ export const translations = {
       privacyPolicyLabel: 'Politique de confidentialité',
       reportTitle: 'Que faut-il signaler ?',
       reportIntro:
-        "Med'EqualiTeam souhaite recevoir des informations relatives à d'éventuelles infractions pénales, à des préoccupations en matière de protection ou à tout autre comportement inacceptable de la part de représentants de l'organisation, de ses partenaires ou de bénévoles.",
+        "Med'EqualiTeam encourage toute personne à signaler toute information concernant d'éventuelles infractions pénales, des problèmes liés à la protection des personnes ou tout autre comportement inacceptable de la part des représentants, partenaires ou bénévoles de l'organisation.",
       reportExamplesIntro: 'Les exemples de plaintes incluent, mais ne sont pas limités à :',
       reportExamples: [
         'Manquement à une obligation légale ou à des directives de gouvernance interne',
@@ -694,6 +699,11 @@ export const translations = {
         complaintDetails: 'Détails de la plainte',
         complaintDetailsLabel: 'Veuillez détailler votre plainte ici :',
         submit: 'Envoyer le formulaire',
+        submitting: 'Envoi…',
+        successTitle: 'Plainte envoyée',
+        successBody:
+          'Merci. Votre plainte a été envoyée de manière confidentielle à notre équipe de sauvegarde.',
+        error: 'Une erreur est survenue. Veuillez réessayer.',
         fieldErrors: {
           required: 'Ce champ est obligatoire.',
           email: 'Veuillez saisir une adresse e-mail valide.',
