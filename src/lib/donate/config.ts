@@ -43,7 +43,7 @@ export const DONATE_COUNTRY_CONFIG: Record<DonateCountryCode, DonateCountryConfi
     symbol: '€',
     deductionRate: 0.66,
     platform: 'HelloAsso',
-    url: 'https://www.helloasso.com/associations/med-equaliteam/formulaires/1/widget?view=form',
+    url: 'https://www.helloasso.com/associations/med-equaliteam/formulaires/2/widget?view=form',
     dualChannelAlt: null,
   },
   US: {
@@ -98,6 +98,12 @@ export const DONATE_COUNTRY_CONFIG: Record<DonateCountryCode, DonateCountryConfi
 
 export const HELLOASSO_FORM_URL =
   'https://www.helloasso.com/associations/med-equaliteam/formulaires/1'
+
+export const HELLOASSO_FORM_URL_EN =
+  'https://www.helloasso.com/associations/med-equaliteam/formulaires/1'
+
+export const HELLOASSO_FORM_URL_FR =
+  'https://www.helloasso.com/associations/med-equaliteam/formulaires/2'
 
 export function getHelloAssoWidgetUrl(formUrl: string = HELLOASSO_FORM_URL): string {
   return `${formUrl.replace(/\/$/, '')}/widget`

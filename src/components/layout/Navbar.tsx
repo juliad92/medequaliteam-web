@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { getT } from '@/i18n/translations'
 import type { VolunteerProjectNavItem } from '@/lib/volunteer'
 
@@ -14,6 +15,7 @@ export default function Navbar({
   volunteerProjects?: VolunteerProjectNavItem[]
 }) {
   const t = getT(locale)
+  const pathname = usePathname() ?? `/${locale}`
   const [scrolled, setScrolled] = useState(false)
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
@@ -38,11 +40,14 @@ export default function Navbar({
     setMenuDropdown(null)
   }
 
+  const localizedPath = (nextLocale: string) => {
+    const pathWithoutLocale = pathname.replace(/^\/(en|fr)(?=\/|$)/, '')
+    return `/${nextLocale}${pathWithoutLocale}`
+  }
+
   const volunteerNav = {
     label: t.nav.volunteer,
-    href: volunteerProjects[0]
-      ? `/volunteer/${volunteerProjects[0].slug}`
-      : '/volunteer/stories',
+    href: volunteerProjects[0] ? `/volunteer/${volunteerProjects[0].slug}` : '/volunteer/stories',
     children: [
       ...volunteerProjects.map((project) => ({
         label: project.title,
@@ -106,7 +111,7 @@ export default function Navbar({
         </div>
         <div className="flex shrink-0 items-center gap-2 sm:gap-3">
           <Link
-            href="/en"
+            href={localizedPath('en')}
             className={
               locale === 'en' ? 'font-medium text-white' : 'transition-colors hover:text-white'
             }
@@ -116,7 +121,7 @@ export default function Navbar({
           </Link>
           <span className="opacity-30">/</span>
           <Link
-            href="/fr"
+            href={localizedPath('fr')}
             className={
               locale === 'fr' ? 'font-medium text-white' : 'transition-colors hover:text-white'
             }
@@ -181,9 +186,7 @@ export default function Navbar({
               <button
                 type="button"
                 onClick={() =>
-                  setOpenDropdown(
-                    openDropdown === volunteerNav.label ? null : volunteerNav.label,
-                  )
+                  setOpenDropdown(openDropdown === volunteerNav.label ? null : volunteerNav.label)
                 }
                 className="flex h-8 w-7 items-center justify-center rounded-lg text-[12px] text-[var(--muted)] hover:bg-[var(--cream)] md:hidden"
                 aria-expanded={openDropdown === volunteerNav.label}
@@ -192,7 +195,7 @@ export default function Navbar({
                 ▾
               </button>
               {openDropdown === volunteerNav.label && (
-                <div className="absolute top-full right-0 z-50 mt-1 min-w-[200px] rounded-xl border border-[var(--border)] bg-white py-2 shadow-lg md:left-0 md:right-auto">
+                <div className="absolute top-full right-0 z-50 mt-1 min-w-[200px] rounded-xl border border-[var(--border)] bg-white py-2 shadow-lg md:right-auto md:left-0">
                   {volunteerNav.children.map((child) => (
                     <Link
                       key={child.href}
@@ -304,7 +307,6 @@ export default function Navbar({
               </div>
             ))}
           </nav>
-
         </aside>
       </div>
     </>

@@ -131,12 +131,6 @@ export const translations = {
         GB: 'United Kingdom',
         OTHER: 'Other country',
       },
-      frequencyLabel: 'Frequency',
-      frequency: {
-        once: 'One-time',
-        monthly: 'Monthly',
-        yearly: 'Annual',
-      },
       amountLabel: 'Amount',
       customPlaceholder: 'Custom amount',
       netCost: {
@@ -503,12 +497,6 @@ export const translations = {
         CH: 'Suisse',
         GB: 'Royaume-Uni',
         OTHER: 'Autre pays',
-      },
-      frequencyLabel: 'Fréquence',
-      frequency: {
-        once: 'Ponctuel',
-        monthly: 'Mensuel',
-        yearly: 'Annuel',
       },
       amountLabel: 'Montant',
       customPlaceholder: 'Montant libre',

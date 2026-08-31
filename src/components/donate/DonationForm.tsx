@@ -10,7 +10,8 @@ import {
   DONATE_COUNTRY_CONFIG,
   DONATE_EMAIL,
   DONATE_PRESET_AMOUNTS,
-  HELLOASSO_FORM_URL,
+  HELLOASSO_FORM_URL_EN,
+  HELLOASSO_FORM_URL_FR,
   PAYPAL_URL,
   getImpactLabel,
   isGivingEuropeCountry,
@@ -154,6 +155,8 @@ export default function DonationForm({ locale }: { locale: string }) {
   const impactAmounts = { consultation: 15, medicine: 50, kit: 100 }
 
   const helloAssoNote = country === 'FR' ? d.helloAssoNote : d.helloAssoNoteInternational
+
+  const helloAssoFormUrl = locale === 'fr' ? HELLOASSO_FORM_URL_FR : HELLOASSO_FORM_URL_EN
 
   function selectAmount(amount: number) {
     setSelectedAmount(amount)
@@ -301,7 +304,7 @@ export default function DonationForm({ locale }: { locale: string }) {
               {helloAssoNote}
             </p>
             <section className="mb-8" aria-label={d.helloAssoTitle}>
-              <HelloAssoWidget formUrl={HELLOASSO_FORM_URL} />
+              <HelloAssoWidget formUrl={helloAssoFormUrl} />
             </section>
           </>
         )}
@@ -332,24 +335,6 @@ export default function DonationForm({ locale }: { locale: string }) {
             </div>
           </div>
         )}
-      </div>
-
-      <SectionLabel>{d.frequencyLabel}</SectionLabel>
-      <div className="mb-6 grid grid-cols-3 gap-1.5">
-        {(['once', 'monthly', 'yearly'] as const).map((freq) => (
-          <button
-            key={freq}
-            type="button"
-            onClick={() => setFrequency(freq)}
-            className={`rounded-lg border px-2 py-2 text-[15px] transition-colors ${
-              frequency === freq
-                ? 'border-[var(--green)] bg-[var(--green-pale)] font-medium text-[var(--green-dark)]'
-                : 'border-[var(--border)] bg-white text-[var(--muted)] hover:border-[var(--green)]/40'
-            }`}
-          >
-            {d.frequency[freq]}
-          </button>
-        ))}
       </div>
 
       <SectionLabel>{d.amountLabel}</SectionLabel>
