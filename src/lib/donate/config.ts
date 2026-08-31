@@ -110,7 +110,7 @@ export function getHelloAssoWidgetUrl(formUrl: string = HELLOASSO_FORM_URL): str
 }
 
 export const PAYPAL_URL = 'https://www.paypal.com/donate/?hosted_button_id=HKFPNYYSLY8PG'
-export const DONATE_EMAIL = 'donate@medequali.team'
+export const DONATE_EMAIL = 'admin@medequali.team'
 
 export function getImpactLabel(amount: number, locale: string): string {
   const labels =
