@@ -71,7 +71,7 @@ export default async function VolunteerStoriesPage({
               {t.volunteerStories.subtitle}
             </p>
           ) : (
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
               {stories.map((story, index) => (
                 <Link
                   key={story.id}
