@@ -8,6 +8,7 @@ import config from '@payload-config'
 import { getT } from '@/i18n/translations'
 import { getProjectsWithVolunteerNeeds } from '@/lib/volunteer'
 import { formatStoryDate, getVolunteerStory } from '@/lib/volunteer-stories'
+import Image from 'next/image'
 
 export const dynamic = 'force-dynamic'
 
@@ -57,7 +58,7 @@ export default async function VolunteerStoryPage({
           className="pointer-events-none absolute inset-0"
           style={{ background: 'var(--gradient-hero-glow)' }}
         />
-        <div className="relative mx-auto max-w-7xl animate-fade-up">
+        <div className="animate-fade-up relative mx-auto max-w-7xl">
           <Link
             href={`/${locale}/volunteer/stories`}
             className="mb-6 inline-flex items-center gap-2 text-[14px] font-medium text-white/50 transition-colors hover:text-white"
@@ -90,7 +91,7 @@ export default async function VolunteerStoryPage({
               style={story.coverImage ? undefined : { background: 'var(--gradient-card)' }}
             >
               {story.coverImage ? (
-                <img
+                <Image
                   src={story.coverImage}
                   alt={story.coverImageAlt}
                   className="aspect-square w-full object-cover"

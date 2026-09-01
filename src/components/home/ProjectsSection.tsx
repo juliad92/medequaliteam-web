@@ -2,6 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import { getT } from '@/i18n/translations'
 import type { Media } from '@/payload/payload-types'
+import Image from 'next/image'
 
 const getPlaceholders = (t: ReturnType<typeof getT>) => [
   {
@@ -56,7 +57,7 @@ function ProjectCard({
         style={imageUrl ? undefined : { background: project.gradient ?? 'var(--gradient-card)' }}
       >
         {imageUrl ? (
-          <img src={imageUrl} alt={imageAlt} className="h-full w-full object-cover" />
+          <Image src={imageUrl} alt={imageAlt} className="h-full w-full object-cover" />
         ) : null}
         <span
           className={`absolute top-3 left-3 rounded-full px-3 py-1 text-[14px] font-medium tracking-wide uppercase ${project.status === 'active' ? 'bg-[var(--green)]/90 text-white' : 'bg-black/40 text-white/80'}`}

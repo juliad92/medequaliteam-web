@@ -7,6 +7,7 @@ import config from '@payload-config'
 import { getT } from '@/i18n/translations'
 import { getProjectsWithVolunteerNeeds } from '@/lib/volunteer'
 import { formatStoryDate, getVolunteerStories } from '@/lib/volunteer-stories'
+import Image from 'next/image'
 
 export const dynamic = 'force-dynamic'
 
@@ -47,7 +48,7 @@ export default async function VolunteerStoriesPage({
           className="pointer-events-none absolute inset-0"
           style={{ background: 'var(--gradient-hero-glow)' }}
         />
-        <div className="relative mx-auto max-w-7xl animate-fade-up">
+        <div className="animate-fade-up relative mx-auto max-w-7xl">
           <p className="mb-4 flex items-center gap-3 text-[13px] font-medium tracking-[0.16em] text-[var(--green-light)] uppercase">
             <span className="h-px w-8 bg-[var(--green-light)]" />
             {t.volunteerStories.eyebrow}
@@ -76,18 +77,14 @@ export default async function VolunteerStoriesPage({
                 <Link
                   key={story.id}
                   href={`/${locale}/volunteer/stories/${story.slug}`}
-                  className={`group overflow-hidden rounded-2xl border border-[var(--border)] bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-xl animate-fade-up ${index === 0 ? 'delay-100' : 'delay-200'}`}
+                  className={`group animate-fade-up overflow-hidden rounded-2xl border border-[var(--border)] bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${index === 0 ? 'delay-100' : 'delay-200'}`}
                 >
                   <div
                     className="relative aspect-[5/4] overflow-hidden bg-[var(--cream)]"
-                    style={
-                      story.coverImage
-                        ? undefined
-                        : { background: 'var(--gradient-card)' }
-                    }
+                    style={story.coverImage ? undefined : { background: 'var(--gradient-card)' }}
                   >
                     {story.coverImage ? (
-                      <img
+                      <Image
                         src={story.coverImage}
                         alt={story.coverImageAlt}
                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"

@@ -1,6 +1,7 @@
 import React from 'react'
 import { getT } from '@/i18n/translations'
 import type { Media } from '@/payload/payload-types'
+import Image from 'next/image'
 
 type MissionImage = string | Media | null | undefined
 
@@ -38,7 +39,7 @@ export default function MissionSection({
             style={imageUrl ? undefined : { background: 'var(--gradient-mission)' }}
           >
             {imageUrl ? (
-              <img src={imageUrl} alt={imageAlt} className="h-full w-full object-cover" />
+              <Image src={imageUrl} alt={imageAlt} className="h-full w-full object-cover" />
             ) : (
               <div className="flex h-full w-full items-end p-6">
                 <p className="text-base text-white/60 italic">{t.mission.photoCaption}</p>

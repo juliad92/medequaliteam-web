@@ -2,6 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import { getT } from '@/i18n/translations'
 import type { Homepage, Media } from '@/payload/payload-types'
+import Image from 'next/image'
 
 type Project = {
   slug: string
@@ -34,7 +35,7 @@ export default function HeroSection({
   return (
     <section className="relative flex min-h-[calc(100svh-7rem)] items-end overflow-hidden bg-[var(--charcoal)] lg:min-h-[88vh]">
       {imageUrl ? (
-        <img
+        <Image
           src={imageUrl}
           alt=""
           aria-hidden
