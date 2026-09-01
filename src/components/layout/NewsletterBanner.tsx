@@ -119,7 +119,9 @@ export default function NewsletterBanner({ locale }: { locale: string }) {
                     if (status === 'error') setStatus('idle')
                   }}
                   aria-invalid={fieldErrors.firstName ? true : undefined}
-                  aria-describedby={fieldErrors.firstName ? 'newsletter-firstName-error' : undefined}
+                  aria-describedby={
+                    fieldErrors.firstName ? 'newsletter-firstName-error' : undefined
+                  }
                   className={fieldErrors.firstName ? inputErrorClass : inputClass}
                 />
                 {fieldErrors.firstName && (

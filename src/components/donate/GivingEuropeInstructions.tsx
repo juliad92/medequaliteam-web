@@ -10,15 +10,7 @@ function DetailRow({ label, value }: { label: string; value: string }) {
   )
 }
 
-function ContactLine({
-  name,
-  email,
-  phone,
-}: {
-  name?: string
-  email: string
-  phone: string
-}) {
+function ContactLine({ name, email, phone }: { name?: string; email: string; phone: string }) {
   return (
     <p className="text-[15px] leading-relaxed text-[var(--charcoal)]">
       {name && <span className="font-medium">{name}: </span>}
@@ -26,7 +18,10 @@ function ContactLine({
         {email}
       </a>
       {' · '}
-      <a href={`tel:${phone.replace(/\s/g, '')}`} className="text-[var(--green-dark)] hover:underline">
+      <a
+        href={`tel:${phone.replace(/\s/g, '')}`}
+        className="text-[var(--green-dark)] hover:underline"
+      >
         {phone}
       </a>
     </p>

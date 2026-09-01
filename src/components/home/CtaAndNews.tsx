@@ -4,13 +4,7 @@ import { getT } from '@/i18n/translations'
 import InstagramFeed from '@/components/home/InstagramFeed'
 import type { InstagramPost } from '@/lib/instagram'
 
-export function VolunteerCTA({
-  locale,
-  volunteerHref,
-}: {
-  locale: string
-  volunteerHref: string
-}) {
+export function VolunteerCTA({ locale, volunteerHref }: { locale: string; volunteerHref: string }) {
   const t = getT(locale)
   return (
     <section className="px-4 py-16 sm:px-8 sm:py-20" style={{ background: 'var(--green-dark)' }}>

@@ -88,11 +88,7 @@ export default async function VolunteerProjectPage({
   const project = projects[0]
   if (!project) notFound()
 
-  const needs = await getVolunteerNeedsForProject(
-    payload,
-    project.id,
-    locale as 'en' | 'fr',
-  )
+  const needs = await getVolunteerNeedsForProject(payload, project.id, locale as 'en' | 'fr')
 
   if (needs.length === 0) notFound()
 
@@ -142,7 +138,7 @@ export default async function VolunteerProjectPage({
         <div className="mx-auto max-w-7xl space-y-16">
           <section
             id="volunteer-overview"
-            className="scroll-mt-36 grid gap-10 lg:grid-cols-[1.1fr_0.9fr]"
+            className="grid scroll-mt-36 gap-10 lg:grid-cols-[1.1fr_0.9fr]"
           >
             <div>
               {copy.intro.map((p) => (

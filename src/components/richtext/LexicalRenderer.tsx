@@ -27,7 +27,9 @@ function getTextAlign(node: LexicalNode): React.CSSProperties | undefined {
 
 function renderChildren(children?: LexicalNode[]) {
   if (!children || children.length === 0) return null
-  return children.map((child, idx) => <React.Fragment key={idx}>{renderNode(child)}</React.Fragment>)
+  return children.map((child, idx) => (
+    <React.Fragment key={idx}>{renderNode(child)}</React.Fragment>
+  ))
 }
 
 function renderNode(node: LexicalNode): React.ReactNode {
@@ -41,7 +43,10 @@ function renderNode(node: LexicalNode): React.ReactNode {
 
   if (type === 'paragraph') {
     return (
-      <p className="mb-4 text-[17px] leading-relaxed text-[var(--muted)]" style={getTextAlign(node)}>
+      <p
+        className="mb-4 text-[17px] leading-relaxed text-[var(--muted)]"
+        style={getTextAlign(node)}
+      >
         {renderChildren(node.children)}
       </p>
     )
@@ -70,11 +75,7 @@ function renderNode(node: LexicalNode): React.ReactNode {
   }
 
   if (type === 'listitem') {
-    return (
-      <li className="mb-1.5 text-[17px] leading-relaxed">
-        {renderChildren(node.children)}
-      </li>
-    )
+    return <li className="mb-1.5 text-[17px] leading-relaxed">{renderChildren(node.children)}</li>
   }
 
   // Unknown node: fall back to rendering children
@@ -85,4 +86,3 @@ export default function LexicalRenderer({ content }: { content: unknown }) {
   if (!isLexicalDocument(content) || !content.root) return null
   return <div>{renderNode(content.root)}</div>
 }
-

@@ -151,7 +151,8 @@ export const Testimonials: CollectionConfig = {
       required: true,
       localized: true,
       admin: {
-        description: 'Pull quote highlighted on the story page (also usable as a short testimonial).',
+        description:
+          'Pull quote highlighted on the story page (also usable as a short testimonial).',
       },
     },
     {

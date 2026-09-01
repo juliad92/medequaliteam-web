@@ -68,9 +68,7 @@ export async function getInstagramPosts(limit = 6): Promise<InstagramPost[]> {
     const data = (await response.json()) as { data?: InstagramMediaItem[] }
     if (!data.data?.length) return []
 
-    return data.data
-      .map(mapMediaItem)
-      .filter((post): post is InstagramPost => post !== null)
+    return data.data.map(mapMediaItem).filter((post): post is InstagramPost => post !== null)
   } catch {
     return []
   }

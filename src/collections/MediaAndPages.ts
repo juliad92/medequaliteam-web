@@ -1,9 +1,7 @@
 import type { CollectionConfig, Block } from 'payload'
 
 const mediaStaticDir =
-  process.env.VERCEL || process.env.BLOB_READ_WRITE_TOKEN?.trim()
-    ? undefined
-    : 'public/media'
+  process.env.VERCEL || process.env.BLOB_READ_WRITE_TOKEN?.trim() ? undefined : 'public/media'
 
 // ─── Reusable content blocks ────────────────────────────────────────────────
 

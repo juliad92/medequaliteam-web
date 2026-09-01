@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { useTranslation } from '@payloadcms/ui'
 import {
@@ -35,7 +35,10 @@ import {
   parseDate,
   type PlanningEntry,
 } from '@/lib/volunteer/planning-dates'
-import { VolunteerRoleCategoryDayCounts, VolunteerRoleCategoryIcons } from './VolunteerRoleCategoryIcons'
+import {
+  VolunteerRoleCategoryDayCounts,
+  VolunteerRoleCategoryIcons,
+} from './VolunteerRoleCategoryIcons'
 
 type Props = {
   entries: PlanningEntry[]
@@ -44,8 +47,11 @@ type Props = {
 export function VolunteerApplicationsPlanningClient({ entries }: Props) {
   const { i18n } = useTranslation()
   const language = resolveAdminLanguage(i18n.language)
-  const copy = (key: Parameters<typeof getVolunteerApplicationsAdminCopy>[1]) =>
-    getVolunteerApplicationsAdminCopy(language, key)
+  const copy = useCallback(
+    (key: Parameters<typeof getVolunteerApplicationsAdminCopy>[1]) =>
+      getVolunteerApplicationsAdminCopy(language, key),
+    [language],
+  )
   const statusLabels = volunteerApplicationStatusLabels[language]
 
   const today = new Date()
@@ -121,7 +127,7 @@ export function VolunteerApplicationsPlanningClient({ entries }: Props) {
         value: option.value,
       })),
     ],
-    [language],
+    [copy, language],
   )
 
   return (
@@ -172,10 +178,16 @@ export function VolunteerApplicationsPlanningClient({ entries }: Props) {
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <button type="button" onClick={() => shiftMonth(-1)} aria-label={copy('previousMonth')}>
+              <button
+                type="button"
+                onClick={() => shiftMonth(-1)}
+                aria-label={copy('previousMonth')}
+              >
                 ◀
               </button>
-              <strong style={{ minWidth: '10rem', textAlign: 'center', textTransform: 'capitalize' }}>
+              <strong
+                style={{ minWidth: '10rem', textAlign: 'center', textTransform: 'capitalize' }}
+              >
                 {monthMeta.label}
               </strong>
               <button type="button" onClick={() => shiftMonth(1)} aria-label={copy('nextMonth')}>
@@ -195,7 +207,10 @@ export function VolunteerApplicationsPlanningClient({ entries }: Props) {
 
             <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <span>{copy('project')}</span>
-              <select value={projectFilter} onChange={(event) => setProjectFilter(event.target.value)}>
+              <select
+                value={projectFilter}
+                onChange={(event) => setProjectFilter(event.target.value)}
+              >
                 <option value="all">{copy('allProjects')}</option>
                 {projects.map(([id, title]) => (
                   <option key={id} value={id}>
@@ -207,7 +222,10 @@ export function VolunteerApplicationsPlanningClient({ entries }: Props) {
 
             <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <span>{copy('status')}</span>
-              <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)}>
+              <select
+                value={statusFilter}
+                onChange={(event) => setStatusFilter(event.target.value)}
+              >
                 {statusFilterOptions.map((option) => (
                   <option key={option.value} value={option.value}>
                     {option.label}
@@ -227,7 +245,10 @@ export function VolunteerApplicationsPlanningClient({ entries }: Props) {
             }}
           >
             {volunteerApplicationStatusValues.map((value) => (
-              <span key={value} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.375rem' }}>
+              <span
+                key={value}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.375rem' }}
+              >
                 <span
                   style={{
                     width: '0.75rem',
@@ -265,7 +286,14 @@ export function VolunteerApplicationsPlanningClient({ entries }: Props) {
           </div>
 
           <div style={{ overflowX: 'auto', marginBottom: '1.5rem' }}>
-            <table style={{ width: '100%', minWidth: '960px', borderCollapse: 'collapse', fontSize: '0.875rem' }}>
+            <table
+              style={{
+                width: '100%',
+                minWidth: '960px',
+                borderCollapse: 'collapse',
+                fontSize: '0.875rem',
+              }}
+            >
               <thead>
                 <tr>
                   <th style={headerCellStyle}>{copy('candidate')}</th>
@@ -277,9 +305,18 @@ export function VolunteerApplicationsPlanningClient({ entries }: Props) {
                     <div style={{ marginBottom: '0.5rem' }}>
                       {copy('period')} ({monthMeta.label})
                     </div>
-                    <div style={{ display: 'grid', gridTemplateColumns: `repeat(${monthMeta.daysInMonth}, 1fr)`, gap: '1px' }}>
+                    <div
+                      style={{
+                        display: 'grid',
+                        gridTemplateColumns: `repeat(${monthMeta.daysInMonth}, 1fr)`,
+                        gap: '1px',
+                      }}
+                    >
                       {Array.from({ length: monthMeta.daysInMonth }, (_, index) => (
-                        <span key={index + 1} style={{ fontSize: '0.6875rem', opacity: 0.7, textAlign: 'center' }}>
+                        <span
+                          key={index + 1}
+                          style={{ fontSize: '0.6875rem', opacity: 0.7, textAlign: 'center' }}
+                        >
                           {index + 1}
                         </span>
                       ))}
@@ -303,7 +340,13 @@ export function VolunteerApplicationsPlanningClient({ entries }: Props) {
                     const period = getPresencePeriod(entry)
                     const barStyle =
                       period &&
-                      getBarStyle(period.start, period.end, monthMeta.start, monthMeta.end, monthMeta.daysInMonth)
+                      getBarStyle(
+                        period.start,
+                        period.end,
+                        monthMeta.start,
+                        monthMeta.end,
+                        monthMeta.daysInMonth,
+                      )
                     const applicationMarker = getDayMarkerStyle(
                       parseDate(entry.createdAt) ?? new Date(entry.createdAt),
                       monthMeta.start,

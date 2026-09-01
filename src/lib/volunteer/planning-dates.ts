@@ -224,7 +224,9 @@ export function parseRoleCategory(value: string | null | undefined): VolunteerRo
 
 export function inferVolunteerRoleCategory(roleName: string): VolunteerRoleCategory {
   const name = roleName.toLowerCase()
-  if (/\b(doctor|physician|médecin|midwife|sage-femme|medical coordinator|coordinateur)\b/.test(name)) {
+  if (
+    /\b(doctor|physician|médecin|midwife|sage-femme|medical coordinator|coordinateur)\b/.test(name)
+  ) {
     return 'doctor'
   }
   if (/\b(nurse|infirmier|infirmière|soignant|soignante|nursing)\b/.test(name)) {
@@ -233,7 +235,9 @@ export function inferVolunteerRoleCategory(roleName: string): VolunteerRoleCateg
   return 'helper'
 }
 
-export function getRoleCategory(role: PlanningRole | null | undefined): VolunteerRoleCategory | null {
+export function getRoleCategory(
+  role: PlanningRole | null | undefined,
+): VolunteerRoleCategory | null {
   if (!role || typeof role === 'string') return null
   return parseRoleCategory(role.roleCategory ?? null)
 }
@@ -280,8 +284,12 @@ export function comparePlanningEntryRoleCategory(
 ): number {
   const categoryA = getEntryPrimaryRoleCategory(a)
   const categoryB = getEntryPrimaryRoleCategory(b)
-  const rankA = categoryA ? volunteerRoleCategorySortRank[categoryA] : volunteerRoleCategoryOrder.length
-  const rankB = categoryB ? volunteerRoleCategorySortRank[categoryB] : volunteerRoleCategoryOrder.length
+  const rankA = categoryA
+    ? volunteerRoleCategorySortRank[categoryA]
+    : volunteerRoleCategoryOrder.length
+  const rankB = categoryB
+    ? volunteerRoleCategorySortRank[categoryB]
+    : volunteerRoleCategoryOrder.length
   if (rankA !== rankB) return rankA - rankB
 
   const locale = language === 'fr' ? 'fr' : 'en'
