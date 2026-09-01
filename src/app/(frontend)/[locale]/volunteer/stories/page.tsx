@@ -87,7 +87,9 @@ export default async function VolunteerStoriesPage({
                       <Image
                         src={story.coverImage}
                         alt={story.coverImageAlt}
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       />
                     ) : null}
                   </div>

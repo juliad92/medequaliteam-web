@@ -7,6 +7,7 @@
     "build": "pnpm run generate:types && next build",
     "start": "next start",
     "lint": "eslint",
+    "typecheck": "tsc --noEmit",
     "format": "prettier --write ./src",
     "format:check": "prettier --check ./src",
     "generate:types": "npx --yes node@22.22.2 --experimental-strip-types --disable-warning=ExperimentalWarning ./node_modules/payload/bin.js generate:types --disable-transpile",

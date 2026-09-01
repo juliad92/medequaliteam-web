@@ -1,6 +1,7 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { checkRateLimit, RATE_LIMITS } from '@/lib/rate-limit'
+import { isValidEmail } from '@/lib/validation'
 import { defaultVolunteerApplicationStatus } from '@/lib/volunteer/application-status'
 import { isAllowedCvFile, mimeTypeForCv, sanitizeCvFilename } from '@/lib/volunteer/cv-upload'
 
@@ -98,6 +99,10 @@ export async function POST(req: Request) {
       age < 16
     ) {
       return Response.json({ ok: false, error: 'Missing required fields.' }, { status: 400 })
+    }
+
+    if (!isValidEmail(email)) {
+      return Response.json({ ok: false, error: 'Invalid email address.' }, { status: 400 })
     }
 
     if (cvFile && !isAllowedCvFile(cvFile.name, cvFile.type, cvFile.size)) {

@@ -57,7 +57,13 @@ function ProjectCard({
         style={imageUrl ? undefined : { background: project.gradient ?? 'var(--gradient-card)' }}
       >
         {imageUrl ? (
-          <Image src={imageUrl} alt={imageAlt} className="h-full w-full object-cover" />
+          <Image
+            src={imageUrl}
+            alt={imageAlt}
+            fill
+            className="object-cover"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          />
         ) : null}
         <span
           className={`absolute top-3 left-3 rounded-full px-3 py-1 text-[14px] font-medium tracking-wide uppercase ${project.status === 'active' ? 'bg-[var(--green)]/90 text-white' : 'bg-black/40 text-white/80'}`}

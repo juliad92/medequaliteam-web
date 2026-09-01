@@ -87,14 +87,16 @@ export default async function VolunteerStoryPage({
         <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-16">
           <div className="animate-fade-up">
             <div
-              className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--cream)]"
+              className="relative aspect-square overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--cream)]"
               style={story.coverImage ? undefined : { background: 'var(--gradient-card)' }}
             >
               {story.coverImage ? (
                 <Image
                   src={story.coverImage}
                   alt={story.coverImageAlt}
-                  className="aspect-square w-full object-cover"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                 />
               ) : (
                 <div className="aspect-square w-full" />

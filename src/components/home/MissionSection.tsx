@@ -39,7 +39,13 @@ export default function MissionSection({
             style={imageUrl ? undefined : { background: 'var(--gradient-mission)' }}
           >
             {imageUrl ? (
-              <Image src={imageUrl} alt={imageAlt} className="h-full w-full object-cover" />
+              <Image
+                src={imageUrl}
+                alt={imageAlt}
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
             ) : (
               <div className="flex h-full w-full items-end p-6">
                 <p className="text-base text-white/60 italic">{t.mission.photoCaption}</p>

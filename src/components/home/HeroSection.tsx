@@ -39,7 +39,10 @@ export default function HeroSection({
           src={imageUrl}
           alt=""
           aria-hidden
-          className="absolute inset-0 h-full w-full object-cover"
+          fill
+          priority
+          className="object-cover"
+          sizes="100vw"
         />
       ) : null}
       <div
