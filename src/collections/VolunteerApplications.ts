@@ -51,7 +51,8 @@ export const VolunteerApplications: CollectionConfig = {
   },
   access: {
     read: ({ req }) => Boolean(req.user),
-    create: () => true,
+    // Public submissions go through /api/volunteer-application (Local API bypasses access).
+    create: () => false,
     update: ({ req }) => Boolean(req.user),
     delete: ({ req }) => Boolean(req.user),
   },

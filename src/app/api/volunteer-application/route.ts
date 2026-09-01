@@ -1,5 +1,6 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
+import { checkRateLimit, RATE_LIMITS } from '@/lib/rate-limit'
 import { defaultVolunteerApplicationStatus } from '@/lib/volunteer/application-status'
 import { isAllowedCvFile, mimeTypeForCv, sanitizeCvFilename } from '@/lib/volunteer/cv-upload'
 
@@ -57,6 +58,9 @@ async function readApplicationRequest(req: Request): Promise<{
 }
 
 export async function POST(req: Request) {
+  const rateLimited = checkRateLimit(req, 'volunteer-application', RATE_LIMITS.volunteerApplication)
+  if (rateLimited) return rateLimited
+
   try {
     let body: Record<string, unknown>
     let cvFile: File | null

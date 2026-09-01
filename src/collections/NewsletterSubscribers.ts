@@ -22,7 +22,8 @@ export const NewsletterSubscribers: CollectionConfig = {
   },
   access: {
     read: ({ req }) => Boolean(req.user),
-    create: () => true,
+    // Public sign-ups go through /api/newsletter (Local API bypasses access).
+    create: () => false,
     update: ({ req }) => Boolean(req.user),
     delete: ({ req }) => Boolean(req.user),
   },

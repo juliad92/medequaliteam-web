@@ -37,6 +37,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
   const { docs: posts } = await payload.find({
     collection: 'posts',
+    where: { _status: { equals: 'published' } },
     sort: '-publishedAt',
     locale: locale as 'en' | 'fr',
     limit: 3,

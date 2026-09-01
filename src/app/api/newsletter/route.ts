@@ -1,5 +1,6 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
+import { checkRateLimit, RATE_LIMITS } from '@/lib/rate-limit'
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -9,6 +10,9 @@ function str(value: unknown): string | undefined {
 }
 
 export async function POST(req: Request) {
+  const rateLimited = checkRateLimit(req, 'newsletter', RATE_LIMITS.newsletter)
+  if (rateLimited) return rateLimited
+
   try {
     const body = await req.json()
 

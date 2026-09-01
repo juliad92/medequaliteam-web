@@ -1,3 +1,5 @@
+import { checkRateLimit, RATE_LIMITS } from '@/lib/rate-limit'
+
 const COMPLAINTS_RECIPIENT = 'safeguarding@medequali.team'
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -45,6 +47,9 @@ function complaintEmailText(body: Record<string, unknown>): string {
 }
 
 export async function POST(req: Request) {
+  const rateLimited = checkRateLimit(req, 'complaints', RATE_LIMITS.complaints)
+  if (rateLimited) return rateLimited
+
   let body: unknown
 
   try {
