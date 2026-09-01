@@ -85,15 +85,16 @@ export default function Navbar({
       <div className="flex items-center justify-between gap-2 bg-[var(--charcoal)] px-4 py-2 text-[12px] tracking-wider text-white/50 sm:px-8 sm:text-[13px]">
         <div className="flex gap-2 sm:gap-4">
           <a
-            href="https://facebook.com"
+            href="https://facebook.com/MedEqualiTeam"
             target="_blank"
             rel="noopener noreferrer"
             className="transition-colors hover:text-white"
           >
             Facebook
           </a>
+          {/* 'https://linkedin.com/company/medequaliteam-france', */}
           <a
-            href="https://twitter.com"
+            href="https://x.com/equalimed"
             target="_blank"
             rel="noopener noreferrer"
             className="transition-colors hover:text-white"
@@ -101,7 +102,7 @@ export default function Navbar({
             Twitter
           </a>
           <a
-            href="https://instagram.com"
+            href="https://instagram.com/medequaliteam"
             target="_blank"
             rel="noopener noreferrer"
             className="transition-colors hover:text-white"
