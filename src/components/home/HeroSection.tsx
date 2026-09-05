@@ -81,7 +81,7 @@ export default function HeroSection({
               {t.hero.donateCta}
             </Link>
             <Link
-              href={`/${locale}/volunteer`}
+              href={`/${locale}/volunteer/volunteer_greece`}
               className="inline-flex items-center gap-2 rounded-lg border border-white/30 px-7 py-3.5 text-base font-medium text-white/80 transition-all hover:border-white/60 hover:text-white"
             >
               {t.hero.volunteerCta}

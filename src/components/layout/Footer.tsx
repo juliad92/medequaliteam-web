@@ -49,13 +49,19 @@ export default function Footer({
               </p>
               <p className="mb-5 text-[15px] leading-relaxed">{t.footer.tagline}</p>
               <div className="flex gap-2">
-                {['f', 'tw', 'ig'].map((s) => (
+                {[
+                  { label: 'f', href: 'https://facebook.com/MedEqualiTeam' },
+                  { label: 'tw', href: 'https://x.com/equalimed' },
+                  { label: 'ig', href: 'https://instagram.com/medequaliteam' },
+                ].map((s) => (
                   <a
-                    key={s}
-                    href="#"
+                    key={s.label}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/6 text-[13px] transition-all hover:bg-white/12 hover:text-white"
                   >
-                    {s}
+                    {s.label}
                   </a>
                 ))}
               </div>
