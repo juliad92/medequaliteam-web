@@ -9,13 +9,6 @@ export type VolunteerProjectNavItem = {
   location: string
 }
 
-const MEDICAL_ROLE_PATTERN =
-  /\b(medical|nurse|doctor|physician|midwife|clinical|médecin|infirmier|soignant|soignante|médecine)\b/i
-
-export function isMedicalVolunteerRole(roleName: string): boolean {
-  return MEDICAL_ROLE_PATTERN.test(roleName)
-}
-
 type Locale = 'en' | 'fr'
 
 const VOLUNTEER_NAV_REVALIDATE_SECONDS = 300

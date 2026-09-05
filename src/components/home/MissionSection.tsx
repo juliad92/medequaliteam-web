@@ -1,19 +1,9 @@
 import React from 'react'
 import { getT } from '@/i18n/translations'
 import type { Media } from '@/payload/payload-types'
-import Image from 'next/image'
+import { getMediaImageSrc, MediaImage } from '@/components/media-image'
 
 type MissionImage = string | Media | null | undefined
-
-function getMissionImageUrl(image: MissionImage): string | null {
-  if (!image || typeof image === 'string') return null
-  return image.sizes?.card?.url ?? image.url ?? null
-}
-
-function getMissionImageAlt(image: MissionImage, fallback: string): string {
-  if (!image || typeof image === 'string') return fallback
-  return image.alt ?? fallback
-}
 
 export default function MissionSection({
   locale,
@@ -23,8 +13,7 @@ export default function MissionSection({
   missionImage?: MissionImage
 }) {
   const t = getT(locale)
-  const imageUrl = getMissionImageUrl(missionImage)
-  const imageAlt = getMissionImageAlt(missionImage, t.mission.title)
+  const imageUrl = getMediaImageSrc(missionImage, 'card')
   const pillars = [
     { icon: '🏥', title: t.mission.pillar1Title, desc: t.mission.pillar1Desc },
     { icon: '🌍', title: t.mission.pillar2Title, desc: t.mission.pillar2Desc },
@@ -39,9 +28,10 @@ export default function MissionSection({
             style={imageUrl ? undefined : { background: 'var(--gradient-mission)' }}
           >
             {imageUrl ? (
-              <Image
-                src={imageUrl}
-                alt={imageAlt}
+              <MediaImage
+                image={missionImage}
+                alt={t.mission.title}
+                size="card"
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"

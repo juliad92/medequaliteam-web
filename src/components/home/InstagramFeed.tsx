@@ -68,8 +68,9 @@ export default function InstagramFeed({
             <Image
               src={post.imageUrl}
               alt=""
-              fill
-              className="object-cover transition-transform duration-300 group-hover:scale-105"
+              width={1080}
+              height={1080}
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />

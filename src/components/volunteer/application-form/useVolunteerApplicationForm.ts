@@ -2,7 +2,7 @@
 
 import { type FormEvent, useEffect, useMemo, useRef, useState } from 'react'
 
-import { isMedicalVolunteerRole } from '@/lib/volunteer'
+import { isMedicalVolunteerRole } from '@/lib/volunteer-role'
 
 import { getVolunteerApplicationFormTranslations } from './translations'
 import {

@@ -1,8 +1,8 @@
 import React from 'react'
 import Link from 'next/link'
 import { getT } from '@/i18n/translations'
-import type { Homepage, Media } from '@/payload/payload-types'
-import Image from 'next/image'
+import type { Homepage } from '@/payload/payload-types'
+import { MediaImage } from '@/components/media-image'
 
 type Project = {
   slug: string
@@ -11,13 +11,6 @@ type Project = {
   title: string
   summary: string
   gradient: string
-}
-
-type HeroImage = string | Media | null | undefined
-
-function getHeroImageUrl(image: HeroImage): string | null {
-  if (!image || typeof image === 'string') return null
-  return image.sizes?.hero?.url ?? image.url ?? null
 }
 
 export default function HeroSection({
@@ -30,25 +23,23 @@ export default function HeroSection({
   project?: Project
 }) {
   const t = getT(locale)
-  const imageUrl = getHeroImageUrl(heroData?.image)
 
   return (
     <section className="relative flex min-h-[calc(100svh-7rem)] items-end overflow-hidden bg-[var(--charcoal)] lg:min-h-[88vh]">
-      {imageUrl ? (
-        <Image
-          src={imageUrl}
-          alt=""
-          aria-hidden
-          fill
-          priority
-          className="object-cover"
-          sizes="100vw"
-        />
-      ) : null}
+      <MediaImage
+        image={heroData?.image}
+        alt=""
+        size="hero"
+        fill
+        priority
+        ariaHidden
+        className="object-cover"
+        sizes="100vw"
+      />
       <div
         className="absolute inset-0"
         style={{
-          background: imageUrl ? 'var(--gradient-hero-overlay)' : 'var(--gradient-hero)',
+          background: heroData?.image ? 'var(--gradient-hero-overlay)' : 'var(--gradient-hero)',
         }}
       />
       <div

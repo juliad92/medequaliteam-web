@@ -9,6 +9,7 @@ import { getT } from '@/i18n/translations'
 import { getProjectsWithVolunteerNeeds } from '@/lib/volunteer'
 import { formatStoryDate, getVolunteerStory } from '@/lib/volunteer-stories'
 import Image from 'next/image'
+import { MEDIA_SIZE_FALLBACKS } from '@/lib/media-image'
 
 export const dynamic = 'force-dynamic'
 
@@ -94,8 +95,9 @@ export default async function VolunteerStoryPage({
                 <Image
                   src={story.coverImage}
                   alt={story.coverImageAlt}
-                  fill
-                  className="object-cover"
+                  width={MEDIA_SIZE_FALLBACKS.card.width}
+                  height={MEDIA_SIZE_FALLBACKS.card.height}
+                  className="absolute inset-0 h-full w-full object-cover"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
               ) : (

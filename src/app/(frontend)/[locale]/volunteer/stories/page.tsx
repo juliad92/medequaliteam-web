@@ -8,6 +8,7 @@ import { getT } from '@/i18n/translations'
 import { getProjectsWithVolunteerNeeds } from '@/lib/volunteer'
 import { formatStoryDate, getVolunteerStories } from '@/lib/volunteer-stories'
 import Image from 'next/image'
+import { MEDIA_SIZE_FALLBACKS } from '@/lib/media-image'
 
 export const dynamic = 'force-dynamic'
 
@@ -87,8 +88,9 @@ export default async function VolunteerStoriesPage({
                       <Image
                         src={story.coverImage}
                         alt={story.coverImageAlt}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                        width={MEDIA_SIZE_FALLBACKS.card.width}
+                        height={MEDIA_SIZE_FALLBACKS.card.height}
+                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       />
                     ) : null}

@@ -35,9 +35,10 @@ function ProjectCard({
   locale: string
   t: ReturnType<typeof getT>
 }) {
-  const imageAlt = project.coverImage
-    ? project.coverImage.alt ?? project.title
-    : project.title
+  const imageAlt =
+    project.coverImage && typeof project.coverImage !== 'string'
+      ? (project.coverImage.alt ?? project.title)
+      : project.title
 
   return (
     <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
