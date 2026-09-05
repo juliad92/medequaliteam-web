@@ -33,7 +33,7 @@ export default function Footer({
     ],
     [t.nav.donate]: [
       { label: t.nav.donate, href: '/donate' },
-      { label: locale === 'fr' ? 'Rapport financier' : 'Financial report', href: '/donate/report' },
+      { label: t.footer.financialReport, href: '/financial-report' },
     ],
   }
   return (

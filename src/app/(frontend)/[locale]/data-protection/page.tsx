@@ -4,8 +4,7 @@ import { notFound } from 'next/navigation'
 
 import LexicalRenderer from '@/components/richtext/LexicalRenderer'
 import { getT } from '@/i18n/translations'
-import { getPageBySlug } from '@/lib/pages'
-import type { Page } from '@/payload/payload-types'
+import { getPageBySlug, getPageRichTextContent } from '@/lib/pages'
 
 import '../styles.css'
 
@@ -14,12 +13,6 @@ export const dynamic = 'force-dynamic'
 const PAGE_SLUG = 'data-protection'
 
 type Locale = 'en' | 'fr'
-
-function getRichTextContent(page: Page): unknown | null {
-  const block = page.layout.find((item) => item.blockType === 'rich-text')
-  if (!block || block.blockType !== 'rich-text') return null
-  return block.content ?? null
-}
 
 export async function generateMetadata({
   params,
@@ -54,7 +47,7 @@ export default async function DataProtectionPage({
 
   if (!page) notFound()
 
-  const content = getRichTextContent(page)
+  const content = getPageRichTextContent(page)
   const dates = page.policyDates
   const hasDates = Boolean(dates?.approvedOn || dates?.reviewedOn || dates?.reviewDate)
 

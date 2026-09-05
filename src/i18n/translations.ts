@@ -276,6 +276,13 @@ export const translations = {
       reviewDate: 'Review date',
     },
 
+    // Financial report
+    financialReport: {
+      metaTitle: 'Financial report',
+      metaDescription:
+        "How Med'EqualiTeam is funded and how donations are spent. Our accounts are reviewed by a chartered accountant.",
+    },
+
     // Complaints
     complaints: {
       metaTitle: 'Make a complaint',
@@ -395,6 +402,7 @@ export const translations = {
       charity: 'Charity No.',
       complaints: 'Complaints',
       dataProtection: 'Data protection',
+      financialReport: 'Financial report',
       rights: 'All rights reserved.',
     },
   },
@@ -678,6 +686,13 @@ export const translations = {
       reviewDate: 'Prochaine révision',
     },
 
+    // Financial report
+    financialReport: {
+      metaTitle: 'Rapport financier',
+      metaDescription:
+        "Comment Med'EqualiTeam est financée et comment les dons sont utilisés. Nos comptes sont suivis par un expert-comptable.",
+    },
+
     // Complaints
     complaints: {
       metaTitle: 'Formuler une plainte',
@@ -797,6 +812,7 @@ export const translations = {
       charity: 'N° association',
       complaints: 'Réclamations',
       dataProtection: 'Protection des données',
+      financialReport: 'Rapport financier',
       rights: 'Tous droits réservés.',
     },
   },
