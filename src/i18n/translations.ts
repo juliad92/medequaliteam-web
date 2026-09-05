@@ -62,6 +62,26 @@ export const translations = {
       active: 'Active',
       past: 'Past',
       learnMore: 'Learn more',
+      metaTitle: 'Our projects',
+      metaDescription:
+        'Discover Med’EqualiTeam’s medical projects providing free primary healthcare to refugees and displaced populations.',
+      backToList: 'All projects',
+      status: {
+        active: 'Active',
+        past: 'Past',
+        upcoming: 'Upcoming',
+      },
+      dateFrom: 'Start',
+      dateTo: 'End',
+      partners: 'Partner organisations',
+      impactStats: 'Key impact',
+      atAGlance: 'At a glance',
+      locationLabel: 'Location',
+      datesLabel: 'Dates',
+      statusLabel: 'Status',
+      volunteerCta: 'Volunteer with us',
+      donateCta: 'Donate',
+      relatedLink: 'Learn more about our work',
     },
 
     // Volunteer CTA
@@ -71,6 +91,27 @@ export const translations = {
       body: 'Our teams are small, dedicated, and international. If you have medical or organisational skills and want to make a direct impact, we want to hear from you.',
       primary: 'Volunteer in Greece',
       secondary: 'Read volunteer stories',
+    },
+
+    // Volunteer stories
+    volunteerStories: {
+      metaTitle: 'Volunteer stories',
+      metaDescription:
+        'Read firsthand accounts from doctors, nurses, and other volunteers who worked with Med’EqualiTeam in Thessaloniki.',
+      eyebrow: 'Volunteer with us',
+      title: 'Volunteer stories',
+      subtitle: 'Some stories from our volunteers in Thessaloniki',
+      by: 'by Med’EqualiTeam',
+      readStory: 'Read story',
+      backToStories: 'All stories',
+      meet: 'Meet',
+      from: 'from',
+      pullQuoteLabel: 'In their words',
+      ctaEyebrow: 'Join the team',
+      ctaTitle: 'Ready to write your own story?',
+      ctaBody:
+        'Our teams need doctors, nurses, and coordinators. If you want to make a direct impact on the ground, we want to hear from you.',
+      ctaPrimary: 'Volunteer in Greece',
     },
 
     // News
@@ -87,18 +128,17 @@ export const translations = {
     // Donate
     donate: {
       metaTitle: 'Donate',
-      metaDescription:
-        "Support Med'EqualiTeam with a donation. 100% of funds go to medicines and medical supplies in Northern Greece.",
+      metaDescription: "Support Med'EqualiTeam with a donation. 100% of funds go to operations.",
       srTitle:
         "Med'EqualiTeam donation page — select your country to see tax deduction options and donate online.",
-      eyebrow: "Med'EqualiTeam — Free healthcare for refugees",
+      eyebrow: "Med'EqualiTeam — Free healthcare for vulnerable and displaced populations",
       title: 'Every donation saves lives',
-      subtitle:
-        '100% of funds go to medicines & medical supplies in Northern Greece. We depend entirely on your generosity.',
+      subtitle: '100% of funds go to operations. We depend entirely on your generosity.',
       impact: {
         consultation: { value: '€15', label: '1 consultation funded' },
         medicine: { value: '€50', label: '1 week of medicine for a child' },
-        kit: { value: '€200', label: 'Emergency medical kit' },
+        kit: { value: '€100', label: 'Pharmacy cost for one full clinic day' },
+        afterDeduction: 'Actual cost after estimated tax deduction: {amount}',
       },
       countryLabel: 'Your country',
       countryPlaceholder: '— Select your country —',
@@ -110,12 +150,6 @@ export const translations = {
         CH: 'Switzerland',
         GB: 'United Kingdom',
         OTHER: 'Other country',
-      },
-      frequencyLabel: 'Frequency',
-      frequency: {
-        once: 'One-time',
-        monthly: 'Monthly',
-        yearly: 'Annual',
       },
       amountLabel: 'Amount',
       customPlaceholder: 'Custom amount',
@@ -171,14 +205,17 @@ export const translations = {
         operations: '100% to operations',
       },
       tax: {
-        FR: 'French tax residents: 66% tax deduction on your income tax (up to 20% of taxable income). A €50 donation costs you just {net} after deduction.',
+        FR: 'French tax residents: 66% tax deduction on your income tax (up to 20% of taxable income).',
         US: 'US taxpayers: donate online via HelloAsso, or via Friends of Fondation de France for full IRS 501(c)(3) tax deduction.',
         DE: 'German taxpayers: donate online via HelloAsso, or via Maecenata for local tax deduction.',
         BE: 'Belgian residents: donate online via HelloAsso, or via Giving Europe for local tax deduction (bank transfer).',
         CH: 'Swiss residents: donate online via HelloAsso, or via Giving Europe for donations of at least 500 CHF (local tax deduction).',
         GB: 'UK taxpayers: donate online via HelloAsso, or via Giving Europe for Gift Aid and higher-rate relief.',
         OTHER:
-          'We accept donations from anywhere in the world. Tax deductibility depends on your local legislation — check with your tax authority.',
+          'We accept donations from anywhere in the world. Tax deductions for donations to our association are available in some countries - please select above -',
+      },
+      taxCalculation: {
+        deductible: 'Estimated tax deduction rate in this country: {rate}%.',
       },
       givingEurope: {
         title: 'Giving Europe',
@@ -229,6 +266,23 @@ export const translations = {
       },
     },
 
+    // Data protection
+    dataProtection: {
+      metaTitle: 'Data Protection Policy',
+      metaDescription:
+        "Med'EqualiTeam's Data Protection Policy: how we process and protect personal data under GDPR.",
+      approvedOn: 'Approved on',
+      reviewedOn: 'Reviewed on',
+      reviewDate: 'Review date',
+    },
+
+    // Financial report
+    financialReport: {
+      metaTitle: 'Financial report',
+      metaDescription:
+        "How Med'EqualiTeam is funded and how donations are spent. Our accounts are reviewed by a chartered accountant.",
+    },
+
     // Complaints
     complaints: {
       metaTitle: 'Make a complaint',
@@ -276,7 +330,7 @@ export const translations = {
       privacyPolicyLabel: 'Privacy Policy',
       reportTitle: 'What should be reported?',
       reportIntro:
-        "Med'EqualiTeam is interested in receiving information relating to potential criminal offences, safeguarding concerns, or otherwise unacceptable behaviour by representatives of the organisation, its partners, or volunteers.",
+        "Med'EqualiTeam encourages anyone to report any information regarding potential criminal offenses, issues related to the protection of individuals, or any other unacceptable behavior on the part of the organization's representatives, partners, or volunteers",
       reportExamplesIntro: 'Examples of complaints include but are not limited to:',
       reportExamples: [
         'Failure to comply with a legal obligation or internal governance guidelines',
@@ -310,6 +364,11 @@ export const translations = {
         complaintDetails: 'Complaint details',
         complaintDetailsLabel: 'Please detail your complaint here:',
         submit: 'Submit form',
+        submitting: 'Sending…',
+        successTitle: 'Complaint submitted',
+        successBody:
+          'Thank you. Your complaint has been sent confidentially to our safeguarding team.',
+        error: 'Something went wrong. Please try again.',
         fieldErrors: {
           required: 'This field is required.',
           email: 'Please enter a valid email address.',
@@ -324,6 +383,8 @@ export const translations = {
       body: 'Receive news from the field and updates on our projects, a few times a year.',
       firstName: 'First name',
       email: 'Email',
+      pixelTrackingConsent:
+        'I agree that newsletter emails may include a tracking pixel to measure opens and engagement.',
       submit: 'Subscribe',
       submitting: 'Subscribing…',
       success: 'Thank you! You are now subscribed to our newsletter.',
@@ -341,6 +402,7 @@ export const translations = {
       charity: 'Charity No.',
       complaints: 'Complaints',
       dataProtection: 'Data protection',
+      financialReport: 'Financial report',
       rights: 'All rights reserved.',
     },
   },
@@ -409,6 +471,26 @@ export const translations = {
       active: 'Actif',
       past: 'Passé',
       learnMore: 'En savoir plus',
+      metaTitle: 'Nos projets',
+      metaDescription:
+        'Découvrez les projets médicaux de Med’EqualiTeam qui fournissent des soins de santé primaires gratuits aux réfugié·e·s et aux personnes déplacées.',
+      backToList: 'Tous les projets',
+      status: {
+        active: 'Actif',
+        past: 'Passé',
+        upcoming: 'À venir',
+      },
+      dateFrom: 'Début',
+      dateTo: 'Fin',
+      partners: 'Organisations partenaires',
+      impactStats: 'Chiffres clés',
+      atAGlance: 'En un coup d’œil',
+      locationLabel: 'Lieu',
+      datesLabel: 'Dates',
+      statusLabel: 'Statut',
+      volunteerCta: 'Devenir bénévole',
+      donateCta: 'Faire un don',
+      relatedLink: 'En savoir plus sur notre action',
     },
 
     // Volunteer CTA
@@ -418,6 +500,27 @@ export const translations = {
       body: 'Nos équipes sont petites, dévouées et internationales. Si vous avez des compétences médicales ou organisationnelles et souhaitez avoir un impact direct, contactez-nous.',
       primary: 'Bénévolat en Grèce',
       secondary: 'Lire les témoignages',
+    },
+
+    // Volunteer stories
+    volunteerStories: {
+      metaTitle: 'Témoignages de bénévoles',
+      metaDescription:
+        'Découvrez les retours d’expérience de médecins, infirmiers et autres bénévoles qui ont travaillé avec Med’EqualiTeam à Thessalonique.',
+      eyebrow: 'Bénévolat avec nous',
+      title: 'Témoignages',
+      subtitle: 'Nos volontaires à Thessalonique racontent leur expérience',
+      by: 'par Med’EqualiTeam',
+      readStory: 'Lire le témoignage',
+      backToStories: 'Tous les témoignages',
+      meet: 'Rencontrez',
+      from: 'de',
+      pullQuoteLabel: 'En leurs mots',
+      ctaEyebrow: "Rejoindre l'équipe",
+      ctaTitle: 'Prêt·e à écrire votre propre histoire ?',
+      ctaBody:
+        'Nos équipes ont besoin de médecins, d’infirmiers et de coordinateurs. Si vous souhaitez avoir un impact direct sur le terrain, contactez-nous.',
+      ctaPrimary: 'Bénévolat en Grèce',
     },
 
     // News
@@ -434,18 +537,18 @@ export const translations = {
     // Donate
     donate: {
       metaTitle: 'Faire un don',
-      metaDescription:
-        "Soutenez Med'EqualiTeam par un don. 100 % des fonds vont aux médicaments et au matériel médical en Grèce du Nord.",
+      metaDescription: "Soutenez Med'EqualiTeam par un don. 100 % des fonds vont aux opérations.",
       srTitle:
         "Page de don Med'EqualiTeam — sélectionnez votre pays pour voir les options de déduction fiscale et faire un don en ligne.",
-      eyebrow: "Med'EqualiTeam — Soins gratuits pour les réfugiés",
+      eyebrow: "Med'EqualiTeam — Soins gratuits pour les populations vulnérables et déplacées",
       title: 'Chaque don sauve des vies',
       subtitle:
-        '100 % des fonds vont aux médicaments et au matériel médical en Grèce du Nord. Nous dépendons entièrement de votre générosité.',
+        '100 % des fonds vont aux opérations. Nous dépendons entièrement de votre générosité.',
       impact: {
         consultation: { value: '15 €', label: '1 consultation financée' },
         medicine: { value: '50 €', label: '1 semaine de médicaments pour un enfant' },
-        kit: { value: '200 €', label: "Kit médical d'urgence" },
+        kit: { value: '100 €', label: 'Frais de pharmacie pour une journée complète de clinique' },
+        afterDeduction: 'Coût réel après déduction fiscale estimée : {amount}',
       },
       countryLabel: 'Votre pays',
       countryPlaceholder: '— Sélectionnez votre pays —',
@@ -457,12 +560,6 @@ export const translations = {
         CH: 'Suisse',
         GB: 'Royaume-Uni',
         OTHER: 'Autre pays',
-      },
-      frequencyLabel: 'Fréquence',
-      frequency: {
-        once: 'Ponctuel',
-        monthly: 'Mensuel',
-        yearly: 'Annuel',
       },
       amountLabel: 'Montant',
       customPlaceholder: 'Montant libre',
@@ -518,14 +615,17 @@ export const translations = {
         operations: '100 % sur le terrain',
       },
       tax: {
-        FR: "Résidents fiscaux français : déduction de 66 % de l'impôt sur le revenu (dans la limite de 20 % du revenu imposable). Un don de 50 € ne vous coûte que {net} après déduction.",
+        FR: "Résidents fiscaux français : déduction de 66 % de l'impôt sur le revenu (dans la limite de 20 % du revenu imposable).",
         US: 'Contribuables américains : don en ligne via HelloAsso, ou via Friends of Fondation de France pour la déduction fiscale IRS 501(c)(3).',
         DE: 'Contribuables allemands : don en ligne via HelloAsso, ou via Maecenata pour la déduction fiscale locale.',
         BE: 'Résidents belges : don en ligne via HelloAsso, ou via Giving Europe pour la déduction fiscale locale (virement bancaire).',
         CH: "Résidents suisses : don en ligne via HelloAsso, ou via Giving Europe pour les dons d'au moins 500 CHF (déduction fiscale locale).",
         GB: 'Contribuables britanniques : don en ligne via HelloAsso, ou via Giving Europe pour le Gift Aid et la déduction au taux supérieur.',
         OTHER:
-          'Nous acceptons les dons du monde entier. La déductibilité fiscale dépend de la législation locale — renseignez-vous auprès de votre administration fiscale.',
+          'Nous acceptons les dons du monde entier. Les déductions fiscales pour les dons à notre association sont disponibles dans certains pays — veuillez sélectionner ci-dessus -.',
+      },
+      taxCalculation: {
+        deductible: 'Taux de déduction fiscale estimé pour ce pays : {rate} %.',
       },
       givingEurope: {
         title: 'Giving Europe',
@@ -576,6 +676,23 @@ export const translations = {
       },
     },
 
+    // Data protection
+    dataProtection: {
+      metaTitle: 'Politique de protection des données',
+      metaDescription:
+        "Politique de protection des données de Med'EqualiTeam : traitement et protection des données personnelles conformément au RGPD.",
+      approvedOn: 'Approuvée le',
+      reviewedOn: 'Révisée le',
+      reviewDate: 'Prochaine révision',
+    },
+
+    // Financial report
+    financialReport: {
+      metaTitle: 'Rapport financier',
+      metaDescription:
+        "Comment Med'EqualiTeam est financée et comment les dons sont utilisés. Nos comptes sont suivis par un expert-comptable.",
+    },
+
     // Complaints
     complaints: {
       metaTitle: 'Formuler une plainte',
@@ -623,7 +740,7 @@ export const translations = {
       privacyPolicyLabel: 'Politique de confidentialité',
       reportTitle: 'Que faut-il signaler ?',
       reportIntro:
-        "Med'EqualiTeam souhaite recevoir des informations relatives à d'éventuelles infractions pénales, à des préoccupations en matière de protection ou à tout autre comportement inacceptable de la part de représentants de l'organisation, de ses partenaires ou de bénévoles.",
+        "Med'EqualiTeam encourage toute personne à signaler toute information concernant d'éventuelles infractions pénales, des problèmes liés à la protection des personnes ou tout autre comportement inacceptable de la part des représentants, partenaires ou bénévoles de l'organisation.",
       reportExamplesIntro: 'Les exemples de plaintes incluent, mais ne sont pas limités à :',
       reportExamples: [
         'Manquement à une obligation légale ou à des directives de gouvernance interne',
@@ -657,6 +774,11 @@ export const translations = {
         complaintDetails: 'Détails de la plainte',
         complaintDetailsLabel: 'Veuillez détailler votre plainte ici :',
         submit: 'Envoyer le formulaire',
+        submitting: 'Envoi…',
+        successTitle: 'Plainte envoyée',
+        successBody:
+          'Merci. Votre plainte a été envoyée de manière confidentielle à notre équipe de sauvegarde.',
+        error: 'Une erreur est survenue. Veuillez réessayer.',
         fieldErrors: {
           required: 'Ce champ est obligatoire.',
           email: 'Veuillez saisir une adresse e-mail valide.',
@@ -671,6 +793,8 @@ export const translations = {
       body: 'Recevez les nouvelles du terrain et les actualités de nos projets, quelques fois par an.',
       firstName: 'Prénom',
       email: 'E-mail',
+      pixelTrackingConsent:
+        'J’accepte que les e-mails de la newsletter puissent contenir un pixel de suivi pour mesurer les ouvertures et l’engagement.',
       submit: 'S’inscrire',
       submitting: 'Inscription…',
       success: 'Merci ! Vous êtes maintenant inscrit·e à notre newsletter.',
@@ -688,6 +812,7 @@ export const translations = {
       charity: 'N° association',
       complaints: 'Réclamations',
       dataProtection: 'Protection des données',
+      financialReport: 'Rapport financier',
       rights: 'Tous droits réservés.',
     },
   },

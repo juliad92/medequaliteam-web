@@ -18,7 +18,7 @@ export default function ImpactBar({ locale, impactStats }: ImpactBarProps) {
         {impactStats.map((stat, i) => (
           <div key={i} className="text-center">
             <span
-              className="mb-2 block font-serif leading-none text-[var(--green-light)]"
+              className="mb-2 block font-serif leading-none text-[var(--green)]"
               style={{ fontSize: 'clamp(28px, 3.5vw, 40px)', fontWeight: 400 }}
             >
               {stat.value}

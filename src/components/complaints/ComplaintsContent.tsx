@@ -4,13 +4,7 @@ import Link from 'next/link'
 import ComplaintForm from '@/components/complaints/ComplaintForm'
 import { getT } from '@/i18n/translations'
 
-function ContentSection({
-  title,
-  children,
-}: {
-  title: string
-  children: React.ReactNode
-}) {
+function ContentSection({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="mt-8">
       <h2 className="mb-3 font-serif text-[20px] font-normal text-[var(--charcoal)]">{title}</h2>
@@ -81,9 +75,8 @@ export default function ComplaintsContent({ locale }: { locale: string }) {
 
             return (
               <li key={example}>
-                {example} (
-                <span className="italic">{c.safeguardingPolicyLabel}</span> {c.safeguardingPolicySuffix}
-                )
+                {example} (<span className="italic">{c.safeguardingPolicyLabel}</span>{' '}
+                {c.safeguardingPolicySuffix})
               </li>
             )
           })}

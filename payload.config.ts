@@ -1,38 +1,3 @@
-// import { postgresAdapter } from "@payloadcms/db-postgres";
-// import { lexicalEditor } from "@payloadcms/richtext-lexical";
-// import path from "path";
-// import { buildConfig } from "payload";
-// import { fileURLToPath } from "url";
-// import sharp from "sharp";
-
-// import { Users } from "./collections/Users";
-// import { Media } from "./collections/Media";
-
-// const filename = fileURLToPath(import.meta.url);
-// const dirname = path.dirname(filename);
-
-// export default buildConfig({
-//   admin: {
-//     user: Users.slug,
-//     importMap: {
-//       baseDir: path.resolve(dirname),
-//     },
-//   },
-//   collections: [Users, Media],
-//   editor: lexicalEditor(),
-//   secret: process.env.PAYLOAD_SECRET || "",
-//   typescript: {
-//     outputFile: path.resolve(dirname, "payload-types.ts"),
-//   },
-//   db: postgresAdapter({
-//     pool: {
-//       connectionString: process.env.DATABASE_URL || "",
-//     },
-//   }),
-//   sharp,
-//   plugins: [],
-// });
-
 import { en } from '@payloadcms/translations/languages/en'
 import { fr } from '@payloadcms/translations/languages/fr'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
@@ -52,7 +17,7 @@ import { VolunteerCVs } from './src/collections/VolunteerCVs.ts'
 import { NewsletterSubscribers } from './src/collections/NewsletterSubscribers.ts'
 import { TeamMembers, Testimonials } from './src/collections/People.ts'
 import { Media, Pages } from './src/collections/MediaAndPages.ts'
-import { Navigation, SiteInfo, Homepage } from './src/globals/index.ts'
+import { SiteInfo, Homepage } from './src/globals/index.ts'
 import { Users } from './src/collections/Users.ts'
 
 const __filename = fileURLToPath(import.meta.url)
@@ -112,7 +77,6 @@ export default buildConfig({
 
   // ── Globals ──────────────────────────────────────────────────────────────────
   globals: [
-    Navigation, // Header menu + Donate CTA
     SiteInfo, // Contact, socials, footer info, default SEO
     Homepage, // Hero, impact stats, featured project
   ],

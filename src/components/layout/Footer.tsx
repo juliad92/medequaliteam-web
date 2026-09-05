@@ -1,14 +1,17 @@
 import React from 'react'
 import Link from 'next/link'
 import { getT } from '@/i18n/translations'
+import type { ProjectNavItem } from '@/lib/projects'
 import type { VolunteerProjectNavItem } from '@/lib/volunteer'
 
 export default function Footer({
   locale,
   volunteerProjects = [],
+  projects = [],
 }: {
   locale: string
   volunteerProjects?: VolunteerProjectNavItem[]
+  projects?: ProjectNavItem[]
 }) {
   const t = getT(locale)
   const footerLinks = {
@@ -17,10 +20,10 @@ export default function Footer({
       { label: t.nav.aboutOrg, href: '/about/organisation' },
       { label: t.nav.aboutTeam, href: '/about/team' },
     ],
-    [t.nav.projects]: [
-      { label: t.nav.projectsActive, href: '/projects/northern-greece' },
-      { label: t.nav.projectsPast, href: '/projects/past' },
-    ],
+    [t.nav.projects]: projects.map((project) => ({
+      label: project.title,
+      href: `/projects/${project.slug}`,
+    })),
     [t.nav.volunteer]: [
       ...volunteerProjects.map((project) => ({
         label: project.title,
@@ -30,7 +33,7 @@ export default function Footer({
     ],
     [t.nav.donate]: [
       { label: t.nav.donate, href: '/donate' },
-      { label: locale === 'fr' ? 'Rapport financier' : 'Financial report', href: '/donate/report' },
+      { label: t.footer.financialReport, href: '/financial-report' },
     ],
   }
   return (
@@ -46,13 +49,19 @@ export default function Footer({
               </p>
               <p className="mb-5 text-[15px] leading-relaxed">{t.footer.tagline}</p>
               <div className="flex gap-2">
-                {['f', 'tw', 'ig'].map((s) => (
+                {[
+                  { label: 'f', href: 'https://facebook.com/MedEqualiTeam' },
+                  { label: 'tw', href: 'https://x.com/equalimed' },
+                  { label: 'ig', href: 'https://instagram.com/medequaliteam' },
+                ].map((s) => (
                   <a
-                    key={s}
-                    href="#"
+                    key={s.label}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/6 text-[13px] transition-all hover:bg-white/12 hover:text-white"
                   >
-                    {s}
+                    {s.label}
                   </a>
                 ))}
               </div>

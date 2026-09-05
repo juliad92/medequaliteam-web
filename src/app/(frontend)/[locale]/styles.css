@@ -2,15 +2,43 @@
 @import 'tailwindcss';
 
 :root {
-  --green: #3d8c4f;
-  --green-light: #4fa363;
-  --green-pale: #edf5ef;
-  --green-dark: #265934;
-  --charcoal: #1a1c1b;
+  /* Brand palette */
+  --brand-green-dark: #1c3f22;
+  --brand-green: #2e5c30;
+  --brand-green-bright: #72c02c;
+  --brand-green-light: #a8d96b;
+  --brand-cream: #ede9c6;
+  --brand-black: #111410;
+
+  /* Semantic tokens */
+  --green-dark: var(--brand-green-dark);
+  --green-mid: var(--brand-green);
+  --green: var(--brand-green);
+  --green-light: var(--brand-green-light);
+  --green-pale: color-mix(in srgb, var(--brand-green-light) 28%, #f8f6f2);
+  --charcoal: var(--brand-black);
   --warm-white: #f8f6f2;
   --cream: #f0ede6;
-  --muted: #6b7068;
-  --border: #d6d9d3;
+  --muted: color-mix(in srgb, var(--brand-black) 52%, #f8f6f2);
+  --border: color-mix(in srgb, var(--brand-green-dark) 14%, #f8f6f2);
+
+  --gradient-hero: linear-gradient(
+    135deg,
+    var(--brand-green-dark) 0%,
+    var(--brand-black) 40%,
+    var(--brand-green) 100%
+  );
+  --gradient-hero-overlay: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--brand-black) 82%, transparent) 0%,
+    color-mix(in srgb, var(--brand-black) 72%, transparent) 40%,
+    color-mix(in srgb, var(--brand-green-dark) 78%, transparent) 100%
+  );
+  --gradient-hero-glow:
+    radial-gradient(circle at 15% 60%, rgba(114, 192, 44, 0.18) 0%, transparent 50%),
+    radial-gradient(circle at 85% 20%, rgba(168, 217, 107, 0.12) 0%, transparent 40%);
+  --gradient-mission: linear-gradient(135deg, var(--brand-green-light), var(--brand-green-bright));
+  --gradient-card: linear-gradient(135deg, var(--brand-green-light), var(--brand-green));
 }
 
 @theme inline {

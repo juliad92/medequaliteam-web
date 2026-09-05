@@ -20,6 +20,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     where: { featured: { equals: true }, _status: { equals: 'published' } },
     locale: locale as 'en' | 'fr',
     fallbackLocale: 'en',
+    depth: 1,
     limit: 3,
   })
 
@@ -36,6 +37,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
   const { docs: posts } = await payload.find({
     collection: 'posts',
+    where: { _status: { equals: 'published' } },
     sort: '-publishedAt',
     locale: locale as 'en' | 'fr',
     limit: 3,
@@ -54,7 +56,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <MissionSection locale={locale} missionImage={missionImage} />
       <ProjectsSection locale={locale} projects={projects as any} />
       <VolunteerCTA locale={locale} volunteerHref={volunteerHref} />
-      <NewsSection locale={locale} posts={posts as any} instagramPosts={instagramPosts} />
+      {/* <NewsSection locale={locale} posts={posts as any} instagramPosts={instagramPosts} /> */}
     </>
   )
 }

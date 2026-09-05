@@ -51,7 +51,10 @@ export const PHONE_COUNTRY_CODES: PhoneCountryCodeOption[] = [
   return a.name.en.localeCompare(b.name.en)
 })
 
-export function formatPhoneCountryCodeOption(option: PhoneCountryCodeOption, locale: string): string {
+export function formatPhoneCountryCodeOption(
+  option: PhoneCountryCodeOption,
+  locale: string,
+): string {
   const name = locale === 'fr' ? option.name.fr : option.name.en
   return `${option.code} (${name})`
 }

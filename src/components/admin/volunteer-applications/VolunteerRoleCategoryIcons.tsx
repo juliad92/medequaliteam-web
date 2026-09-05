@@ -3,7 +3,10 @@ import {
   getVolunteerRoleCategoryLabel,
   type AdminLanguage,
 } from '@/i18n/volunteer-applications-admin'
-import { volunteerRoleCategoryOrder, type VolunteerRoleCategory } from '@/lib/volunteer/planning-dates'
+import {
+  volunteerRoleCategoryOrder,
+  type VolunteerRoleCategory,
+} from '@/lib/volunteer/planning-dates'
 
 type Props = {
   categories: VolunteerRoleCategory[]

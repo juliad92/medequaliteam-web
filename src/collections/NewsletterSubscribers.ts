@@ -14,7 +14,7 @@ export const NewsletterSubscribers: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'email',
-    defaultColumns: ['firstName', 'email', 'locale', 'createdAt'],
+    defaultColumns: ['firstName', 'email', 'pixelTrackingConsent', 'locale', 'createdAt'],
     description: {
       en: 'Newsletter sign-ups from the website.',
       fr: 'Inscriptions à la newsletter reçues via le site.',
@@ -22,7 +22,8 @@ export const NewsletterSubscribers: CollectionConfig = {
   },
   access: {
     read: ({ req }) => Boolean(req.user),
-    create: () => true,
+    // Public sign-ups go through /api/newsletter (Local API bypasses access).
+    create: () => false,
     update: ({ req }) => Boolean(req.user),
     delete: ({ req }) => Boolean(req.user),
   },
@@ -44,6 +45,21 @@ export const NewsletterSubscribers: CollectionConfig = {
       label: {
         en: 'Email',
         fr: 'E-mail',
+      },
+    },
+    {
+      name: 'pixelTrackingConsent',
+      type: 'checkbox',
+      defaultValue: false,
+      label: {
+        en: 'Pixel tracking consent',
+        fr: 'Consentement au suivi par pixel',
+      },
+      admin: {
+        description: {
+          en: 'Whether the subscriber agreed to tracking pixels in newsletter emails.',
+          fr: 'Indique si l’abonné a accepté le suivi par pixel dans les e-mails de newsletter.',
+        },
       },
     },
     {

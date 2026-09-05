@@ -112,12 +112,10 @@ export interface Config {
   };
   fallbackLocale: ('false' | 'none' | 'null') | false | null | ('en' | 'fr') | ('en' | 'fr')[];
   globals: {
-    navigation: Navigation;
     'site-info': SiteInfo;
     homepage: Homepage;
   };
   globalsSelect: {
-    navigation: NavigationSelect<false> | NavigationSelect<true>;
     'site-info': SiteInfoSelect<false> | SiteInfoSelect<true>;
     homepage: HomepageSelect<false> | HomepageSelect<true>;
   };
@@ -515,12 +513,16 @@ export interface NewsletterSubscriber {
   id: string;
   firstName: string;
   email: string;
+  /**
+   * Whether the subscriber agreed to tracking pixels in newsletter emails.
+   */
+  pixelTrackingConsent?: boolean | null;
   locale: 'en' | 'fr';
   updatedAt: string;
   createdAt: string;
 }
 /**
- * Quotes from volunteers, shown on the Volunteer page.
+ * Volunteer stories and short quotes. Full stories appear on /volunteer/stories; featured quotes can appear on the Volunteer page.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "testimonials".
@@ -529,11 +531,44 @@ export interface Testimonial {
   id: string;
   name: string;
   /**
-   * e.g. "Doctor, Samos 2020"
+   * URL slug for the story page, e.g. "nurse" or "doctor".
+   */
+  slug: string;
+  /**
+   * e.g. "Nurse" / "Infirmière"
    */
   role?: string | null;
+  /**
+   * e.g. "Freiburg, Germany" / "Fribourg, Allemagne"
+   */
+  location?: string | null;
   photo?: (string | null) | Media;
+  /**
+   * Short preview shown on the Volunteer stories listing (1–2 sentences).
+   */
+  excerpt?: string | null;
+  /**
+   * Opening paragraph on the story detail page.
+   */
+  intro?: string | null;
+  /**
+   * Interview questions and answers shown on the story page.
+   */
+  sections?:
+    | {
+        question: string;
+        answer: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Pull quote highlighted on the story page (also usable as a short testimonial).
+   */
   quote: string;
+  /**
+   * Controls the display date and sort order on the stories listing.
+   */
+  publishedAt?: string | null;
   project?: (string | null) | Project;
   featured?: boolean | null;
   updatedAt: string;
@@ -574,7 +609,7 @@ export interface Page {
   id: string;
   title: string;
   /**
-   * e.g. "about/organisation" or "volunteer"
+   * e.g. "about/organisation", "data-protection", or "volunteer"
    */
   slug: string;
   layout: (
@@ -642,6 +677,23 @@ export interface Page {
         blockType: 'cta';
       }
   )[];
+  /**
+   * Optional. Used on legal / policy pages (e.g. Data Protection).
+   */
+  policyDates?: {
+    /**
+     * e.g. "July 2021"
+     */
+    approvedOn?: string | null;
+    /**
+     * e.g. "March 2025"
+     */
+    reviewedOn?: string | null;
+    /**
+     * e.g. "March 2026"
+     */
+    reviewDate?: string | null;
+  };
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -1133,6 +1185,7 @@ export interface VolunteerCvsSelect<T extends boolean = true> {
 export interface NewsletterSubscribersSelect<T extends boolean = true> {
   firstName?: T;
   email?: T;
+  pixelTrackingConsent?: T;
   locale?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -1143,9 +1196,21 @@ export interface NewsletterSubscribersSelect<T extends boolean = true> {
  */
 export interface TestimonialsSelect<T extends boolean = true> {
   name?: T;
+  slug?: T;
   role?: T;
+  location?: T;
   photo?: T;
+  excerpt?: T;
+  intro?: T;
+  sections?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
   quote?: T;
+  publishedAt?: T;
   project?: T;
   featured?: T;
   updatedAt?: T;
@@ -1239,6 +1304,13 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+      };
+  policyDates?:
+    | T
+    | {
+        approvedOn?: T;
+        reviewedOn?: T;
+        reviewDate?: T;
       };
   meta?:
     | T
@@ -1382,36 +1454,6 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   createdAt?: T;
 }
 /**
- * Main navigation menu. Changes here affect the header on every page.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "navigation".
- */
-export interface Navigation {
-  id: string;
-  items?:
-    | {
-        label: string;
-        type?: ('link' | 'dropdown') | null;
-        url?: string | null;
-        children?:
-          | {
-              label: string;
-              url: string;
-              id?: string | null;
-            }[]
-          | null;
-        id?: string | null;
-      }[]
-    | null;
-  donateCta?: {
-    label?: string | null;
-    url?: string | null;
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
  * Contact details, social links, legal footer information.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1422,12 +1464,6 @@ export interface SiteInfo {
   email?: string | null;
   address?: string | null;
   charityNumber?: string | null;
-  socials?: {
-    facebook?: string | null;
-    twitter?: string | null;
-    instagram?: string | null;
-    linkedin?: string | null;
-  };
   seoDefaults?: {
     title?: string | null;
     description?: string | null;
@@ -1497,50 +1533,12 @@ export interface Homepage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "navigation_select".
- */
-export interface NavigationSelect<T extends boolean = true> {
-  items?:
-    | T
-    | {
-        label?: T;
-        type?: T;
-        url?: T;
-        children?:
-          | T
-          | {
-              label?: T;
-              url?: T;
-              id?: T;
-            };
-        id?: T;
-      };
-  donateCta?:
-    | T
-    | {
-        label?: T;
-        url?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-info_select".
  */
 export interface SiteInfoSelect<T extends boolean = true> {
   email?: T;
   address?: T;
   charityNumber?: T;
-  socials?:
-    | T
-    | {
-        facebook?: T;
-        twitter?: T;
-        instagram?: T;
-        linkedin?: T;
-      };
   seoDefaults?:
     | T
     | {

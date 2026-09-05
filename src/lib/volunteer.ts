@@ -1,4 +1,6 @@
-import type { Payload } from 'payload'
+import { getPayload, type Payload } from 'payload'
+import { unstable_cache } from 'next/cache'
+import config from '@payload-config'
 import type { Project } from '@/payload/payload-types'
 
 export type VolunteerProjectNavItem = {
@@ -7,14 +9,21 @@ export type VolunteerProjectNavItem = {
   location: string
 }
 
-const MEDICAL_ROLE_PATTERN =
-  /\b(medical|nurse|doctor|physician|midwife|clinical|médecin|infirmier|soignant|soignante|médecine)\b/i
-
-export function isMedicalVolunteerRole(roleName: string): boolean {
-  return MEDICAL_ROLE_PATTERN.test(roleName)
-}
-
 type Locale = 'en' | 'fr'
+
+const VOLUNTEER_NAV_REVALIDATE_SECONDS = 300
+
+export const getCachedProjectsWithVolunteerNeeds = unstable_cache(
+  async (locale: Locale) => {
+    const payload = await getPayload({ config })
+    return getProjectsWithVolunteerNeeds(payload, locale)
+  },
+  ['volunteer-nav-projects'],
+  {
+    revalidate: VOLUNTEER_NAV_REVALIDATE_SECONDS,
+    tags: ['volunteer-nav'],
+  },
+)
 
 export async function getProjectsWithVolunteerNeeds(
   payload: Payload,

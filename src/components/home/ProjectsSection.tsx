@@ -1,6 +1,8 @@
 import React from 'react'
 import Link from 'next/link'
 import { getT } from '@/i18n/translations'
+import type { Media } from '@/payload/payload-types'
+import { MediaImage } from '@/components/media-image'
 
 const getPlaceholders = (t: ReturnType<typeof getT>) => [
   {
@@ -10,7 +12,7 @@ const getPlaceholders = (t: ReturnType<typeof getT>) => [
     title: t.nav.projectsActive,
     summary:
       'Providing basic medical care to displaced populations in the Thessaloniki region since December 2023.',
-    gradient: 'linear-gradient(135deg, #7db87d, #5a9e5a)',
+    gradient: 'var(--gradient-card)',
   },
 ]
 
@@ -20,7 +22,8 @@ type Project = {
   location: string
   title: string
   summary: string
-  gradient: string
+  gradient?: string
+  coverImage?: string | Media | null | undefined
 }
 
 function ProjectCard({
@@ -32,9 +35,27 @@ function ProjectCard({
   locale: string
   t: ReturnType<typeof getT>
 }) {
+  const imageAlt =
+    project.coverImage && typeof project.coverImage !== 'string'
+      ? (project.coverImage.alt ?? project.title)
+      : project.title
+
   return (
     <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-      <div className="relative h-44" style={{ background: project.gradient }}>
+      <div
+        className="relative h-44 overflow-hidden"
+        style={
+          project.coverImage
+            ? undefined
+            : { background: project.gradient ?? 'var(--gradient-card)' }
+        }
+      >
+        <MediaImage
+          image={project.coverImage}
+          alt={imageAlt}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        />
         <span
           className={`absolute top-3 left-3 rounded-full px-3 py-1 text-[14px] font-medium tracking-wide uppercase ${project.status === 'active' ? 'bg-[var(--green)]/90 text-white' : 'bg-black/40 text-white/80'}`}
         >

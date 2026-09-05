@@ -1,6 +1,7 @@
 import React from 'react'
 import { getT } from '@/i18n/translations'
 import { INSTAGRAM_HANDLE, INSTAGRAM_PROFILE, type InstagramPost } from '@/lib/instagram'
+import Image from 'next/image'
 
 function formatPostDate(timestamp: string, locale: string): string {
   return new Intl.DateTimeFormat(locale === 'fr' ? 'fr-FR' : 'en-GB', {
@@ -64,10 +65,13 @@ export default function InstagramFeed({
                 : `${t.news.instagramPost} @${INSTAGRAM_HANDLE}`
             }
           >
-            <img
+            <Image
               src={post.imageUrl}
               alt=""
-              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+              width={1080}
+              height={1080}
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
             <div className="absolute inset-x-0 bottom-0 p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">

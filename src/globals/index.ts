@@ -1,66 +1,5 @@
 import type { GlobalConfig } from 'payload'
 
-// ─── Navigation ──────────────────────────────────────────────────────────────
-
-export const Navigation: GlobalConfig = {
-  slug: 'navigation',
-  admin: {
-    description: 'Main navigation menu. Changes here affect the header on every page.',
-  },
-  fields: [
-    {
-      name: 'items',
-      type: 'array',
-      label: 'Menu items',
-      fields: [
-        {
-          name: 'label',
-          type: 'text',
-          required: true,
-          localized: true,
-        },
-        {
-          name: 'type',
-          type: 'select',
-          options: [
-            { label: 'Link (no dropdown)', value: 'link' },
-            { label: 'Dropdown', value: 'dropdown' },
-          ],
-          defaultValue: 'link',
-        },
-        {
-          name: 'url',
-          type: 'text',
-          admin: {
-            condition: (data, siblingData) => siblingData.type === 'link',
-          },
-        },
-        {
-          name: 'children',
-          type: 'array',
-          label: 'Dropdown items',
-          admin: {
-            condition: (data, siblingData) => siblingData.type === 'dropdown',
-          },
-          fields: [
-            { name: 'label', type: 'text', required: true, localized: true },
-            { name: 'url', type: 'text', required: true },
-          ],
-        },
-      ],
-    },
-    {
-      name: 'donateCta',
-      type: 'group',
-      label: 'Donate button (always visible in navbar)',
-      fields: [
-        { name: 'label', type: 'text', defaultValue: 'Donate', localized: true },
-        { name: 'url', type: 'text', defaultValue: '/donate' },
-      ],
-    },
-  ],
-}
-
 // ─── Site Info ───────────────────────────────────────────────────────────────
 
 export const SiteInfo: GlobalConfig = {
@@ -84,16 +23,6 @@ export const SiteInfo: GlobalConfig = {
       type: 'text',
       label: 'Charity registration number',
       defaultValue: 'W102001158',
-    },
-    {
-      name: 'socials',
-      type: 'group',
-      fields: [
-        { name: 'facebook', type: 'text', defaultValue: 'https://facebook.com/MedEqualiTeam' },
-        { name: 'twitter', type: 'text', label: 'Twitter / X' },
-        { name: 'instagram', type: 'text' },
-        { name: 'linkedin', type: 'text' },
-      ],
     },
     {
       name: 'seoDefaults',

@@ -1,18 +1,9 @@
 import React from 'react'
 import { getT } from '@/i18n/translations'
 import type { Media } from '@/payload/payload-types'
+import { getMediaImageSrc, MediaImage } from '@/components/media-image'
 
 type MissionImage = string | Media | null | undefined
-
-function getMissionImageUrl(image: MissionImage): string | null {
-  if (!image || typeof image === 'string') return null
-  return image.sizes?.card?.url ?? image.url ?? null
-}
-
-function getMissionImageAlt(image: MissionImage, fallback: string): string {
-  if (!image || typeof image === 'string') return fallback
-  return image.alt ?? fallback
-}
 
 export default function MissionSection({
   locale,
@@ -22,8 +13,7 @@ export default function MissionSection({
   missionImage?: MissionImage
 }) {
   const t = getT(locale)
-  const imageUrl = getMissionImageUrl(missionImage)
-  const imageAlt = getMissionImageAlt(missionImage, t.mission.title)
+  const imageUrl = getMediaImageSrc(missionImage, 'card')
   const pillars = [
     { icon: '🏥', title: t.mission.pillar1Title, desc: t.mission.pillar1Desc },
     { icon: '🌍', title: t.mission.pillar2Title, desc: t.mission.pillar2Desc },
@@ -35,17 +25,16 @@ export default function MissionSection({
         <div className="relative mx-auto h-[300px] w-full max-w-lg sm:h-[380px] lg:mx-0 lg:h-[460px] lg:max-w-none">
           <div
             className="absolute inset-0 overflow-hidden rounded-2xl"
-            style={
-              imageUrl
-                ? undefined
-                : { background: 'linear-gradient(135deg, #c8d9c8, #9ab89a)' }
-            }
+            style={imageUrl ? undefined : { background: 'var(--gradient-mission)' }}
           >
             {imageUrl ? (
-              <img
-                src={imageUrl}
-                alt={imageAlt}
-                className="h-full w-full object-cover"
+              <MediaImage
+                image={missionImage}
+                alt={t.mission.title}
+                size="card"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
               />
             ) : (
               <div className="flex h-full w-full items-end p-6">
@@ -57,12 +46,6 @@ export default function MissionSection({
             <p className="font-serif text-[15px] leading-snug text-[var(--green-dark)] italic">
               &ldquo;{t.mission.quote}&rdquo;
             </p>
-          </div>
-          <div className="absolute top-6 left-2 rounded-xl bg-[var(--green)] p-3 text-center text-white shadow-lg sm:top-8 sm:-left-4 sm:p-4">
-            <span className="block font-serif text-3xl leading-none">7+</span>
-            <span className="text-[13px] tracking-wider uppercase opacity-80">
-              {t.mission.years}
-            </span>
           </div>
         </div>
         <div>

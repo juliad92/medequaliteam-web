@@ -78,6 +78,7 @@ export default function ComplaintForm({ locale }: { locale: string }) {
   const [phone, setPhone] = useState('')
   const [details, setDetails] = useState('')
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({})
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
 
   function clearFieldError(field: FieldName) {
     setFieldErrors((prev) => {
@@ -107,167 +108,209 @@ export default function ComplaintForm({ locale }: { locale: string }) {
     return Object.keys(errors).length === 0
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    validate()
-    // Submission handling (database storage, email routing) to be implemented later.
+    if (!validate()) return
+
+    setStatus('submitting')
+    try {
+      const res = await fetch('/api/complaints', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          isSensitive,
+          firstName: firstName.trim(),
+          lastName: lastName.trim(),
+          email: email.trim(),
+          phoneCountryCode: phoneCountryCode.trim(),
+          phone: phone.trim(),
+          details: details.trim(),
+        }),
+      })
+      const data = await res.json().catch(() => null)
+      if (!res.ok || !data?.ok) {
+        setStatus('error')
+        return
+      }
+      setStatus('success')
+    } catch {
+      setStatus('error')
+    }
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mt-8 border-t border-[var(--border)] pt-8" noValidate>
-      <fieldset className="grid gap-3">
-        <legend className="text-[15px] leading-relaxed text-[var(--charcoal)]">
-          {f.sensitiveLabel}
-        </legend>
-        <div className="flex gap-6">
-          {(['yes', 'no'] as const).map((opt) => (
-            <label key={opt} className="flex items-center gap-2 text-[15px] text-[var(--muted)]">
+    <div className="mt-8 border-t border-[var(--border)] pt-8">
+      {status === 'success' ? (
+        <div className="rounded-xl border border-[var(--border)] bg-[var(--green-pale)] p-5">
+          <p className="text-base font-medium text-[var(--charcoal)]">{f.successTitle}</p>
+          <p className="mt-1 text-[15px] leading-relaxed text-[var(--muted)]">{f.successBody}</p>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit} noValidate>
+          <fieldset className="grid gap-3">
+            <legend className="text-[15px] leading-relaxed text-[var(--charcoal)]">
+              {f.sensitiveLabel}
+            </legend>
+            <div className="flex gap-6">
+              {(['yes', 'no'] as const).map((opt) => (
+                <label
+                  key={opt}
+                  className="flex items-center gap-2 text-[15px] text-[var(--muted)]"
+                >
+                  <input
+                    type="radio"
+                    name="isSensitive"
+                    value={opt}
+                    checked={isSensitive === opt}
+                    onChange={() => {
+                      setIsSensitive(opt)
+                      clearFieldError('isSensitive')
+                    }}
+                    className="accent-[var(--green)]"
+                  />
+                  {opt === 'yes' ? f.yes : f.no}
+                </label>
+              ))}
+            </div>
+            <FieldError id="isSensitive-error" message={fieldErrors.isSensitive} />
+          </fieldset>
+
+          <SectionTitle>{f.personalDetails}</SectionTitle>
+          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+            <div className="grid gap-1.5">
+              <FieldLabel htmlFor="firstName" required>
+                {f.firstName}
+              </FieldLabel>
               <input
-                type="radio"
-                name="isSensitive"
-                value={opt}
-                checked={isSensitive === opt}
-                onChange={() => {
-                  setIsSensitive(opt)
-                  clearFieldError('isSensitive')
+                id="firstName"
+                type="text"
+                value={firstName}
+                onChange={(e) => {
+                  setFirstName(e.target.value)
+                  clearFieldError('firstName')
                 }}
-                className="accent-[var(--green)]"
+                autoComplete="given-name"
+                aria-invalid={fieldErrors.firstName ? true : undefined}
+                aria-describedby={fieldErrors.firstName ? 'firstName-error' : undefined}
+                className={fieldErrors.firstName ? inputErrorClass : inputClass}
               />
-              {opt === 'yes' ? f.yes : f.no}
-            </label>
-          ))}
-        </div>
-        <FieldError id="isSensitive-error" message={fieldErrors.isSensitive} />
-      </fieldset>
+              <FieldError id="firstName-error" message={fieldErrors.firstName} />
+            </div>
 
-      <SectionTitle>{f.personalDetails}</SectionTitle>
-      <div className="mt-4 grid gap-4 sm:grid-cols-2">
-        <div className="grid gap-1.5">
-          <FieldLabel htmlFor="firstName" required>
-            {f.firstName}
-          </FieldLabel>
-          <input
-            id="firstName"
-            type="text"
-            value={firstName}
-            onChange={(e) => {
-              setFirstName(e.target.value)
-              clearFieldError('firstName')
-            }}
-            autoComplete="given-name"
-            aria-invalid={fieldErrors.firstName ? true : undefined}
-            aria-describedby={fieldErrors.firstName ? 'firstName-error' : undefined}
-            className={fieldErrors.firstName ? inputErrorClass : inputClass}
-          />
-          <FieldError id="firstName-error" message={fieldErrors.firstName} />
-        </div>
+            <div className="grid gap-1.5">
+              <FieldLabel htmlFor="lastName" required>
+                {f.lastName}
+              </FieldLabel>
+              <input
+                id="lastName"
+                type="text"
+                value={lastName}
+                onChange={(e) => {
+                  setLastName(e.target.value)
+                  clearFieldError('lastName')
+                }}
+                autoComplete="family-name"
+                aria-invalid={fieldErrors.lastName ? true : undefined}
+                aria-describedby={fieldErrors.lastName ? 'lastName-error' : undefined}
+                className={fieldErrors.lastName ? inputErrorClass : inputClass}
+              />
+              <FieldError id="lastName-error" message={fieldErrors.lastName} />
+            </div>
 
-        <div className="grid gap-1.5">
-          <FieldLabel htmlFor="lastName" required>
-            {f.lastName}
-          </FieldLabel>
-          <input
-            id="lastName"
-            type="text"
-            value={lastName}
-            onChange={(e) => {
-              setLastName(e.target.value)
-              clearFieldError('lastName')
-            }}
-            autoComplete="family-name"
-            aria-invalid={fieldErrors.lastName ? true : undefined}
-            aria-describedby={fieldErrors.lastName ? 'lastName-error' : undefined}
-            className={fieldErrors.lastName ? inputErrorClass : inputClass}
-          />
-          <FieldError id="lastName-error" message={fieldErrors.lastName} />
-        </div>
+            <div className="grid gap-1.5 sm:col-span-2">
+              <FieldLabel htmlFor="email" required>
+                {f.email}
+              </FieldLabel>
+              <input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value)
+                  clearFieldError('email')
+                }}
+                autoComplete="email"
+                aria-invalid={fieldErrors.email ? true : undefined}
+                aria-describedby={fieldErrors.email ? 'email-error' : undefined}
+                className={fieldErrors.email ? inputErrorClass : inputClass}
+              />
+              <FieldError id="email-error" message={fieldErrors.email} />
+            </div>
 
-        <div className="grid gap-1.5 sm:col-span-2">
-          <FieldLabel htmlFor="email" required>
-            {f.email}
-          </FieldLabel>
-          <input
-            id="email"
-            type="email"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value)
-              clearFieldError('email')
-            }}
-            autoComplete="email"
-            aria-invalid={fieldErrors.email ? true : undefined}
-            aria-describedby={fieldErrors.email ? 'email-error' : undefined}
-            className={fieldErrors.email ? inputErrorClass : inputClass}
-          />
-          <FieldError id="email-error" message={fieldErrors.email} />
-        </div>
+            <div className="grid gap-1.5">
+              <FieldLabel htmlFor="phoneCountryCode" required>
+                {f.phoneCountryCode}
+              </FieldLabel>
+              <PhoneCountryCodeSelect
+                id="phoneCountryCode"
+                value={phoneCountryCode}
+                onChange={(value) => {
+                  setPhoneCountryCode(value)
+                  clearFieldError('phoneCountryCode')
+                }}
+                locale={locale}
+                hasError={!!fieldErrors.phoneCountryCode}
+              />
+              <FieldError id="phoneCountryCode-error" message={fieldErrors.phoneCountryCode} />
+            </div>
 
-        <div className="grid gap-1.5">
-          <FieldLabel htmlFor="phoneCountryCode" required>
-            {f.phoneCountryCode}
-          </FieldLabel>
-          <PhoneCountryCodeSelect
-            id="phoneCountryCode"
-            value={phoneCountryCode}
-            onChange={(value) => {
-              setPhoneCountryCode(value)
-              clearFieldError('phoneCountryCode')
-            }}
-            locale={locale}
-            hasError={!!fieldErrors.phoneCountryCode}
-          />
-          <FieldError id="phoneCountryCode-error" message={fieldErrors.phoneCountryCode} />
-        </div>
+            <div className="grid gap-1.5">
+              <FieldLabel htmlFor="phone" required>
+                {f.phone}
+              </FieldLabel>
+              <input
+                id="phone"
+                type="tel"
+                value={phone}
+                onChange={(e) => {
+                  setPhone(e.target.value)
+                  clearFieldError('phone')
+                }}
+                autoComplete="tel-national"
+                aria-invalid={fieldErrors.phone ? true : undefined}
+                aria-describedby={fieldErrors.phone ? 'phone-error' : undefined}
+                className={fieldErrors.phone ? inputErrorClass : inputClass}
+              />
+              <FieldError id="phone-error" message={fieldErrors.phone} />
+            </div>
+          </div>
 
-        <div className="grid gap-1.5">
-          <FieldLabel htmlFor="phone" required>
-            {f.phone}
-          </FieldLabel>
-          <input
-            id="phone"
-            type="tel"
-            value={phone}
-            onChange={(e) => {
-              setPhone(e.target.value)
-              clearFieldError('phone')
-            }}
-            autoComplete="tel-national"
-            aria-invalid={fieldErrors.phone ? true : undefined}
-            aria-describedby={fieldErrors.phone ? 'phone-error' : undefined}
-            className={fieldErrors.phone ? inputErrorClass : inputClass}
-          />
-          <FieldError id="phone-error" message={fieldErrors.phone} />
-        </div>
-      </div>
+          <SectionTitle>{f.complaintDetails}</SectionTitle>
+          <div className="mt-4 grid gap-1.5">
+            <FieldLabel htmlFor="details" required>
+              {f.complaintDetailsLabel}
+            </FieldLabel>
+            <textarea
+              id="details"
+              rows={6}
+              value={details}
+              onChange={(e) => {
+                setDetails(e.target.value)
+                clearFieldError('details')
+              }}
+              aria-invalid={fieldErrors.details ? true : undefined}
+              aria-describedby={fieldErrors.details ? 'details-error' : undefined}
+              className={fieldErrors.details ? textareaErrorClass : textareaClass}
+            />
+            <FieldError id="details-error" message={fieldErrors.details} />
+          </div>
 
-      <SectionTitle>{f.complaintDetails}</SectionTitle>
-      <div className="mt-4 grid gap-1.5">
-        <FieldLabel htmlFor="details" required>
-          {f.complaintDetailsLabel}
-        </FieldLabel>
-        <textarea
-          id="details"
-          rows={6}
-          value={details}
-          onChange={(e) => {
-            setDetails(e.target.value)
-            clearFieldError('details')
-          }}
-          aria-invalid={fieldErrors.details ? true : undefined}
-          aria-describedby={fieldErrors.details ? 'details-error' : undefined}
-          className={fieldErrors.details ? textareaErrorClass : textareaClass}
-        />
-        <FieldError id="details-error" message={fieldErrors.details} />
-      </div>
-
-      <div className="mt-8">
-        <button
-          type="submit"
-          className="h-11 rounded-lg bg-[var(--green)] px-6 text-[15px] font-medium text-white transition-colors hover:bg-[var(--green-dark)]"
-        >
-          {f.submit}
-        </button>
-      </div>
-    </form>
+          <div className="mt-8">
+            <button
+              type="submit"
+              disabled={status === 'submitting'}
+              className="h-11 rounded-lg bg-[var(--green)] px-6 text-[15px] font-medium text-white transition-colors hover:bg-[var(--green-dark)]"
+            >
+              {status === 'submitting' ? f.submitting : f.submit}
+            </button>
+            {status === 'error' ? (
+              <p className="mt-3 text-[14px] text-red-700" role="alert">
+                {f.error}
+              </p>
+            ) : null}
+          </div>
+        </form>
+      )}
+    </div>
   )
 }

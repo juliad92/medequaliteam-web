@@ -1,18 +1,15 @@
 import React from 'react'
 import { notFound } from 'next/navigation'
 import { Analytics } from '@vercel/analytics/next'
-import { getPayload } from 'payload'
-import config from '@payload-config'
 
 import Navbar from '@/components/layout/Navbar'
 import NewsletterBanner from '@/components/layout/NewsletterBanner'
 import Footer from '@/components/layout/Footer'
-import { getProjectsWithVolunteerNeeds } from '@/lib/volunteer'
+import { getCachedProjectsForNav } from '@/lib/projects'
+import { getCachedProjectsWithVolunteerNeeds } from '@/lib/volunteer'
 
 const locales = ['en', 'fr'] as const
 type Locale = (typeof locales)[number]
-
-export const dynamic = 'force-dynamic'
 
 export async function generateStaticParams() {
   return locales.map((locale) => ({ locale }))
@@ -29,16 +26,18 @@ export default async function LocaleLayout({
 
   if (!locales.includes(locale as Locale)) notFound()
 
-  const payload = await getPayload({ config })
-  const volunteerProjects = await getProjectsWithVolunteerNeeds(payload, locale as Locale)
+  const [volunteerProjects, projects] = await Promise.all([
+    getCachedProjectsWithVolunteerNeeds(locale as Locale),
+    getCachedProjectsForNav(locale as Locale),
+  ])
 
   return (
     <html lang={locale}>
       <body>
-        <Navbar locale={locale} volunteerProjects={volunteerProjects} />
+        <Navbar locale={locale} volunteerProjects={volunteerProjects} projects={projects} />
         {children}
         <NewsletterBanner locale={locale} />
-        <Footer locale={locale} volunteerProjects={volunteerProjects} />
+        <Footer locale={locale} volunteerProjects={volunteerProjects} projects={projects} />
         <Analytics />
       </body>
     </html>

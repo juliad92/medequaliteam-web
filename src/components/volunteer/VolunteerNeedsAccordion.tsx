@@ -45,7 +45,7 @@ export default function VolunteerNeedsAccordion({
           further: 'Informations complémentaires',
           emptyTitle: 'Sélectionnez un rôle',
           emptyBody:
-            "Nous sommes aussi preneurs de candidatures avec des compétences complémentaires.",
+            'Nous sommes aussi preneurs de candidatures avec des compétences complémentaires.',
           applyForRole: 'Postuler pour ce rôle',
         }
       : {
@@ -73,9 +73,7 @@ export default function VolunteerNeedsAccordion({
           <h2 className="mt-2 font-serif text-2xl font-normal text-[var(--charcoal)]">
             {strings.title}
           </h2>
-          <p className="mt-2 text-[16px] leading-relaxed text-[var(--muted)]">
-            {strings.hint}
-          </p>
+          <p className="mt-2 text-[16px] leading-relaxed text-[var(--muted)]">{strings.hint}</p>
         </div>
 
         <ul className="divide-y divide-[var(--border)]">
@@ -183,4 +181,3 @@ export default function VolunteerNeedsAccordion({
     </div>
   )
 }
-

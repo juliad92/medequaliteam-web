@@ -4,13 +4,7 @@ import { getT } from '@/i18n/translations'
 import InstagramFeed from '@/components/home/InstagramFeed'
 import type { InstagramPost } from '@/lib/instagram'
 
-export function VolunteerCTA({
-  locale,
-  volunteerHref,
-}: {
-  locale: string
-  volunteerHref: string
-}) {
+export function VolunteerCTA({ locale, volunteerHref }: { locale: string; volunteerHref: string }) {
   const t = getT(locale)
   return (
     <section className="px-4 py-16 sm:px-8 sm:py-20" style={{ background: 'var(--green-dark)' }}>
@@ -59,7 +53,7 @@ const getPlaceholderPosts = (locale: string) => [
         ? 'Un bilan complet de notre année à Thessalonique.'
         : 'A full review of our year in Thessaloniki.',
     date: 'May 2025',
-    gradient: 'linear-gradient(135deg, #9dbf9d, #7aa07a)',
+    gradient: 'var(--gradient-card)',
   },
   {
     slug: 'mobile-clinic',
@@ -68,7 +62,7 @@ const getPlaceholderPosts = (locale: string) => [
       locale === 'fr' ? 'Nouvelle clinique mobile à Oreokastro' : 'New mobile clinic in Oreokastro',
     excerpt: '',
     date: 'March 2025',
-    gradient: 'linear-gradient(135deg, #b5c5b5, #96aa96)',
+    gradient: 'linear-gradient(135deg, var(--brand-green-light), var(--brand-green))',
   },
   {
     slug: 'newsletter-2025',
@@ -76,7 +70,7 @@ const getPlaceholderPosts = (locale: string) => [
     title: locale === 'fr' ? 'Hiver 2025 — Nouvelles de Grèce' : 'Winter 2025 — Update from Greece',
     excerpt: '',
     date: 'January 2025',
-    gradient: 'linear-gradient(135deg, #aab8c8, #8898b0)',
+    gradient: 'linear-gradient(135deg, var(--brand-green), var(--brand-green-dark))',
   },
 ]
 

@@ -88,11 +88,7 @@ export default async function VolunteerProjectPage({
   const project = projects[0]
   if (!project) notFound()
 
-  const needs = await getVolunteerNeedsForProject(
-    payload,
-    project.id,
-    locale as 'en' | 'fr',
-  )
+  const needs = await getVolunteerNeedsForProject(payload, project.id, locale as 'en' | 'fr')
 
   if (needs.length === 0) notFound()
 
@@ -104,14 +100,13 @@ export default async function VolunteerProjectPage({
         <div
           className="absolute inset-0"
           style={{
-            background: 'linear-gradient(135deg, #1a2e20 0%, #0f1f14 45%, #1c2818 100%)',
+            background: 'var(--gradient-hero)',
           }}
         />
         <div
           className="pointer-events-none absolute inset-0"
           style={{
-            background:
-              'radial-gradient(circle at 15% 40%, rgba(61,140,79,0.18) 0%, transparent 55%), radial-gradient(circle at 85% 25%, rgba(61,140,79,0.08) 0%, transparent 40%)',
+            background: 'var(--gradient-hero-glow)',
           }}
         />
         <div className="relative mx-auto max-w-7xl">
@@ -143,7 +138,7 @@ export default async function VolunteerProjectPage({
         <div className="mx-auto max-w-7xl space-y-16">
           <section
             id="volunteer-overview"
-            className="scroll-mt-36 grid gap-10 lg:grid-cols-[1.1fr_0.9fr]"
+            className="grid scroll-mt-36 gap-10 lg:grid-cols-[1.1fr_0.9fr]"
           >
             <div>
               {copy.intro.map((p) => (
