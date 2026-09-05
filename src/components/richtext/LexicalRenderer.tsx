@@ -2,6 +2,8 @@
 
 import React from 'react'
 
+import { extractArticleNavSections } from '@/lib/lexical-sections'
+
 type LexicalNode = {
   type?: string
   children?: LexicalNode[]
@@ -192,15 +194,22 @@ function renderNode(node: LexicalNode): React.ReactNode {
   return renderChildren(node.children)
 }
 
-function ArticleSection({ section }: { section: Section }) {
+function ArticleSection({ section, id }: { section: Section; id?: string }) {
   if (!section.heading) {
-    return <div className="max-w-[65ch]">{section.nodes.map((node, idx) => (
-      <React.Fragment key={idx}>{renderNode(node)}</React.Fragment>
-    ))}</div>
+    return (
+      <div className="max-w-[65ch]">
+        {section.nodes.map((node, idx) => (
+          <React.Fragment key={idx}>{renderNode(node)}</React.Fragment>
+        ))}
+      </div>
+    )
   }
 
   return (
-    <section className="max-w-[65ch] border-t border-[var(--border)] pt-8 first:border-t-0 first:pt-0">
+    <section
+      id={id}
+      className="max-w-[65ch] scroll-mt-36 border-t border-[var(--border)] pt-8 first:border-t-0 first:pt-0"
+    >
       {renderNode(section.heading)}
       <div className="mt-1">
         {section.nodes.map((node, idx) => (
@@ -223,12 +232,16 @@ export default function LexicalRenderer({
 
   if (variant === 'article') {
     const sections = groupIntoSections(content.root)
+    const navSections = extractArticleNavSections(content)
     if (sections.length === 0) return null
+
+    let headingIndex = 0
     return (
       <div className="space-y-8">
-        {sections.map((section, idx) => (
-          <ArticleSection key={idx} section={section} />
-        ))}
+        {sections.map((section, idx) => {
+          const id = section.heading ? navSections[headingIndex++]?.id : undefined
+          return <ArticleSection key={idx} section={section} id={id} />
+        })}
       </div>
     )
   }

@@ -6,7 +6,10 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 
 import LexicalRenderer from '@/components/richtext/LexicalRenderer'
+import ImpactBar from '@/components/home/ImpactBar'
+import ProjectPageNav from '@/components/projects/ProjectPageNav'
 import { getT } from '@/i18n/translations'
+import { extractArticleNavSections } from '@/lib/lexical-sections'
 import type { Media } from '@/payload/payload-types'
 import Image from 'next/image'
 
@@ -101,6 +104,7 @@ export default async function ProjectDetailPage({
   const hasPartners = Boolean(project.partners && project.partners.length > 0)
   const dateLine = [startLabel, endLabel].filter(Boolean).join(' → ')
   const volunteerHref = `/${locale}/volunteer/${project.slug}`
+  const navSections = extractArticleNavSections(project.content)
 
   return (
     <>
@@ -128,75 +132,23 @@ export default async function ProjectDetailPage({
           >
             {project.title}
           </h1>
-          {startLabel || endLabel ? (
-            <p className="mt-4 text-[15px] text-white/50">
-              {[
-                startLabel ? `${t.projects.dateFrom} ${startLabel}` : '',
-                endLabel ? `${t.projects.dateTo} ${endLabel}` : '',
-              ]
-                .filter(Boolean)
-                .join(' · ')}
+          {project.summary ? (
+            <p className="mt-5 max-w-2xl text-[16px] leading-relaxed text-white/55">
+              {project.summary}
             </p>
           ) : null}
         </div>
       </header>
 
+      {hasStats ? <ImpactBar locale={locale} impactStats={project.stats!} /> : null}
+
+      <ProjectPageNav locale={locale} sections={navSections} />
+
       <main className="bg-white px-4 py-14 sm:px-8 sm:py-20">
         <div className="mx-auto max-w-7xl">
-          {hasStats ? (
-            <section aria-labelledby="project-impact" className="mb-12 border-y border-[var(--border)] py-8 sm:mb-16 sm:py-10">
-              <p
-                id="project-impact"
-                className="mb-6 text-[13px] font-medium tracking-[0.14em] text-[var(--green)] uppercase"
-              >
-                {t.projects.impactStats}
-              </p>
-              <dl className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-4">
-                {project.stats!.map((stat) => (
-                  <div key={stat.id ?? `${stat.value}-${stat.label}`}>
-                    <dt className="sr-only">{stat.label}</dt>
-                    <dd>
-                      <p className="font-serif text-[clamp(28px,3vw,36px)] leading-none text-[var(--charcoal)]">
-                        {stat.value}
-                      </p>
-                      <p className="mt-2 text-[14px] leading-snug text-[var(--muted)]">{stat.label}</p>
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-            </section>
-          ) : null}
-
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(260px,300px)] lg:gap-14">
-            {/* Lead: cover + summary — appears first on all breakpoints */}
-            <div className="space-y-8 lg:col-start-1">
-              {coverImageUrl ? (
-                <div
-                  className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--cream)]"
-                  style={
-                    project.status === 'active' ? undefined : { background: 'var(--gradient-hero)' }
-                  }
-                >
-                  <Image
-                    src={coverImageUrl}
-                    alt={coverImageAlt}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 1024px) 100vw, 65vw"
-                    priority
-                  />
-                </div>
-              ) : null}
-
-              {project.summary ? (
-                <p className="max-w-[65ch] text-[19px] leading-relaxed text-[var(--charcoal)]">
-                  {project.summary}
-                </p>
-              ) : null}
-            </div>
-
             {/* At a glance + CTAs — after lead on mobile, sticky sidebar on desktop */}
-            <aside className="space-y-6 lg:col-start-2 lg:row-span-2 lg:sticky lg:top-24 lg:self-start">
+            <aside className="space-y-6 lg:sticky lg:top-36 lg:col-start-2 lg:row-span-2 lg:self-start">
               <div className="rounded-2xl border border-[var(--border)] bg-[var(--cream)] p-6 sm:p-7">
                 <p className="mb-5 text-[13px] font-medium tracking-[0.14em] text-[var(--green)] uppercase">
                   {t.projects.atAGlance}
@@ -213,7 +165,9 @@ export default async function ProjectDetailPage({
                       <dt className="text-[12px] font-medium tracking-[0.1em] text-[var(--muted)] uppercase">
                         {t.projects.locationLabel}
                       </dt>
-                      <dd className="mt-1 text-[15px] text-[var(--charcoal)]">{project.location}</dd>
+                      <dd className="mt-1 text-[15px] text-[var(--charcoal)]">
+                        {project.location}
+                      </dd>
                     </div>
                   ) : null}
                   {dateLine ? (
@@ -268,7 +222,6 @@ export default async function ProjectDetailPage({
                 </div>
               ) : null}
             </aside>
-
             {/* Long-form content — after aside on mobile so readers get facts first */}
             {project.content ? (
               <article className="lg:col-start-1">

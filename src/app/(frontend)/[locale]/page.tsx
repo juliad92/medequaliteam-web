@@ -56,7 +56,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <MissionSection locale={locale} missionImage={missionImage} />
       <ProjectsSection locale={locale} projects={projects as any} />
       <VolunteerCTA locale={locale} volunteerHref={volunteerHref} />
-      <NewsSection locale={locale} posts={posts as any} instagramPosts={instagramPosts} />
+      {/* <NewsSection locale={locale} posts={posts as any} instagramPosts={instagramPosts} /> */}
     </>
   )
 }
