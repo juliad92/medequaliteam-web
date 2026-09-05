@@ -150,7 +150,7 @@ export const Pages: CollectionConfig = {
       unique: true,
       admin: {
         position: 'sidebar',
-        description: 'e.g. "about/organisation" or "volunteer"',
+        description: 'e.g. "about/organisation", "data-protection", or "volunteer"',
       },
     },
     {
@@ -158,6 +158,35 @@ export const Pages: CollectionConfig = {
       type: 'blocks',
       required: true,
       blocks: [HeroBlock, RichTextBlock, StatsBlock, MediaBlock, CallToActionBlock],
+    },
+    {
+      name: 'policyDates',
+      type: 'group',
+      label: 'Policy review dates',
+      admin: {
+        position: 'sidebar',
+        description: 'Optional. Used on legal / policy pages (e.g. Data Protection).',
+      },
+      fields: [
+        {
+          name: 'approvedOn',
+          type: 'text',
+          label: 'Approved on',
+          admin: { description: 'e.g. "July 2021"' },
+        },
+        {
+          name: 'reviewedOn',
+          type: 'text',
+          label: 'Reviewed on',
+          admin: { description: 'e.g. "March 2025"' },
+        },
+        {
+          name: 'reviewDate',
+          type: 'text',
+          label: 'Next review date',
+          admin: { description: 'e.g. "March 2026"' },
+        },
+      ],
     },
     {
       name: 'meta',

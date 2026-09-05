@@ -266,6 +266,16 @@ export const translations = {
       },
     },
 
+    // Data protection
+    dataProtection: {
+      metaTitle: 'Data Protection Policy',
+      metaDescription:
+        "Med'EqualiTeam's Data Protection Policy: how we process and protect personal data under GDPR.",
+      approvedOn: 'Approved on',
+      reviewedOn: 'Reviewed on',
+      reviewDate: 'Review date',
+    },
+
     // Complaints
     complaints: {
       metaTitle: 'Make a complaint',
@@ -656,6 +666,16 @@ export const translations = {
           },
         },
       },
+    },
+
+    // Data protection
+    dataProtection: {
+      metaTitle: 'Politique de protection des données',
+      metaDescription:
+        "Politique de protection des données de Med'EqualiTeam : traitement et protection des données personnelles conformément au RGPD.",
+      approvedOn: 'Approuvée le',
+      reviewedOn: 'Révisée le',
+      reviewDate: 'Prochaine révision',
     },
 
     // Complaints
