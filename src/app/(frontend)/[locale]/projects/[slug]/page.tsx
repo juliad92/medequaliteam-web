@@ -98,8 +98,8 @@ export default async function ProjectDetailPage({
     t.projects.status[project.status as keyof typeof t.projects.status] ?? project.status
   const startLabel = formatDate(project.dateStart, locale)
   const endLabel = formatDate(project.dateEnd, locale)
-  const coverImageUrl = getCoverImageUrl(project.coverImage)
-  const coverImageAlt = getCoverImageAlt(project.coverImage, project.title)
+  // const coverImageUrl = getCoverImageUrl(project.coverImage)
+  // const coverImageAlt = getCoverImageAlt(project.coverImage, project.title)
   const hasStats = Boolean(project.stats && project.stats.length > 0)
   const hasPartners = Boolean(project.partners && project.partners.length > 0)
   const dateLine = [startLabel, endLabel].filter(Boolean).join(' → ')
@@ -108,7 +108,7 @@ export default async function ProjectDetailPage({
 
   return (
     <>
-      <header className="relative overflow-hidden bg-[var(--charcoal)] px-4 pt-24 pb-16 sm:px-8 sm:pt-28">
+      <header className="relative overflow-hidden bg-[var(--charcoal)] px-4 pt-20 pb-14 sm:px-8 sm:pt-24">
         <div className="absolute inset-0" style={{ background: 'var(--gradient-hero)' }} />
         <div
           className="pointer-events-none absolute inset-0"
@@ -117,7 +117,7 @@ export default async function ProjectDetailPage({
         <div className="relative mx-auto max-w-7xl">
           <Link
             href={`/${locale}/projects`}
-            className="mb-6 inline-flex items-center gap-2 text-[14px] font-medium text-white/50 transition-colors hover:text-white"
+            className="mb-4 inline-flex items-center gap-2 text-[14px] font-medium text-white/50 transition-colors hover:text-white"
           >
             ← {t.projects.backToList}
           </Link>

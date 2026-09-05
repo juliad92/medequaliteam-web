@@ -5,6 +5,7 @@ import { Analytics } from '@vercel/analytics/next'
 import Navbar from '@/components/layout/Navbar'
 import NewsletterBanner from '@/components/layout/NewsletterBanner'
 import Footer from '@/components/layout/Footer'
+import { getCachedProjectsForNav } from '@/lib/projects'
 import { getCachedProjectsWithVolunteerNeeds } from '@/lib/volunteer'
 
 const locales = ['en', 'fr'] as const
@@ -25,7 +26,10 @@ export default async function LocaleLayout({
 
   if (!locales.includes(locale as Locale)) notFound()
 
-  const volunteerProjects = await getCachedProjectsWithVolunteerNeeds(locale as Locale)
+  const [volunteerProjects, projects] = await Promise.all([
+    getCachedProjectsWithVolunteerNeeds(locale as Locale),
+    getCachedProjectsForNav(locale as Locale),
+  ])
 
   return (
     <html lang={locale}>
@@ -33,7 +37,7 @@ export default async function LocaleLayout({
         <Navbar locale={locale} volunteerProjects={volunteerProjects} />
         {children}
         <NewsletterBanner locale={locale} />
-        <Footer locale={locale} volunteerProjects={volunteerProjects} />
+        <Footer locale={locale} volunteerProjects={volunteerProjects} projects={projects} />
         <Analytics />
       </body>
     </html>
