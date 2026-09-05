@@ -34,7 +34,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <body>
-        <Navbar locale={locale} volunteerProjects={volunteerProjects} />
+        <Navbar locale={locale} volunteerProjects={volunteerProjects} projects={projects} />
         {children}
         <NewsletterBanner locale={locale} />
         <Footer locale={locale} volunteerProjects={volunteerProjects} projects={projects} />

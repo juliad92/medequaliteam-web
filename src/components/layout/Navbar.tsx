@@ -5,14 +5,17 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { getT } from '@/i18n/translations'
+import type { ProjectNavItem } from '@/lib/projects'
 import type { VolunteerProjectNavItem } from '@/lib/volunteer'
 
 export default function Navbar({
   locale,
   volunteerProjects = [],
+  projects = [],
 }: {
   locale: string
   volunteerProjects?: VolunteerProjectNavItem[]
+  projects?: ProjectNavItem[]
 }) {
   const t = getT(locale)
   const pathname = usePathname() ?? `/${locale}`
@@ -70,13 +73,17 @@ export default function Navbar({
     {
       label: t.nav.projects,
       href: '/projects',
-      children: [
-        { label: t.nav.projectsActive, href: '/projects/northern-greece' },
-        { label: t.nav.projectsPast, href: '/projects/past' },
-      ],
+      ...(projects.length > 0
+        ? {
+            children: projects.map((project) => ({
+              label: project.title,
+              href: `/projects/${project.slug}`,
+            })),
+          }
+        : {}),
     },
     volunteerNav,
-    { label: t.nav.news, href: '/news' },
+    // { label: t.nav.news, href: '/news' },
   ]
 
   return (
