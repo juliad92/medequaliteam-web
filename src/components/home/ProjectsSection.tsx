@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import { getT } from '@/i18n/translations'
 import type { Media } from '@/payload/payload-types'
-import Image from 'next/image'
+import { MediaImage } from '@/components/media-image'
 
 const getPlaceholders = (t: ReturnType<typeof getT>) => [
   {
@@ -16,8 +16,6 @@ const getPlaceholders = (t: ReturnType<typeof getT>) => [
   },
 ]
 
-type CoverImage = string | Media | null | undefined
-
 type Project = {
   slug: string
   status: string
@@ -25,17 +23,7 @@ type Project = {
   title: string
   summary: string
   gradient?: string
-  coverImage?: CoverImage
-}
-
-function getCoverImageUrl(image: CoverImage): string | null {
-  if (!image || typeof image === 'string') return null
-  return image.sizes?.card?.url ?? image.url ?? null
-}
-
-function getCoverImageAlt(image: CoverImage, fallback: string): string {
-  if (!image || typeof image === 'string') return fallback
-  return image.alt ?? fallback
+  coverImage?: string | Media | null | undefined
 }
 
 function ProjectCard({
@@ -47,24 +35,26 @@ function ProjectCard({
   locale: string
   t: ReturnType<typeof getT>
 }) {
-  const imageUrl = getCoverImageUrl(project.coverImage)
-  const imageAlt = getCoverImageAlt(project.coverImage, project.title)
+  const imageAlt = project.coverImage
+    ? project.coverImage.alt ?? project.title
+    : project.title
 
   return (
     <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
       <div
         className="relative h-44 overflow-hidden"
-        style={imageUrl ? undefined : { background: project.gradient ?? 'var(--gradient-card)' }}
+        style={
+          project.coverImage
+            ? undefined
+            : { background: project.gradient ?? 'var(--gradient-card)' }
+        }
       >
-        {imageUrl ? (
-          <Image
-            src={imageUrl}
-            alt={imageAlt}
-            fill
-            className="object-cover"
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          />
-        ) : null}
+        <MediaImage
+          image={project.coverImage}
+          alt={imageAlt}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        />
         <span
           className={`absolute top-3 left-3 rounded-full px-3 py-1 text-[14px] font-medium tracking-wide uppercase ${project.status === 'active' ? 'bg-[var(--green)]/90 text-white' : 'bg-black/40 text-white/80'}`}
         >

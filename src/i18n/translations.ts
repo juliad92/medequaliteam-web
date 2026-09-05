@@ -62,6 +62,20 @@ export const translations = {
       active: 'Active',
       past: 'Past',
       learnMore: 'Learn more',
+      metaTitle: 'Our projects',
+      metaDescription:
+        'Discover Med’EqualiTeam’s medical projects providing free primary healthcare to refugees and displaced populations.',
+      backToList: 'All projects',
+      status: {
+        active: 'Active',
+        past: 'Past',
+        upcoming: 'Upcoming',
+      },
+      dateFrom: 'Start',
+      dateTo: 'End',
+      partners: 'Partner organisations',
+      impactStats: 'Key impact',
+      relatedLink: 'Learn more about our work',
     },
 
     // Volunteer CTA
@@ -433,6 +447,20 @@ export const translations = {
       active: 'Actif',
       past: 'Passé',
       learnMore: 'En savoir plus',
+      metaTitle: 'Nos projets',
+      metaDescription:
+        'Découvrez les projets médicaux de Med’EqualiTeam qui fournissent des soins de santé primaires gratuits aux réfugié·e·s et aux personnes déplacées.',
+      backToList: 'Tous les projets',
+      status: {
+        active: 'Actif',
+        past: 'Passé',
+        upcoming: 'À venir',
+      },
+      dateFrom: 'Début',
+      dateTo: 'Fin',
+      partners: 'Organisations partenaires',
+      impactStats: 'Chiffres clés',
+      relatedLink: 'En savoir plus sur notre action',
     },
 
     // Volunteer CTA
