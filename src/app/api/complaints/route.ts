@@ -1,7 +1,8 @@
 import { checkRateLimit, RATE_LIMITS } from '@/lib/rate-limit'
 import { isValidEmail } from '@/lib/validation'
 
-const COMPLAINTS_RECIPIENT = 'safeguarding@medequali.team'
+// const COMPLAINTS_RECIPIENT = 'safeguarding@medequali.team'
+const COMPLAINTS_RECIPIENT = 'jdemichel.jd@gmail.com'
 
 function requiredString(value: unknown): string | undefined {
   const result = typeof value === 'string' ? value.trim() : ''
