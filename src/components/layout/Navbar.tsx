@@ -187,7 +187,7 @@ export default function Navbar({
               <div className="inline-flex items-center rounded-lg hover:bg-[var(--cream)]">
                 <Link
                   href={`/${locale}${volunteerNav.href}`}
-                  className="whitespace-nowrap py-1.5 pr-0.5 pl-2 text-[13px] font-medium text-[var(--muted)] transition-colors hover:text-[var(--charcoal)] sm:px-3 sm:py-2 sm:text-[16px]"
+                  className="py-1.5 pr-0.5 pl-2 text-[13px] font-medium whitespace-nowrap text-[var(--muted)] transition-colors hover:text-[var(--charcoal)] sm:px-3 sm:py-2 sm:text-[16px]"
                 >
                   <span className="sm:hidden">{t.nav.volunteerShort}</span>
                   <span className="hidden sm:inline">{volunteerNav.label}</span>
@@ -222,7 +222,7 @@ export default function Navbar({
             </div>
             <Link
               href={`/${locale}/donate`}
-              className="whitespace-nowrap rounded-lg bg-[var(--green)] px-2.5 py-1.5 text-[13px] font-medium text-white transition-colors hover:bg-[var(--green-dark)] sm:ml-1 sm:px-5 sm:py-2 sm:text-[16px]"
+              className="rounded-lg bg-[var(--green)] px-2.5 py-1.5 text-[13px] font-medium whitespace-nowrap text-white transition-colors hover:bg-[var(--green-dark)] sm:ml-1 sm:px-5 sm:py-2 sm:text-[16px]"
             >
               {t.nav.donate}
             </Link>

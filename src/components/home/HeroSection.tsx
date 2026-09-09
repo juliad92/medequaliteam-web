@@ -1,17 +1,8 @@
 import React from 'react'
 import Link from 'next/link'
 import { getT } from '@/i18n/translations'
-import type { Homepage } from '@/payload/payload-types'
+import type { Homepage, Project } from '@/payload/payload-types'
 import { MediaImage } from '@/components/media-image'
-
-type Project = {
-  slug: string
-  status: string
-  location: string
-  title: string
-  summary: string
-  gradient: string
-}
 
 export default function HeroSection({
   locale,
@@ -20,7 +11,7 @@ export default function HeroSection({
 }: {
   locale: string
   heroData?: Homepage['hero']
-  project?: Project
+  project?: Project | null
 }) {
   const t = getT(locale)
 

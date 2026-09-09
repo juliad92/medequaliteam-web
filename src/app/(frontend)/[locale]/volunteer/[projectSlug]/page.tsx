@@ -167,7 +167,7 @@ export default async function VolunteerProjectPage({
           </section>
 
           <VolunteerRolesAndForm
-            needs={needs as any}
+            needs={needs}
             locale={locale}
             projectId={project.id}
             projectLocation={project.location}
