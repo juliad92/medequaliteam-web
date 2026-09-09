@@ -112,11 +112,9 @@ export interface Config {
   };
   fallbackLocale: ('false' | 'none' | 'null') | false | null | ('en' | 'fr') | ('en' | 'fr')[];
   globals: {
-    'site-info': SiteInfo;
     homepage: Homepage;
   };
   globalsSelect: {
-    'site-info': SiteInfoSelect<false> | SiteInfoSelect<true>;
     homepage: HomepageSelect<false> | HomepageSelect<true>;
   };
   locale: 'en' | 'fr';
@@ -1454,25 +1452,6 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   createdAt?: T;
 }
 /**
- * Contact details, social links, legal footer information.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "site-info".
- */
-export interface SiteInfo {
-  id: string;
-  email?: string | null;
-  address?: string | null;
-  charityNumber?: string | null;
-  seoDefaults?: {
-    title?: string | null;
-    description?: string | null;
-    image?: (string | null) | Media;
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
  * Editable content for the homepage hero, mission statement, and featured project.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1530,25 +1509,6 @@ export interface Homepage {
   featuredProject?: (string | null) | Project;
   updatedAt?: string | null;
   createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "site-info_select".
- */
-export interface SiteInfoSelect<T extends boolean = true> {
-  email?: T;
-  address?: T;
-  charityNumber?: T;
-  seoDefaults?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        image?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
