@@ -1,5 +1,6 @@
 import React from 'react'
 import { notFound } from 'next/navigation'
+import Script from 'next/script'
 import { Analytics } from '@vercel/analytics/next'
 
 import Navbar from '@/components/layout/Navbar'
@@ -41,6 +42,12 @@ export default async function LocaleLayout({
         <Footer locale={locale} volunteerProjects={volunteerProjects} projects={projects} />
         <CookieBanner locale={locale} />
         <Analytics />
+        <Script
+          defer
+          src="https://cloud.umami.is/script.js"
+          data-website-id="17ed92d1-507e-4869-8d0d-d55546602a1f"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   )
