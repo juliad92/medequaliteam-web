@@ -4,6 +4,7 @@ import { Analytics } from '@vercel/analytics/next'
 
 import Navbar from '@/components/layout/Navbar'
 import NewsletterBanner from '@/components/layout/NewsletterBanner'
+import CookieBanner from '@/components/layout/CookieBanner'
 import Footer from '@/components/layout/Footer'
 import { getCachedProjectsForNav } from '@/lib/projects'
 import { getCachedProjectsWithVolunteerNeeds } from '@/lib/volunteer'
@@ -38,6 +39,7 @@ export default async function LocaleLayout({
         {children}
         <NewsletterBanner locale={locale} />
         <Footer locale={locale} volunteerProjects={volunteerProjects} projects={projects} />
+        <CookieBanner locale={locale} />
         <Analytics />
       </body>
     </html>

@@ -10,6 +10,7 @@ export const translations = {
       projectsActive: 'Northern Greece',
       projectsPast: 'Past projects',
       volunteer: 'Volunteer with us',
+      volunteerShort: 'Volunteer',
       volunteerGreece: 'Volunteer in Greece',
       volunteerStories: 'Volunteer stories',
       news: 'News',
@@ -405,6 +406,12 @@ export const translations = {
       financialReport: 'Financial report',
       rights: 'All rights reserved.',
     },
+
+    cookies: {
+      message: "Med'EqualiTeam uses cookies to improve your experience.",
+      learnMore: 'Learn more',
+      accept: 'Got it!',
+    },
   },
 
   fr: {
@@ -418,6 +425,7 @@ export const translations = {
       projectsActive: 'Grèce du Nord',
       projectsPast: 'Projets passés',
       volunteer: 'Bénévolat avec nous',
+      volunteerShort: 'Bénévolat',
       volunteerGreece: 'Bénévolat en Grèce',
       volunteerStories: 'Témoignages',
       news: 'Actualités',
@@ -814,6 +822,12 @@ export const translations = {
       dataProtection: 'Protection des données',
       financialReport: 'Rapport financier',
       rights: 'Tous droits réservés.',
+    },
+
+    cookies: {
+      message: "Med'EqualiTeam utilise des cookies pour améliorer votre expérience.",
+      learnMore: 'En savoir plus',
+      accept: 'Got it!',
     },
   },
 } as const
