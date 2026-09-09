@@ -68,8 +68,6 @@ export interface Config {
   blocks: {};
   collections: {
     media: Media;
-    posts: Post;
-    'team-members': TeamMember;
     projects: Project;
     'volunteer-needs': VolunteerNeed;
     'volunteer-applications': VolunteerApplication;
@@ -89,8 +87,6 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     media: MediaSelect<false> | MediaSelect<true>;
-    posts: PostsSelect<false> | PostsSelect<true>;
-    'team-members': TeamMembersSelect<false> | TeamMembersSelect<true>;
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
     'volunteer-needs': VolunteerNeedsSelect<false> | VolunteerNeedsSelect<true>;
     'volunteer-applications': VolunteerApplicationsSelect<false> | VolunteerApplicationsSelect<true>;
@@ -204,46 +200,6 @@ export interface Media {
   };
 }
 /**
- * News articles, field updates, and annual reports.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "posts".
- */
-export interface Post {
-  id: string;
-  title: string;
-  slug: string;
-  category?: ('field-update' | 'annual-report' | 'press-release' | 'newsletter') | null;
-  /**
-   * Controls the display date and sort order.
-   */
-  publishedAt?: string | null;
-  coverImage?: (string | null) | Media;
-  /**
-   * Short preview shown on the News listing page (1–2 sentences).
-   */
-  excerpt?: string | null;
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  relatedProject?: (string | null) | Project;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
  * Medical projects run by Med'EqualiTeam on the ground.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -314,30 +270,6 @@ export interface Project {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
-}
-/**
- * Current and past team members shown on the "Meet the team" page.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "team-members".
- */
-export interface TeamMember {
-  id: string;
-  name: string;
-  /**
-   * e.g. "Field Coordinator" / "Coordinatrice terrain"
-   */
-  role: string;
-  photo?: (string | null) | Media;
-  bio?: string | null;
-  project?: (string | null) | Project;
-  type?: ('coordinator' | 'medical' | 'translator' | 'admin') | null;
-  /**
-   * Lower = shown first. Coordinators typically get 1–10.
-   */
-  order?: number | null;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * Open volunteer roles linked to field projects (e.g. medical coordinator, nurse).
@@ -897,14 +829,6 @@ export interface PayloadLockedDocument {
         value: string | Media;
       } | null)
     | ({
-        relationTo: 'posts';
-        value: string | Post;
-      } | null)
-    | ({
-        relationTo: 'team-members';
-        value: string | TeamMember;
-      } | null)
-    | ({
         relationTo: 'projects';
         value: string | Project;
       } | null)
@@ -1030,38 +954,6 @@ export interface MediaSelect<T extends boolean = true> {
               filename?: T;
             };
       };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "posts_select".
- */
-export interface PostsSelect<T extends boolean = true> {
-  title?: T;
-  slug?: T;
-  category?: T;
-  publishedAt?: T;
-  coverImage?: T;
-  excerpt?: T;
-  content?: T;
-  relatedProject?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "team-members_select".
- */
-export interface TeamMembersSelect<T extends boolean = true> {
-  name?: T;
-  role?: T;
-  photo?: T;
-  bio?: T;
-  project?: T;
-  type?: T;
-  order?: T;
-  updatedAt?: T;
-  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1573,8 +1465,6 @@ export interface TaskCreateCollectionExport {
     batchSize?: number | null;
     collectionSlug:
       | 'media'
-      | 'posts'
-      | 'team-members'
       | 'projects'
       | 'volunteer-needs'
       | 'volunteer-applications'
