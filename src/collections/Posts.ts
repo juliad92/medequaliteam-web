@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { publishedOrAuthenticated } from '../lib/access.ts'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -8,7 +9,7 @@ export const Posts: CollectionConfig = {
     description: 'News articles, field updates, and annual reports.',
   },
   access: {
-    read: () => true,
+    read: publishedOrAuthenticated,
   },
   versions: {
     drafts: true,

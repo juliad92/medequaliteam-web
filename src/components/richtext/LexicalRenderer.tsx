@@ -92,7 +92,8 @@ function renderTextNode(node: LexicalNode): React.ReactNode {
       </code>
     )
   }
-  if (format & IS_BOLD) content = <strong className="font-semibold text-[var(--charcoal)]">{content}</strong>
+  if (format & IS_BOLD)
+    content = <strong className="font-semibold text-[var(--charcoal)]">{content}</strong>
   if (format & IS_ITALIC) content = <em>{content}</em>
   if (format & IS_UNDERLINE) content = <span className="underline">{content}</span>
   if (format & IS_STRIKETHROUGH) content = <s>{content}</s>
@@ -152,7 +153,9 @@ function renderNode(node: LexicalNode): React.ReactNode {
   if (type === 'heading') {
     const tag = (node.tag || 'h3') as keyof typeof HEADING_CLASS
     const Tag = (node.tag || 'h3') as React.ElementType
-    return <Tag className={HEADING_CLASS[tag] ?? HEADING_CLASS.h3}>{renderChildren(node.children)}</Tag>
+    return (
+      <Tag className={HEADING_CLASS[tag] ?? HEADING_CLASS.h3}>{renderChildren(node.children)}</Tag>
+    )
   }
 
   if (type === 'list') {

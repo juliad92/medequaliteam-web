@@ -1,7 +1,7 @@
 import { checkRateLimit, RATE_LIMITS } from '@/lib/rate-limit'
+import { isValidEmail } from '@/lib/validation'
 
 const COMPLAINTS_RECIPIENT = 'safeguarding@medequali.team'
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 function requiredString(value: unknown): string | undefined {
   const result = typeof value === 'string' ? value.trim() : ''
@@ -15,7 +15,7 @@ function isValidComplaint(body: Record<string, unknown>): boolean {
     (body.isSensitive === 'yes' || body.isSensitive === 'no') &&
     Boolean(requiredString(body.firstName)) &&
     Boolean(requiredString(body.lastName)) &&
-    Boolean(email && EMAIL_PATTERN.test(email)) &&
+    Boolean(email && isValidEmail(email)) &&
     Boolean(requiredString(body.phoneCountryCode)) &&
     Boolean(requiredString(body.phone)) &&
     Boolean(requiredString(body.details))
