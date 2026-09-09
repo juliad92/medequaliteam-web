@@ -1,7 +1,5 @@
 import { checkRateLimit, RATE_LIMITS } from '@/lib/rate-limit'
-
-const COMPLAINTS_RECIPIENT = 'safeguarding@medequali.team'
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+import { isValidEmail } from '@/lib/validation'
 
 function requiredString(value: unknown): string | undefined {
   const result = typeof value === 'string' ? value.trim() : ''
@@ -15,7 +13,7 @@ function isValidComplaint(body: Record<string, unknown>): boolean {
     (body.isSensitive === 'yes' || body.isSensitive === 'no') &&
     Boolean(requiredString(body.firstName)) &&
     Boolean(requiredString(body.lastName)) &&
-    Boolean(email && EMAIL_PATTERN.test(email)) &&
+    Boolean(email && isValidEmail(email)) &&
     Boolean(requiredString(body.phoneCountryCode)) &&
     Boolean(requiredString(body.phone)) &&
     Boolean(requiredString(body.details))
@@ -69,6 +67,7 @@ export async function POST(req: Request) {
       { status: 400 },
     )
   }
+  const COMPLAINTS_RECIPIENT = process.env.COMPLAINTS_RECIPIENT?.trim() || 'jdemichel.jd@gmail.com'
 
   const apiKey = process.env.RESEND_API_KEY?.trim()
   if (!apiKey) {

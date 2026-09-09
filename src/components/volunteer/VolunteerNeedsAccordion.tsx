@@ -2,16 +2,7 @@
 
 import React, { useMemo, useState } from 'react'
 import LexicalRenderer from '@/components/richtext/LexicalRenderer'
-
-type VolunteerNeed = {
-  id: string
-  roleName: string
-  duration?: string | null
-  jobDescription?: unknown
-  requiredExperienceAndSkills?: unknown
-  desiredExperienceAndSkills?: unknown
-  furtherInformation?: unknown
-}
+import type { VolunteerNeed } from '@/payload/payload-types'
 
 export default function VolunteerNeedsAccordion({
   needs,

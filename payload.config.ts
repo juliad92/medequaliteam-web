@@ -10,14 +10,13 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 
 import { Projects } from './src/collections/Projects.ts'
-import { Posts } from './src/collections/Posts.ts'
 import { VolunteerNeeds } from './src/collections/VolunteerNeeds.ts'
 import { VolunteerApplications } from './src/collections/VolunteerApplications.ts'
 import { VolunteerCVs } from './src/collections/VolunteerCVs.ts'
 import { NewsletterSubscribers } from './src/collections/NewsletterSubscribers.ts'
-import { TeamMembers, Testimonials } from './src/collections/People.ts'
+import { Testimonials } from './src/collections/People.ts'
 import { Media, Pages } from './src/collections/MediaAndPages.ts'
-import { SiteInfo, Homepage } from './src/globals/index.ts'
+import { Homepage } from './src/globals/index.ts'
 import { Users } from './src/collections/Users.ts'
 
 const __filename = fileURLToPath(import.meta.url)
@@ -62,9 +61,6 @@ export default buildConfig({
   // ── Collections ─────────────────────────────────────────────────────────────
   collections: [
     Media, // Images, PDFs, uploads
-    // Projects,  // Active & past field projects
-    Posts, // News, reports, newsletters
-    TeamMembers,
     Projects,
     VolunteerNeeds,
     VolunteerApplications,
@@ -77,7 +73,6 @@ export default buildConfig({
 
   // ── Globals ──────────────────────────────────────────────────────────────────
   globals: [
-    SiteInfo, // Contact, socials, footer info, default SEO
     Homepage, // Hero, impact stats, featured project
   ],
 

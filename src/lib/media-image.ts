@@ -15,10 +15,7 @@ function isMedia(image: CoverImage): image is Media {
 }
 
 /** Prefer a named size when available, otherwise the original file URL. */
-export function getMediaImageSrc(
-  image: CoverImage,
-  size: MediaSizeName = 'card',
-): string | null {
+export function getMediaImageSrc(image: CoverImage, size: MediaSizeName = 'card'): string | null {
   if (!image) return null
   if (typeof image === 'string') return image
   return image.sizes?.[size]?.url ?? image.url ?? null
