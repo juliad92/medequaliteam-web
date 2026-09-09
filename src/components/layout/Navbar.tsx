@@ -171,7 +171,7 @@ export default function Navbar({
                 alt="Med'EqualiTeam"
                 width={155}
                 height={36}
-                className="h-8 w-auto max-w-[min(130px,28vw)] object-contain object-left sm:h-9 sm:max-w-[155px]"
+                className="h-9 w-auto max-w-[min(155px,50vw)] shrink-0 object-contain object-left"
                 priority
               />
             </Link>
