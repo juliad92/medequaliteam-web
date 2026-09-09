@@ -63,7 +63,7 @@ export default function Navbar({
   const drawerNavItems = [
     {
       label: t.nav.about,
-      href: '/about',
+      href: '/about/why-we-exist',
       children: [
         { label: t.nav.aboutWhy, href: '/about/why-we-exist' },
         { label: t.nav.aboutOrg, href: '/about/organisation' },
