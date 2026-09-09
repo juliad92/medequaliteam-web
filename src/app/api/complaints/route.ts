@@ -1,9 +1,6 @@
 import { checkRateLimit, RATE_LIMITS } from '@/lib/rate-limit'
 import { isValidEmail } from '@/lib/validation'
 
-// const COMPLAINTS_RECIPIENT = 'safeguarding@medequali.team'
-const COMPLAINTS_RECIPIENT = 'jdemichel.jd@gmail.com'
-
 function requiredString(value: unknown): string | undefined {
   const result = typeof value === 'string' ? value.trim() : ''
   return result || undefined
@@ -70,6 +67,7 @@ export async function POST(req: Request) {
       { status: 400 },
     )
   }
+  const COMPLAINTS_RECIPIENT = process.env.COMPLAINTS_RECIPIENT?.trim() || 'jdemichel.jd@gmail.com'
 
   const apiKey = process.env.RESEND_API_KEY?.trim()
   if (!apiKey) {
