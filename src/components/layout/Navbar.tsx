@@ -67,7 +67,7 @@ export default function Navbar({
       children: [
         { label: t.nav.aboutWhy, href: '/about/why-we-exist' },
         { label: t.nav.aboutOrg, href: '/about/organisation' },
-        { label: t.nav.aboutTeam, href: '/about/team' },
+        { label: t.nav.aboutTeam, href: '/about/meet-team' },
       ],
     },
     {
