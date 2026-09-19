@@ -7,6 +7,8 @@ import Navbar from '@/components/layout/Navbar'
 import NewsletterBanner from '@/components/layout/NewsletterBanner'
 import CookieBanner from '@/components/layout/CookieBanner'
 import Footer from '@/components/layout/Footer'
+import JsonLd from '@/components/seo/JsonLd'
+import { organizationAndWebsiteJsonLd } from '@/lib/json-ld'
 import { getCachedProjectsForNav } from '@/lib/projects'
 import { getCachedProjectsWithVolunteerNeeds } from '@/lib/volunteer'
 
@@ -36,6 +38,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <body>
+        <JsonLd data={organizationAndWebsiteJsonLd(locale)} />
         <Navbar locale={locale} volunteerProjects={volunteerProjects} projects={projects} />
         {children}
         <NewsletterBanner locale={locale} />

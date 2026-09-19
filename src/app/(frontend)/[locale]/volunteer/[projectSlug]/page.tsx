@@ -1,10 +1,15 @@
 import React from 'react'
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 
+import JsonLd from '@/components/seo/JsonLd'
 import VolunteerPageNav from '@/components/volunteer/VolunteerPageNav'
 import VolunteerRolesAndForm from '@/components/volunteer/VolunteerRolesAndForm'
+import { getT } from '@/i18n/translations'
+import { breadcrumbJsonLd } from '@/lib/json-ld'
+import { buildPageMetadata } from '@/lib/seo'
 import { getVolunteerNeedsForProject } from '@/lib/volunteer'
 
 export const dynamic = 'force-dynamic'
@@ -16,6 +21,7 @@ function getCopy(locale: string, project: { title: string; location: string }) {
     return {
       title: `Bénévolat — ${project.title}`,
       subtitle: `Rejoignez notre projet à ${place}`,
+      metaDescription: `Rejoignez Med'EqualiTeam sur le projet ${project.title}${project.location ? ` à ${project.location}` : ''}. Postulez aux rôles bénévoles médicaux et de soutien ouverts.`,
       intro: [
         `Vous trouverez ci-dessous une description des différents rôles de nos bénévoles afin de mieux comprendre ce que vous pourriez faire en rejoignant le projet à ${place}.`,
         "Si vous avez d'autres compétences et idées, ou si vous souhaitez combiner des rôles, nous serons ravis d'en discuter. Pour toute question, écrivez à volunteer@medequali.team et notre Volunteer Coordinator reviendra vers vous dans les prochains jours.",
@@ -44,6 +50,7 @@ function getCopy(locale: string, project: { title: string; location: string }) {
   return {
     title: `Volunteer — ${project.title}`,
     subtitle: `Join our project in ${place}`,
+    metaDescription: `Volunteer with Med'EqualiTeam on ${project.title}${project.location ? ` in ${project.location}` : ''}. Apply for open medical and support volunteer roles.`,
     intro: [
       `Below you can find a description of the different roles of our volunteers to give you a better idea of what you could be doing by joining the project in ${place}.`,
       'If you have other skills and ideas, or you would like to combine roles, we would also be delighted to hear from you. If you have additional questions, please message to volunteer@medequali.team and our Volunteer Coordinator will come back to you in the next days.',
@@ -69,6 +76,44 @@ function getCopy(locale: string, project: { title: string; location: string }) {
   }
 }
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; projectSlug: string }>
+}): Promise<Metadata> {
+  const { locale, projectSlug } = await params
+  const t = getT(locale)
+  const payload = await getPayload({ config })
+  const { docs: projects } = await payload.find({
+    collection: 'projects',
+    where: { slug: { equals: projectSlug } },
+    locale: locale as 'en' | 'fr',
+    fallbackLocale: 'en',
+    depth: 1,
+    limit: 1,
+  })
+  const project = projects[0]
+
+  if (!project) {
+    return buildPageMetadata({
+      locale,
+      path: `/volunteer/${projectSlug}`,
+      title: t.nav.volunteer,
+      description: t.volunteerCta.body,
+    })
+  }
+
+  const copy = getCopy(locale, { title: project.title, location: project.location })
+
+  return buildPageMetadata({
+    locale,
+    path: `/volunteer/${projectSlug}`,
+    title: copy.title,
+    description: copy.metaDescription,
+    image: project.coverImage,
+  })
+}
+
 export default async function VolunteerProjectPage({
   params,
 }: {
@@ -76,6 +121,7 @@ export default async function VolunteerProjectPage({
 }) {
   const { locale, projectSlug } = await params
   const payload = await getPayload({ config })
+  const t = getT(locale)
 
   const { docs: projects } = await payload.find({
     collection: 'projects',
@@ -96,6 +142,12 @@ export default async function VolunteerProjectPage({
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd(locale, [
+          { name: t.nav.volunteer, path: '/volunteer/stories' },
+          { name: project.title, path: `/volunteer/${projectSlug}` },
+        ])}
+      />
       <header className="relative overflow-hidden bg-[var(--charcoal)] px-8 pt-24 pb-16">
         <div
           className="absolute inset-0"

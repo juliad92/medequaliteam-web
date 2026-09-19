@@ -2,7 +2,9 @@ import React from 'react'
 import type { Metadata } from 'next'
 
 import DonationForm from '@/components/donate/DonationForm'
+import JsonLd from '@/components/seo/JsonLd'
 import { getT } from '@/i18n/translations'
+import { breadcrumbJsonLd } from '@/lib/json-ld'
 import { buildPageMetadata } from '@/lib/seo'
 
 import '../styles.css'
@@ -29,6 +31,9 @@ export default async function DonatePage({ params }: { params: Promise<{ locale:
 
   return (
     <main className="min-h-screen bg-[var(--warm-white)]">
+      <JsonLd
+        data={breadcrumbJsonLd(locale, [{ name: t.donate.metaTitle, path: '/donate' }])}
+      />
       <h2 className="sr-only">{t.donate.srTitle}</h2>
       <DonationForm locale={locale} />
     </main>

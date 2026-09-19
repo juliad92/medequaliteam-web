@@ -3,7 +3,9 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import LexicalRenderer from '@/components/richtext/LexicalRenderer'
+import JsonLd from '@/components/seo/JsonLd'
 import { getT } from '@/i18n/translations'
+import { breadcrumbJsonLd } from '@/lib/json-ld'
 import { getPageBySlug, getPageRichTextContent } from '@/lib/pages'
 import { buildCmsPageMetadata } from '@/lib/seo'
 
@@ -39,6 +41,7 @@ export default async function FinancialReportPage({
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
+  const t = getT(locale)
   const page = await getPageBySlug(PAGE_SLUG, locale as Locale)
 
   if (!page) notFound()
@@ -47,6 +50,11 @@ export default async function FinancialReportPage({
 
   return (
     <main className="min-h-screen bg-[var(--warm-white)]">
+      <JsonLd
+        data={breadcrumbJsonLd(locale, [
+          { name: page.title || t.financialReport.metaTitle, path: '/financial-report' },
+        ])}
+      />
       <div className="mx-auto w-full max-w-2xl px-4 pt-6 pb-10 sm:px-6 sm:pt-8 sm:pb-14">
         <header className="mb-8 border-b border-[var(--border)] pb-8">
           <h1 className="mb-4 font-serif text-[28px] leading-tight font-normal text-[var(--charcoal)]">

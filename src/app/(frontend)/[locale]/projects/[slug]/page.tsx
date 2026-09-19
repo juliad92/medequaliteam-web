@@ -8,8 +8,10 @@ import config from '@payload-config'
 import LexicalRenderer from '@/components/richtext/LexicalRenderer'
 import ImpactBar from '@/components/home/ImpactBar'
 import ProjectPageNav from '@/components/projects/ProjectPageNav'
+import JsonLd from '@/components/seo/JsonLd'
 import { getT } from '@/i18n/translations'
 import { extractArticleNavSections } from '@/lib/lexical-sections'
+import { breadcrumbJsonLd } from '@/lib/json-ld'
 import { buildPageMetadata } from '@/lib/seo'
 import type { Media } from '@/payload/payload-types'
 import Image from 'next/image'
@@ -120,6 +122,12 @@ export default async function ProjectDetailPage({
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd(locale, [
+          { name: t.projects.metaTitle, path: '/projects' },
+          { name: project.title, path: `/projects/${slug}` },
+        ])}
+      />
       <header className="relative overflow-hidden bg-[var(--charcoal)] px-4 pt-20 pb-14 sm:px-8 sm:pt-24">
         <div className="absolute inset-0" style={{ background: 'var(--gradient-hero)' }} />
         <div

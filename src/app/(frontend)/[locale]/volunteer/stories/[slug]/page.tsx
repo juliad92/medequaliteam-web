@@ -6,11 +6,13 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 
 import { getT } from '@/i18n/translations'
+import { breadcrumbJsonLd } from '@/lib/json-ld'
 import { buildPageMetadata } from '@/lib/seo'
 import { getProjectsWithVolunteerNeeds } from '@/lib/volunteer'
 import { formatStoryDate, getVolunteerStory } from '@/lib/volunteer-stories'
 import Image from 'next/image'
 import { MEDIA_SIZE_FALLBACKS } from '@/lib/media-image'
+import JsonLd from '@/components/seo/JsonLd'
 
 export const dynamic = 'force-dynamic'
 
@@ -62,6 +64,12 @@ export default async function VolunteerStoryPage({
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd(locale, [
+          { name: t.volunteerStories.metaTitle, path: '/volunteer/stories' },
+          { name: story.name, path: `/volunteer/stories/${slug}` },
+        ])}
+      />
       <header className="relative overflow-hidden bg-[var(--charcoal)] px-4 pt-24 pb-16 sm:px-8">
         <div className="absolute inset-0" style={{ background: 'var(--gradient-hero)' }} />
         <div

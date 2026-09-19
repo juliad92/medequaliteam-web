@@ -5,9 +5,11 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 
 import { getT } from '@/i18n/translations'
+import { breadcrumbJsonLd } from '@/lib/json-ld'
 import { buildPageMetadata } from '@/lib/seo'
 import type { Media } from '@/payload/payload-types'
 import { getMediaImageAlt, getMediaImageSrc, MediaImage } from '@/components/media-image'
+import JsonLd from '@/components/seo/JsonLd'
 
 export const dynamic = 'force-dynamic'
 
@@ -60,6 +62,11 @@ export default async function ProjectsListingPage({
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd(locale, [
+          { name: t.projects.metaTitle, path: '/projects' },
+        ])}
+      />
       <header className="relative overflow-hidden bg-[var(--charcoal)] px-4 pt-24 pb-14 sm:px-8 sm:pt-28">
         <div className="absolute inset-0" style={{ background: 'var(--gradient-hero)' }} />
         <div

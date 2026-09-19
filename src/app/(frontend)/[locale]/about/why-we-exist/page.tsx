@@ -4,7 +4,9 @@ import { notFound } from 'next/navigation'
 
 import PageHero from '@/components/pages/PageHero'
 import LexicalRenderer from '@/components/richtext/LexicalRenderer'
+import JsonLd from '@/components/seo/JsonLd'
 import { getT } from '@/i18n/translations'
+import { breadcrumbJsonLd } from '@/lib/json-ld'
 import { getPageBySlug, getPageHero, getPageRichTextContent } from '@/lib/pages'
 import { buildCmsPageMetadata } from '@/lib/seo'
 
@@ -40,6 +42,7 @@ export default async function WhyWeExistPage({
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
+  const t = getT(locale)
   const page = await getPageBySlug(PAGE_SLUG, locale as Locale)
 
   if (!page) notFound()
@@ -49,6 +52,12 @@ export default async function WhyWeExistPage({
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd(locale, [
+          { name: t.nav.about, path: '/about/why-we-exist' },
+          { name: page.title || t.nav.aboutWhy, path: '/about/why-we-exist' },
+        ])}
+      />
       <PageHero locale={locale} hero={hero} fallbackHeading={page.title} />
 
       <main className="bg-[var(--warm-white)] px-4 py-14 sm:px-8 sm:py-20">
