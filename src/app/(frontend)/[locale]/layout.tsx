@@ -15,6 +15,9 @@ import { getCachedProjectsWithVolunteerNeeds } from '@/lib/volunteer'
 const locales = ['en', 'fr'] as const
 type Locale = (typeof locales)[number]
 
+/** ISR for all public marketing routes under this locale layout (seconds). */
+export const revalidate = 300
+
 export async function generateStaticParams() {
   return locales.map((locale) => ({ locale }))
 }

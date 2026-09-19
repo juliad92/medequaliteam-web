@@ -14,7 +14,26 @@ import Image from 'next/image'
 import { MEDIA_SIZE_FALLBACKS } from '@/lib/media-image'
 import JsonLd from '@/components/seo/JsonLd'
 
-export const dynamic = 'force-dynamic'
+/** Enable ISR with the locale layout `revalidate = 300`. */
+export const dynamicParams = true
+
+export async function generateStaticParams() {
+  try {
+    const payload = await getPayload({ config })
+    const { docs } = await payload.find({
+      collection: 'testimonials',
+      depth: 0,
+      limit: 200,
+      select: { slug: true },
+    })
+    return docs
+      .map((story) => story.slug)
+      .filter((slug): slug is string => Boolean(slug))
+      .map((slug) => ({ slug }))
+  } catch {
+    return []
+  }
+}
 
 export async function generateMetadata({
   params,

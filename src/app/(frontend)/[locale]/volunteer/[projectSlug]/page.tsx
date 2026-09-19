@@ -10,9 +10,20 @@ import VolunteerRolesAndForm from '@/components/volunteer/VolunteerRolesAndForm'
 import { getT } from '@/i18n/translations'
 import { breadcrumbJsonLd } from '@/lib/json-ld'
 import { buildPageMetadata } from '@/lib/seo'
-import { getVolunteerNeedsForProject } from '@/lib/volunteer'
+import { getVolunteerNeedsForProject, getProjectsWithVolunteerNeeds } from '@/lib/volunteer'
 
-export const dynamic = 'force-dynamic'
+/** Enable ISR with the locale layout `revalidate = 300`. */
+export const dynamicParams = true
+
+export async function generateStaticParams() {
+  try {
+    const payload = await getPayload({ config })
+    const projects = await getProjectsWithVolunteerNeeds(payload, 'en')
+    return projects.map((project) => ({ projectSlug: project.slug }))
+  } catch {
+    return []
+  }
+}
 
 function getCopy(locale: string, project: { title: string; location: string }) {
   const place = project.location || project.title

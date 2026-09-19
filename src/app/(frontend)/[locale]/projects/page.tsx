@@ -11,7 +11,6 @@ import type { Media } from '@/payload/payload-types'
 import { getMediaImageAlt, getMediaImageSrc, MediaImage } from '@/components/media-image'
 import JsonLd from '@/components/seo/JsonLd'
 
-export const dynamic = 'force-dynamic'
 
 type Project = {
   slug: string

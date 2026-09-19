@@ -16,7 +16,27 @@ import { buildPageMetadata } from '@/lib/seo'
 import type { Media } from '@/payload/payload-types'
 import Image from 'next/image'
 
-export const dynamic = 'force-dynamic'
+/** Enable ISR with the locale layout `revalidate = 300`. */
+export const dynamicParams = true
+
+export async function generateStaticParams() {
+  try {
+    const payload = await getPayload({ config })
+    const { docs } = await payload.find({
+      collection: 'projects',
+      where: { _status: { equals: 'published' } },
+      depth: 0,
+      limit: 200,
+      select: { slug: true },
+    })
+    return docs
+      .map((project) => project.slug)
+      .filter((slug): slug is string => Boolean(slug))
+      .map((slug) => ({ slug }))
+  } catch {
+    return []
+  }
+}
 
 type Project = {
   title: string

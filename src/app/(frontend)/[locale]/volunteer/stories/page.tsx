@@ -13,7 +13,6 @@ import Image from 'next/image'
 import { MEDIA_SIZE_FALLBACKS } from '@/lib/media-image'
 import JsonLd from '@/components/seo/JsonLd'
 
-export const dynamic = 'force-dynamic'
 
 export async function generateMetadata({
   params,

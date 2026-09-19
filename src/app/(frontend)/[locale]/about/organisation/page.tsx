@@ -12,7 +12,6 @@ import { buildCmsPageMetadata } from '@/lib/seo'
 
 import '../../styles.css'
 
-export const dynamic = 'force-dynamic'
 
 const PAGE_SLUG = 'about/organisation'
 
