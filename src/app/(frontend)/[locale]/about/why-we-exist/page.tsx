@@ -6,6 +6,7 @@ import PageHero from '@/components/pages/PageHero'
 import LexicalRenderer from '@/components/richtext/LexicalRenderer'
 import { getT } from '@/i18n/translations'
 import { getPageBySlug, getPageHero, getPageRichTextContent } from '@/lib/pages'
+import { buildCmsPageMetadata } from '@/lib/seo'
 
 import '../../styles.css'
 
@@ -24,17 +25,13 @@ export async function generateMetadata({
   const t = getT(locale)
   const page = await getPageBySlug(PAGE_SLUG, locale as Locale)
 
-  if (!page) {
-    return {
-      title: t.whyWeExist.metaTitle,
-      description: t.whyWeExist.metaDescription,
-    }
-  }
-
-  return {
-    title: page.meta?.title || page.title || t.whyWeExist.metaTitle,
-    description: page.meta?.description || t.whyWeExist.metaDescription,
-  }
+  return buildCmsPageMetadata({
+    locale,
+    path: '/about/why-we-exist',
+    page,
+    fallbackTitle: t.whyWeExist.metaTitle,
+    fallbackDescription: t.whyWeExist.metaDescription,
+  })
 }
 
 export default async function WhyWeExistPage({

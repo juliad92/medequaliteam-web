@@ -6,6 +6,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 
 import { getT } from '@/i18n/translations'
+import { buildPageMetadata } from '@/lib/seo'
 import { getProjectsWithVolunteerNeeds } from '@/lib/volunteer'
 import { formatStoryDate, getVolunteerStory } from '@/lib/volunteer-stories'
 import Image from 'next/image'
@@ -24,13 +25,21 @@ export async function generateMetadata({
   const t = getT(locale)
 
   if (!story) {
-    return { title: t.volunteerStories.metaTitle }
+    return buildPageMetadata({
+      locale,
+      path: `/volunteer/stories/${slug}`,
+      title: t.volunteerStories.metaTitle,
+      description: t.volunteerStories.metaDescription,
+    })
   }
 
-  return {
+  return buildPageMetadata({
+    locale,
+    path: `/volunteer/stories/${slug}`,
     title: `${story.role || story.name} — ${story.name}`,
     description: story.excerpt,
-  }
+    image: story.coverImage,
+  })
 }
 
 export default async function VolunteerStoryPage({

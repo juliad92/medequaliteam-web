@@ -1,17 +1,53 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import React from 'react'
+import type { Metadata } from 'next'
 
 import HeroSection from '@/components/home/HeroSection'
 import ImpactBar from '@/components/home/ImpactBar'
 import MissionSection from '@/components/home/MissionSection'
 import ProjectsSection from '@/components/home/ProjectsSection'
 import { VolunteerCTA } from '@/components/home/CtaAndNews'
+import { getT } from '@/i18n/translations'
+import { buildPageMetadata } from '@/lib/seo'
 import { getProjectsWithVolunteerNeeds } from '@/lib/volunteer'
 import type { Project } from '@/payload/payload-types'
 
 function populatedProject(value: string | Project | null | undefined): Project | undefined {
   return value && typeof value === 'object' ? value : undefined
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const t = getT(locale)
+  const payload = await getPayload({ config })
+  const homepageSettings = await payload.findGlobal({
+    slug: 'homepage',
+    locale: locale as 'en' | 'fr',
+    fallbackLocale: 'en',
+    depth: 1,
+  })
+
+  const heading = homepageSettings?.hero?.heading?.trim()
+  const tagline = homepageSettings?.hero?.tagline?.trim()
+  const title = heading
+    ? tagline
+      ? `${heading} — ${tagline}`
+      : heading
+    : t.home.metaTitle
+
+  return buildPageMetadata({
+    locale,
+    path: '',
+    title,
+    description: t.home.metaDescription,
+    image: homepageSettings?.hero?.image,
+    absoluteTitle: true,
+  })
 }
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {

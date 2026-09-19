@@ -10,6 +10,7 @@ import ImpactBar from '@/components/home/ImpactBar'
 import ProjectPageNav from '@/components/projects/ProjectPageNav'
 import { getT } from '@/i18n/translations'
 import { extractArticleNavSections } from '@/lib/lexical-sections'
+import { buildPageMetadata } from '@/lib/seo'
 import type { Media } from '@/payload/payload-types'
 import Image from 'next/image'
 
@@ -63,14 +64,25 @@ export async function generateMetadata({
     where: { slug: { equals: slug } },
     locale: locale as 'en' | 'fr',
     fallbackLocale: 'en',
+    depth: 1,
     limit: 1,
   })
   const project = projects[0] as Project | undefined
-  if (!project) return { title: t.projects.metaTitle }
-  return {
+  if (!project) {
+    return buildPageMetadata({
+      locale,
+      path: `/projects/${slug}`,
+      title: t.projects.metaTitle,
+      description: t.projects.metaDescription,
+    })
+  }
+  return buildPageMetadata({
+    locale,
+    path: `/projects/${slug}`,
     title: `${project.title} — ${t.projects.metaTitle}`,
     description: project.summary ?? t.projects.metaDescription,
-  }
+    image: project.coverImage,
+  })
 }
 
 export default async function ProjectDetailPage({

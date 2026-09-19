@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 
 import ComplaintsContent from '@/components/complaints/ComplaintsContent'
 import { getT } from '@/i18n/translations'
+import { buildPageMetadata } from '@/lib/seo'
 
 import '../styles.css'
 
@@ -14,10 +15,12 @@ export async function generateMetadata({
   const { locale } = await params
   const t = getT(locale)
 
-  return {
+  return buildPageMetadata({
+    locale,
+    path: '/complaints',
     title: t.complaints.metaTitle,
     description: t.complaints.metaDescription,
-  }
+  })
 }
 
 export default async function ComplaintsPage({ params }: { params: Promise<{ locale: string }> }) {

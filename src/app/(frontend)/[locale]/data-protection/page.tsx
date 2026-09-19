@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation'
 import LexicalRenderer from '@/components/richtext/LexicalRenderer'
 import { getT } from '@/i18n/translations'
 import { getPageBySlug, getPageRichTextContent } from '@/lib/pages'
+import { buildCmsPageMetadata } from '@/lib/seo'
 
 import '../styles.css'
 
@@ -23,17 +24,13 @@ export async function generateMetadata({
   const t = getT(locale)
   const page = await getPageBySlug(PAGE_SLUG, locale as Locale)
 
-  if (!page) {
-    return {
-      title: t.dataProtection.metaTitle,
-      description: t.dataProtection.metaDescription,
-    }
-  }
-
-  return {
-    title: page.meta?.title || page.title || t.dataProtection.metaTitle,
-    description: page.meta?.description || t.dataProtection.metaDescription,
-  }
+  return buildCmsPageMetadata({
+    locale,
+    path: '/data-protection',
+    page,
+    fallbackTitle: t.dataProtection.metaTitle,
+    fallbackDescription: t.dataProtection.metaDescription,
+  })
 }
 
 export default async function DataProtectionPage({

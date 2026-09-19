@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 
 import DonationForm from '@/components/donate/DonationForm'
 import { getT } from '@/i18n/translations'
+import { buildPageMetadata } from '@/lib/seo'
 
 import '../styles.css'
 
@@ -14,10 +15,12 @@ export async function generateMetadata({
   const { locale } = await params
   const t = getT(locale)
 
-  return {
+  return buildPageMetadata({
+    locale,
+    path: '/donate',
     title: t.donate.metaTitle,
     description: t.donate.metaDescription,
-  }
+  })
 }
 
 export default async function DonatePage({ params }: { params: Promise<{ locale: string }> }) {

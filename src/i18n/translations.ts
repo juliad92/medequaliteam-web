@@ -17,6 +17,13 @@ export const translations = {
       donate: 'Donate',
     },
 
+    // Homepage SEO (CMS hero heading/tagline preferred when set)
+    home: {
+      metaTitle: "Med'EqualiTeam — Free healthcare for refugees",
+      metaDescription:
+        "Medical NGO providing free primary healthcare for refugees and displaced people. Donate or volunteer with Med'EqualiTeam.",
+    },
+
     // Hero
     hero: {
       eyebrow: 'Medical NGO · Since 2018',
@@ -437,6 +444,13 @@ export const translations = {
       volunteerStories: 'Témoignages',
       news: 'Actualités',
       donate: 'Faire un don',
+    },
+
+    // Homepage SEO (CMS hero heading/tagline preferred when set)
+    home: {
+      metaTitle: "Med'EqualiTeam — Soins gratuits pour les réfugiés",
+      metaDescription:
+        "ONG médicale fournissant des soins de santé primaires gratuits aux réfugiés et personnes déplacées. Faites un don ou devenez bénévole avec Med'EqualiTeam.",
     },
 
     // Hero

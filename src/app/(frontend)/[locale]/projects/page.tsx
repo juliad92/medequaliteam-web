@@ -5,6 +5,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 
 import { getT } from '@/i18n/translations'
+import { buildPageMetadata } from '@/lib/seo'
 import type { Media } from '@/payload/payload-types'
 import { getMediaImageAlt, getMediaImageSrc, MediaImage } from '@/components/media-image'
 
@@ -26,10 +27,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params
   const t = getT(locale)
-  return {
+  return buildPageMetadata({
+    locale,
+    path: '/projects',
     title: t.projects.metaTitle,
     description: t.projects.metaDescription,
-  }
+  })
 }
 
 export default async function ProjectsListingPage({
