@@ -31,9 +31,7 @@ export default async function DonatePage({ params }: { params: Promise<{ locale:
 
   return (
     <main className="min-h-screen bg-[var(--warm-white)]">
-      <JsonLd
-        data={breadcrumbJsonLd(locale, [{ name: t.donate.metaTitle, path: '/donate' }])}
-      />
+      <JsonLd data={breadcrumbJsonLd(locale, [{ name: t.donate.metaTitle, path: '/donate' }])} />
       <h2 className="sr-only">{t.donate.srTitle}</h2>
       <DonationForm locale={locale} />
     </main>

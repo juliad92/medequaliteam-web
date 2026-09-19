@@ -135,4 +135,4 @@ e2e/                       # Playwright tests
 
 ## CI
 
-GitHub Actions runs lint, typecheck, and E2E tests on push/PR to `main`. See `.github/workflows/ci.yml`.
+GitHub Actions runs lint, typecheck, format check, production build, and E2E tests on push/PR to `main`. See `.github/workflows/ci.yml`.

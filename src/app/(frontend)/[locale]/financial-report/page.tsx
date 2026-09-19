@@ -11,7 +11,6 @@ import { buildCmsPageMetadata } from '@/lib/seo'
 
 import '../styles.css'
 
-
 const PAGE_SLUG = 'financial-report'
 
 type Locale = 'en' | 'fr'

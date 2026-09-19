@@ -12,7 +12,6 @@ import { buildCmsPageMetadata } from '@/lib/seo'
 
 import '../../styles.css'
 
-
 const PAGE_SLUG = 'about/meet-team'
 
 type Locale = 'en' | 'fr'

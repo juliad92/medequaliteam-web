@@ -32,9 +32,7 @@ export default async function ComplaintsPage({ params }: { params: Promise<{ loc
   return (
     <main className="min-h-screen bg-[var(--warm-white)]">
       <JsonLd
-        data={breadcrumbJsonLd(locale, [
-          { name: t.complaints.metaTitle, path: '/complaints' },
-        ])}
+        data={breadcrumbJsonLd(locale, [{ name: t.complaints.metaTitle, path: '/complaints' }])}
       />
       <h2 className="sr-only">{t.complaints.srTitle}</h2>
       <ComplaintsContent locale={locale} />

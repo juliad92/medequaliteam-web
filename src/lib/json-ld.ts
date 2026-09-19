@@ -7,10 +7,10 @@ const SAME_AS = [
 ] as const
 
 const DESCRIPTION_EN =
-  "Medical NGO providing free primary healthcare for refugees and displaced populations. Volunteer-powered and crowdfunded; 100% of donations go to operations."
+  'Medical NGO providing free primary healthcare for refugees and displaced populations. Volunteer-powered and crowdfunded; 100% of donations go to operations.'
 
 const DESCRIPTION_FR =
-  "ONG médicale fournissant des soins de santé primaires gratuits aux réfugiés et personnes déplacées. Financée par le crowdfunding et portée par des bénévoles ; 100 % des dons vont aux opérations."
+  'ONG médicale fournissant des soins de santé primaires gratuits aux réfugiés et personnes déplacées. Financée par le crowdfunding et portée par des bénévoles ; 100 % des dons vont aux opérations.'
 
 export type BreadcrumbItem = {
   name: string

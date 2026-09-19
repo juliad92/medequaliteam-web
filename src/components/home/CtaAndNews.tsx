@@ -102,7 +102,7 @@ export function NewsSection({
             </h2>
           </div>
           <Link
-            href={`/${locale}/news`}
+            href={`/${locale}/volunteer/stories`}
             className="border-b border-[var(--border)] pb-0.5 text-[16px] font-medium text-[var(--muted)] transition-colors hover:border-[var(--charcoal)] hover:text-[var(--charcoal)]"
           >
             {t.news.viewAll} →

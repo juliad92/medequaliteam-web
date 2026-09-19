@@ -12,7 +12,6 @@ import { buildCmsPageMetadata } from '@/lib/seo'
 
 import '../../styles.css'
 
-
 const PAGE_SLUG = 'about/why-we-exist'
 
 type Locale = 'en' | 'fr'
@@ -35,11 +34,7 @@ export async function generateMetadata({
   })
 }
 
-export default async function WhyWeExistPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>
-}) {
+export default async function WhyWeExistPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   const t = getT(locale)
   const page = await getPageBySlug(PAGE_SLUG, locale as Locale)

@@ -12,7 +12,6 @@ import { buildCmsPageMetadata } from '@/lib/seo'
 
 import '../../styles.css'
 
-
 const PAGE_SLUG = 'about/organisation'
 
 type Locale = 'en' | 'fr'
@@ -35,7 +34,11 @@ export async function generateMetadata({
   })
 }
 
-export default async function OrganisationPage({ params }: { params: Promise<{ locale: string }> }) {
+export default async function OrganisationPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}) {
   const { locale } = await params
   const t = getT(locale)
   const page = await getPageBySlug(PAGE_SLUG, locale as Locale)

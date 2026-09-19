@@ -34,11 +34,7 @@ export async function generateMetadata({
 
   const heading = homepageSettings?.hero?.heading?.trim()
   const tagline = homepageSettings?.hero?.tagline?.trim()
-  const title = heading
-    ? tagline
-      ? `${heading} — ${tagline}`
-      : heading
-    : t.home.metaTitle
+  const title = heading ? (tagline ? `${heading} — ${tagline}` : heading) : t.home.metaTitle
 
   return buildPageMetadata({
     locale,
