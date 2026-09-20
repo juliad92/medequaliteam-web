@@ -101,14 +101,9 @@ export default buildConfig({
   // ── File storage (Vercel Blob) ───────────────────────────────────────────────
   // Local dev without BLOB_READ_WRITE_TOKEN keeps using public/media (staticDir).
   // On Vercel, add Blob storage in the project dashboard — Vercel sets the token.
+  // importExportPlugin must run before vercelBlobStorage so `exports` / `imports`
+  // exist when the storage adapter is attached.
   plugins: [
-    vercelBlobStorage({
-      collections: {
-        media: true,
-        'volunteer-cvs': true,
-      },
-      token: process.env.BLOB_READ_WRITE_TOKEN,
-    }),
     importExportPlugin({
       collections: [
         {
@@ -131,6 +126,15 @@ export default buildConfig({
         }
         return collection
       },
+    }),
+    vercelBlobStorage({
+      collections: {
+        media: true,
+        'volunteer-cvs': true,
+        exports: true,
+        imports: true,
+      },
+      token: process.env.BLOB_READ_WRITE_TOKEN,
     }),
   ],
 })
