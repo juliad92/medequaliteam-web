@@ -83,7 +83,7 @@ export async function generateMetadata({
   const payload = await getPayload({ config })
   const { docs: projects } = await payload.find({
     collection: 'projects',
-    where: { slug: { equals: slug } },
+    where: { slug: { equals: slug }, _status: { equals: 'published' } },
     locale: locale as 'en' | 'fr',
     fallbackLocale: 'en',
     depth: 1,
@@ -118,7 +118,7 @@ export default async function ProjectDetailPage({
 
   const { docs: projects } = await payload.find({
     collection: 'projects',
-    where: { slug: { equals: slug } },
+    where: { slug: { equals: slug }, _status: { equals: 'published' } },
     locale: locale as 'en' | 'fr',
     fallbackLocale: 'en',
     depth: 1,

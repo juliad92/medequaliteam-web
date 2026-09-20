@@ -7,6 +7,37 @@ export const SITE_NAME = "Med'EqualiTeam"
 export const LOCALES = ['en', 'fr'] as const
 export type SeoLocale = (typeof LOCALES)[number]
 
+/**
+ * Whether search engines may index this deployment.
+ * Set `ALLOW_SEARCH_INDEXING=true` only on the public production host
+ * (medequali.team). Defaults to false so Vercel "hidden production" / previews stay out of the index.
+ */
+export function isSearchIndexingAllowed(): boolean {
+  const raw = process.env.ALLOW_SEARCH_INDEXING?.trim().toLowerCase()
+  return raw === '1' || raw === 'true' || raw === 'yes'
+}
+
+/** Robots metadata for Next.js `metadata.robots` (root layout / pages). */
+export function getRobotsMetadata(): Metadata['robots'] {
+  if (isSearchIndexingAllowed()) {
+    return {
+      index: true,
+      follow: true,
+    }
+  }
+
+  return {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: {
+      index: false,
+      follow: false,
+      noimageindex: true,
+    },
+  }
+}
+
 /** Public site origin for metadataBase, OG, and canonical URLs. */
 export function getSiteUrl(): string {
   const explicit = process.env.NEXT_PUBLIC_SITE_URL?.trim()

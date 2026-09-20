@@ -1,9 +1,20 @@
 import type { MetadataRoute } from 'next'
 
-import { getSiteUrl } from '@/lib/seo'
+import { getSiteUrl, isSearchIndexingAllowed } from '@/lib/seo'
 
 export default function robots(): MetadataRoute.Robots {
   const siteUrl = getSiteUrl()
+
+  if (!isSearchIndexingAllowed()) {
+    return {
+      rules: [
+        {
+          userAgent: '*',
+          disallow: '/',
+        },
+      ],
+    }
+  }
 
   return {
     rules: [

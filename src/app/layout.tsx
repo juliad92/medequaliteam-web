@@ -1,7 +1,7 @@
 import React from 'react'
 import type { Metadata } from 'next'
 
-import { getSiteUrl, SITE_NAME } from '@/lib/seo'
+import { getRobotsMetadata, getSiteUrl, SITE_NAME } from '@/lib/seo'
 
 import './globals.css'
 
@@ -11,6 +11,7 @@ export const metadata: Metadata = {
     default: SITE_NAME,
     template: `%s | ${SITE_NAME}`,
   },
+  robots: getRobotsMetadata(),
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
