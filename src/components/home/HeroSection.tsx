@@ -45,7 +45,7 @@ export default function HeroSection({
           style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}
         >
           {' '}
-          <p className="mb-5 flex items-center gap-3 text-[13px] font-medium tracking-[0.16em] text-[var(--green)] uppercase">
+          <p className="mb-5 flex items-center gap-3 text-[13px] font-medium tracking-[0.16em] text-white/55 uppercase">
             <span className="h-px w-8 bg-[var(--green)]" />
             {t.hero.eyebrow}
           </p>
