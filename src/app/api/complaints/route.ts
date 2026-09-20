@@ -67,7 +67,7 @@ export async function POST(req: Request) {
       { status: 400 },
     )
   }
-  const COMPLAINTS_RECIPIENT = process.env.COMPLAINTS_RECIPIENT?.trim() || 'jdemichel.jd@gmail.com'
+  const COMPLAINTS_RECIPIENT = process.env.COMPLAINTS_RECIPIENT?.trim() || 'admin@medequali.team'
 
   const apiKey = process.env.RESEND_API_KEY?.trim()
   if (!apiKey) {
