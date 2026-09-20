@@ -1,53 +1,5 @@
 import type { GlobalConfig } from 'payload'
 
-// ─── Site Info ───────────────────────────────────────────────────────────────
-
-export const SiteInfo: GlobalConfig = {
-  slug: 'site-info',
-  admin: {
-    description: 'Contact details, social links, legal footer information.',
-  },
-  fields: [
-    {
-      name: 'email',
-      type: 'email',
-      defaultValue: 'info@medequali.team',
-    },
-    {
-      name: 'address',
-      type: 'text',
-      defaultValue: '867 route de Dorjon, 74490 Megevette, France',
-    },
-    {
-      name: 'charityNumber',
-      type: 'text',
-      label: 'Charity registration number',
-      defaultValue: 'W102001158',
-    },
-    {
-      name: 'seoDefaults',
-      type: 'group',
-      label: 'Default SEO (used when a page has no custom meta)',
-      fields: [
-        {
-          name: 'title',
-          type: 'text',
-          localized: true,
-          defaultValue: "Med'EqualiTeam — Free healthcare for people on the move",
-        },
-        {
-          name: 'description',
-          type: 'textarea',
-          localized: true,
-          defaultValue:
-            "Med'EqualiTeam is a medical NGO providing free primary health care for refugees and displaced populations.",
-        },
-        { name: 'image', type: 'upload', relationTo: 'media' },
-      ],
-    },
-  ],
-}
-
 // ─── Homepage ─────────────────────────────────────────────────────────────────
 
 export const Homepage: GlobalConfig = {

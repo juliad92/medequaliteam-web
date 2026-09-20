@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { publishedOrAuthenticated } from '../lib/access.ts'
 
 export const Projects: CollectionConfig = {
   slug: 'projects',
@@ -8,7 +9,7 @@ export const Projects: CollectionConfig = {
     description: "Medical projects run by Med'EqualiTeam on the ground.",
   },
   access: {
-    read: () => true, // public
+    read: publishedOrAuthenticated,
   },
   versions: {
     drafts: true,

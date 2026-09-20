@@ -6,12 +6,34 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 
 import { getT } from '@/i18n/translations'
+import { breadcrumbJsonLd } from '@/lib/json-ld'
+import { buildPageMetadata } from '@/lib/seo'
 import { getProjectsWithVolunteerNeeds } from '@/lib/volunteer'
 import { formatStoryDate, getVolunteerStory } from '@/lib/volunteer-stories'
 import Image from 'next/image'
 import { MEDIA_SIZE_FALLBACKS } from '@/lib/media-image'
+import JsonLd from '@/components/seo/JsonLd'
 
-export const dynamic = 'force-dynamic'
+/** Enable ISR with the locale layout `revalidate = 300`. */
+export const dynamicParams = true
+
+export async function generateStaticParams() {
+  try {
+    const payload = await getPayload({ config })
+    const { docs } = await payload.find({
+      collection: 'testimonials',
+      depth: 0,
+      limit: 200,
+      select: { slug: true },
+    })
+    return docs
+      .map((story) => story.slug)
+      .filter((slug): slug is string => Boolean(slug))
+      .map((slug) => ({ slug }))
+  } catch {
+    return []
+  }
+}
 
 export async function generateMetadata({
   params,
@@ -24,13 +46,21 @@ export async function generateMetadata({
   const t = getT(locale)
 
   if (!story) {
-    return { title: t.volunteerStories.metaTitle }
+    return buildPageMetadata({
+      locale,
+      path: `/volunteer/stories/${slug}`,
+      title: t.volunteerStories.metaTitle,
+      description: t.volunteerStories.metaDescription,
+    })
   }
 
-  return {
+  return buildPageMetadata({
+    locale,
+    path: `/volunteer/stories/${slug}`,
     title: `${story.role || story.name} — ${story.name}`,
     description: story.excerpt,
-  }
+    image: story.coverImage,
+  })
 }
 
 export default async function VolunteerStoryPage({
@@ -53,6 +83,12 @@ export default async function VolunteerStoryPage({
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd(locale, [
+          { name: t.volunteerStories.metaTitle, path: '/volunteer/stories' },
+          { name: story.name, path: `/volunteer/stories/${slug}` },
+        ])}
+      />
       <header className="relative overflow-hidden bg-[var(--charcoal)] px-4 pt-24 pb-16 sm:px-8">
         <div className="absolute inset-0" style={{ background: 'var(--gradient-hero)' }} />
         <div

@@ -140,10 +140,7 @@ export function FinalDetailsStep({
           }
           className={fieldErrors.howDidYouHearAboutUs ? textareaErrorClass : textareaClass}
         />
-        <FieldError
-          id="howDidYouHearAboutUs-error"
-          message={fieldErrors.howDidYouHearAboutUs}
-        />
+        <FieldError id="howDidYouHearAboutUs-error" message={fieldErrors.howDidYouHearAboutUs} />
       </label>
     </>
   )

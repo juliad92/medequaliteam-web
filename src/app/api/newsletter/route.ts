@@ -1,8 +1,7 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { checkRateLimit, RATE_LIMITS } from '@/lib/rate-limit'
-
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+import { isValidEmail } from '@/lib/validation'
 
 function str(value: unknown): string | undefined {
   const s = String(value ?? '').trim()
@@ -25,7 +24,7 @@ export async function POST(req: Request) {
       return Response.json({ ok: false, error: 'Missing required fields.' }, { status: 400 })
     }
 
-    if (!EMAIL_PATTERN.test(email)) {
+    if (!isValidEmail(email)) {
       return Response.json({ ok: false, error: 'Invalid email address.' }, { status: 400 })
     }
 

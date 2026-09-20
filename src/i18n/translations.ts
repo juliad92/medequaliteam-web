@@ -10,10 +10,18 @@ export const translations = {
       projectsActive: 'Northern Greece',
       projectsPast: 'Past projects',
       volunteer: 'Volunteer with us',
+      volunteerShort: 'Volunteer',
       volunteerGreece: 'Volunteer in Greece',
       volunteerStories: 'Volunteer stories',
       news: 'News',
       donate: 'Donate',
+    },
+
+    // Homepage SEO (CMS hero heading/tagline preferred when set)
+    home: {
+      metaTitle: "Med'EqualiTeam — Free healthcare for refugees",
+      metaDescription:
+        "Medical NGO providing free primary healthcare for refugees and displaced people. Donate or volunteer with Med'EqualiTeam.",
     },
 
     // Hero
@@ -283,6 +291,13 @@ export const translations = {
         "How Med'EqualiTeam is funded and how donations are spent. Our accounts are reviewed by a chartered accountant.",
     },
 
+    // Why we exist
+    whyWeExist: {
+      metaTitle: 'Why we exist',
+      metaDescription:
+        "Why Med'EqualiTeam exists: our purpose, values, and the communities we serve.",
+    },
+
     // Complaints
     complaints: {
       metaTitle: 'Make a complaint',
@@ -405,6 +420,12 @@ export const translations = {
       financialReport: 'Financial report',
       rights: 'All rights reserved.',
     },
+
+    cookies: {
+      message: "Med'EqualiTeam uses cookies to improve your experience.",
+      learnMore: 'Learn more',
+      accept: 'Got it!',
+    },
   },
 
   fr: {
@@ -418,10 +439,18 @@ export const translations = {
       projectsActive: 'Grèce du Nord',
       projectsPast: 'Projets passés',
       volunteer: 'Bénévolat avec nous',
+      volunteerShort: 'Bénévolat',
       volunteerGreece: 'Bénévolat en Grèce',
       volunteerStories: 'Témoignages',
       news: 'Actualités',
       donate: 'Faire un don',
+    },
+
+    // Homepage SEO (CMS hero heading/tagline preferred when set)
+    home: {
+      metaTitle: "Med'EqualiTeam — Soins gratuits pour les réfugiés",
+      metaDescription:
+        "ONG médicale fournissant des soins de santé primaires gratuits aux réfugiés et personnes déplacées. Faites un don ou devenez bénévole avec Med'EqualiTeam.",
     },
 
     // Hero
@@ -693,6 +722,13 @@ export const translations = {
         "Comment Med'EqualiTeam est financée et comment les dons sont utilisés. Nos comptes sont suivis par un expert-comptable.",
     },
 
+    // Why we exist
+    whyWeExist: {
+      metaTitle: 'Pourquoi nous existons',
+      metaDescription:
+        "Pourquoi Med'EqualiTeam existe : notre raison d'être, nos valeurs et les communautés que nous servons.",
+    },
+
     // Complaints
     complaints: {
       metaTitle: 'Formuler une plainte',
@@ -814,6 +850,12 @@ export const translations = {
       dataProtection: 'Protection des données',
       financialReport: 'Rapport financier',
       rights: 'Tous droits réservés.',
+    },
+
+    cookies: {
+      message: "Med'EqualiTeam utilise des cookies pour améliorer votre expérience.",
+      learnMore: 'En savoir plus',
+      accept: 'Got it!',
     },
   },
 } as const

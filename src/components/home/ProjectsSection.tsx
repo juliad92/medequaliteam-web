@@ -1,13 +1,13 @@
 import React from 'react'
 import Link from 'next/link'
 import { getT } from '@/i18n/translations'
-import type { Media } from '@/payload/payload-types'
+import type { Project as PayloadProject } from '@/payload/payload-types'
 import { MediaImage } from '@/components/media-image'
 
 const getPlaceholders = (t: ReturnType<typeof getT>) => [
   {
     slug: 'northern-greece',
-    status: 'active',
+    status: 'active' as const,
     location: 'Thessaloniki, Greece',
     title: t.nav.projectsActive,
     summary:
@@ -16,14 +16,11 @@ const getPlaceholders = (t: ReturnType<typeof getT>) => [
   },
 ]
 
-type Project = {
-  slug: string
-  status: string
-  location: string
-  title: string
-  summary: string
+type ProjectCardData = Pick<
+  PayloadProject,
+  'slug' | 'status' | 'location' | 'title' | 'summary' | 'coverImage'
+> & {
   gradient?: string
-  coverImage?: string | Media | null | undefined
 }
 
 function ProjectCard({
@@ -31,7 +28,7 @@ function ProjectCard({
   locale,
   t,
 }: {
-  project: Project
+  project: ProjectCardData
   locale: string
   t: ReturnType<typeof getT>
 }) {
@@ -87,10 +84,11 @@ export default function ProjectsSection({
   projects,
 }: {
   locale: string
-  projects?: Project[]
+  projects?: PayloadProject[]
 }) {
   const t = getT(locale)
-  const displayProjects = projects && projects.length > 0 ? projects : getPlaceholders(t)
+  const displayProjects: ProjectCardData[] =
+    projects && projects.length > 0 ? projects : getPlaceholders(t)
   return (
     <section className="bg-[var(--cream)] px-4 py-16 sm:px-8 sm:py-24">
       <div className="mx-auto max-w-7xl">

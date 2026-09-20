@@ -5,18 +5,9 @@ import React, { useCallback, useRef, useState } from 'react'
 import VolunteerNeedsAccordion from '@/components/volunteer/VolunteerNeedsAccordion'
 import VolunteerImportantNotice from '@/components/volunteer/VolunteerImportantNotice'
 import VolunteerApplicationForm from '@/components/volunteer/VolunteerApplicationForm'
+import type { VolunteerNeed } from '@/payload/payload-types'
 
 type AvailableRole = { id: string; roleName: string }
-
-type VolunteerNeed = {
-  id: string
-  roleName: string
-  duration?: string | null
-  jobDescription?: unknown
-  requiredExperienceAndSkills?: unknown
-  desiredExperienceAndSkills?: unknown
-  furtherInformation?: unknown
-}
 
 export default function VolunteerRolesAndForm({
   needs,

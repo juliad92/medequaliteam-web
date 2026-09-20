@@ -8,12 +8,35 @@ import config from '@payload-config'
 import LexicalRenderer from '@/components/richtext/LexicalRenderer'
 import ImpactBar from '@/components/home/ImpactBar'
 import ProjectPageNav from '@/components/projects/ProjectPageNav'
+import JsonLd from '@/components/seo/JsonLd'
 import { getT } from '@/i18n/translations'
 import { extractArticleNavSections } from '@/lib/lexical-sections'
+import { breadcrumbJsonLd } from '@/lib/json-ld'
+import { buildPageMetadata } from '@/lib/seo'
 import type { Media } from '@/payload/payload-types'
 import Image from 'next/image'
 
-export const dynamic = 'force-dynamic'
+/** Enable ISR with the locale layout `revalidate = 300`. */
+export const dynamicParams = true
+
+export async function generateStaticParams() {
+  try {
+    const payload = await getPayload({ config })
+    const { docs } = await payload.find({
+      collection: 'projects',
+      where: { _status: { equals: 'published' } },
+      depth: 0,
+      limit: 200,
+      select: { slug: true },
+    })
+    return docs
+      .map((project) => project.slug)
+      .filter((slug): slug is string => Boolean(slug))
+      .map((slug) => ({ slug }))
+  } catch {
+    return []
+  }
+}
 
 type Project = {
   title: string
@@ -60,17 +83,28 @@ export async function generateMetadata({
   const payload = await getPayload({ config })
   const { docs: projects } = await payload.find({
     collection: 'projects',
-    where: { slug: { equals: slug } },
+    where: { slug: { equals: slug }, _status: { equals: 'published' } },
     locale: locale as 'en' | 'fr',
     fallbackLocale: 'en',
+    depth: 1,
     limit: 1,
   })
   const project = projects[0] as Project | undefined
-  if (!project) return { title: t.projects.metaTitle }
-  return {
+  if (!project) {
+    return buildPageMetadata({
+      locale,
+      path: `/projects/${slug}`,
+      title: t.projects.metaTitle,
+      description: t.projects.metaDescription,
+    })
+  }
+  return buildPageMetadata({
+    locale,
+    path: `/projects/${slug}`,
     title: `${project.title} — ${t.projects.metaTitle}`,
     description: project.summary ?? t.projects.metaDescription,
-  }
+    image: project.coverImage,
+  })
 }
 
 export default async function ProjectDetailPage({
@@ -84,7 +118,7 @@ export default async function ProjectDetailPage({
 
   const { docs: projects } = await payload.find({
     collection: 'projects',
-    where: { slug: { equals: slug } },
+    where: { slug: { equals: slug }, _status: { equals: 'published' } },
     locale: locale as 'en' | 'fr',
     fallbackLocale: 'en',
     depth: 1,
@@ -108,6 +142,12 @@ export default async function ProjectDetailPage({
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd(locale, [
+          { name: t.projects.metaTitle, path: '/projects' },
+          { name: project.title, path: `/projects/${slug}` },
+        ])}
+      />
       <header className="relative overflow-hidden bg-[var(--charcoal)] px-4 pt-20 pb-14 sm:px-8 sm:pt-24">
         <div className="absolute inset-0" style={{ background: 'var(--gradient-hero)' }} />
         <div

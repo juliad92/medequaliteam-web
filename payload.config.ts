@@ -1,5 +1,6 @@
 import { en } from '@payloadcms/translations/languages/en'
 import { fr } from '@payloadcms/translations/languages/fr'
+import { resendAdapter } from '@payloadcms/email-resend'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { importExportPlugin } from '@payloadcms/plugin-import-export'
 import { buildConfig } from 'payload'
@@ -10,14 +11,13 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 
 import { Projects } from './src/collections/Projects.ts'
-import { Posts } from './src/collections/Posts.ts'
 import { VolunteerNeeds } from './src/collections/VolunteerNeeds.ts'
 import { VolunteerApplications } from './src/collections/VolunteerApplications.ts'
 import { VolunteerCVs } from './src/collections/VolunteerCVs.ts'
 import { NewsletterSubscribers } from './src/collections/NewsletterSubscribers.ts'
-import { TeamMembers, Testimonials } from './src/collections/People.ts'
+import { Testimonials } from './src/collections/People.ts'
 import { Media, Pages } from './src/collections/MediaAndPages.ts'
-import { SiteInfo, Homepage } from './src/globals/index.ts'
+import { Homepage } from './src/globals/index.ts'
 import { Users } from './src/collections/Users.ts'
 
 const __filename = fileURLToPath(import.meta.url)
@@ -36,6 +36,15 @@ export default buildConfig({
   // ── Database ────────────────────────────────────────────────────────────────
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || '',
+  }),
+
+  // ── Email (Resend — same API key as the complaints form) ────────────────────
+  // Used by Payload for auth emails (e.g. password reset). Preferred on Vercel
+  // over nodemailer because it is lightweight.
+  email: resendAdapter({
+    defaultFromAddress: process.env.EMAIL_FROM_ADDRESS || 'info@medequali.team',
+    defaultFromName: process.env.EMAIL_FROM_NAME || "Med'EqualiTeam",
+    apiKey: process.env.RESEND_API_KEY || '',
   }),
 
   // ── Editor ──────────────────────────────────────────────────────────────────
@@ -62,9 +71,6 @@ export default buildConfig({
   // ── Collections ─────────────────────────────────────────────────────────────
   collections: [
     Media, // Images, PDFs, uploads
-    // Projects,  // Active & past field projects
-    Posts, // News, reports, newsletters
-    TeamMembers,
     Projects,
     VolunteerNeeds,
     VolunteerApplications,
@@ -77,7 +83,6 @@ export default buildConfig({
 
   // ── Globals ──────────────────────────────────────────────────────────────────
   globals: [
-    SiteInfo, // Contact, socials, footer info, default SEO
     Homepage, // Hero, impact stats, featured project
   ],
 
@@ -106,14 +111,9 @@ export default buildConfig({
   // ── File storage (Vercel Blob) ───────────────────────────────────────────────
   // Local dev without BLOB_READ_WRITE_TOKEN keeps using public/media (staticDir).
   // On Vercel, add Blob storage in the project dashboard — Vercel sets the token.
+  // importExportPlugin must run before vercelBlobStorage so `exports` / `imports`
+  // exist when the storage adapter is attached.
   plugins: [
-    vercelBlobStorage({
-      collections: {
-        media: true,
-        'volunteer-cvs': true,
-      },
-      token: process.env.BLOB_READ_WRITE_TOKEN,
-    }),
     importExportPlugin({
       collections: [
         {
@@ -136,6 +136,15 @@ export default buildConfig({
         }
         return collection
       },
+    }),
+    vercelBlobStorage({
+      collections: {
+        media: true,
+        'volunteer-cvs': true,
+        exports: true,
+        imports: true,
+      },
+      token: process.env.BLOB_READ_WRITE_TOKEN,
     }),
   ],
 })

@@ -19,7 +19,7 @@ const eslintConfig = [
       'build/**',
       'next-env.d.ts',
       'node_modules/**',
-      'payload-types.ts',
+      '**/payload-types.ts',
     ],
   },
 ]
