@@ -23,6 +23,7 @@
     "@faceless-ui/modal": "3.0.0",
     "@faceless-ui/scroll-info": "2.0.0",
     "@payloadcms/db-mongodb": "^3.84.1",
+    "@payloadcms/email-resend": "3.84.1",
     "@payloadcms/next": "^3.84.1",
     "@payloadcms/plugin-import-export": "3.84.1",
     "@payloadcms/richtext-lexical": "^3.84.1",

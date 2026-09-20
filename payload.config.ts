@@ -1,5 +1,6 @@
 import { en } from '@payloadcms/translations/languages/en'
 import { fr } from '@payloadcms/translations/languages/fr'
+import { resendAdapter } from '@payloadcms/email-resend'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { importExportPlugin } from '@payloadcms/plugin-import-export'
 import { buildConfig } from 'payload'
@@ -35,6 +36,15 @@ export default buildConfig({
   // ── Database ────────────────────────────────────────────────────────────────
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || '',
+  }),
+
+  // ── Email (Resend — same API key as the complaints form) ────────────────────
+  // Used by Payload for auth emails (e.g. password reset). Preferred on Vercel
+  // over nodemailer because it is lightweight.
+  email: resendAdapter({
+    defaultFromAddress: process.env.EMAIL_FROM_ADDRESS || 'info@medequali.team',
+    defaultFromName: process.env.EMAIL_FROM_NAME || "Med'EqualiTeam",
+    apiKey: process.env.RESEND_API_KEY || '',
   }),
 
   // ── Editor ──────────────────────────────────────────────────────────────────
