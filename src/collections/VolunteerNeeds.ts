@@ -1,5 +1,9 @@
 import type { CollectionConfig } from 'payload'
 import { publishedOrAuthenticated } from '../lib/access.ts'
+import {
+  revalidateVolunteerNeedAfterChange,
+  revalidateVolunteerNeedAfterDelete,
+} from '../lib/cms-revalidate.ts'
 
 export const VolunteerNeeds: CollectionConfig = {
   slug: 'volunteer-needs',
@@ -17,6 +21,10 @@ export const VolunteerNeeds: CollectionConfig = {
   },
   versions: {
     drafts: true,
+  },
+  hooks: {
+    afterChange: [revalidateVolunteerNeedAfterChange],
+    afterDelete: [revalidateVolunteerNeedAfterDelete],
   },
   fields: [
     {

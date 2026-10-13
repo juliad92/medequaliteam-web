@@ -1,4 +1,8 @@
 import type { CollectionConfig } from 'payload'
+import {
+  revalidateTestimonialAfterChange,
+  revalidateTestimonialAfterDelete,
+} from '../lib/cms-revalidate.ts'
 
 export const Testimonials: CollectionConfig = {
   slug: 'testimonials',
@@ -10,6 +14,10 @@ export const Testimonials: CollectionConfig = {
   },
   access: {
     read: () => true,
+  },
+  hooks: {
+    afterChange: [revalidateTestimonialAfterChange],
+    afterDelete: [revalidateTestimonialAfterDelete],
   },
   fields: [
     {

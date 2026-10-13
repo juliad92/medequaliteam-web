@@ -1,4 +1,5 @@
 import type { GlobalConfig } from 'payload'
+import { revalidateHomepageAfterChange } from '../lib/cms-revalidate.ts'
 
 // ─── Homepage ─────────────────────────────────────────────────────────────────
 
@@ -6,6 +7,9 @@ export const Homepage: GlobalConfig = {
   slug: 'homepage',
   admin: {
     description: 'Editable content for the homepage hero, mission statement, and featured project.',
+  },
+  hooks: {
+    afterChange: [revalidateHomepageAfterChange],
   },
   fields: [
     {

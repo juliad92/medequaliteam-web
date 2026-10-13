@@ -1,5 +1,6 @@
 import type { CollectionConfig, Block } from 'payload'
 import { publishedOrAuthenticated } from '../lib/access.ts'
+import { revalidatePageAfterChange, revalidatePageAfterDelete } from '../lib/cms-revalidate.ts'
 
 const mediaStaticDir =
   process.env.VERCEL || process.env.BLOB_READ_WRITE_TOKEN?.trim() ? undefined : 'public/media'
@@ -136,6 +137,10 @@ export const Pages: CollectionConfig = {
   },
   versions: {
     drafts: true,
+  },
+  hooks: {
+    afterChange: [revalidatePageAfterChange],
+    afterDelete: [revalidatePageAfterDelete],
   },
   fields: [
     {

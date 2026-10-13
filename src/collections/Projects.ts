@@ -1,5 +1,9 @@
 import type { CollectionConfig } from 'payload'
 import { publishedOrAuthenticated } from '../lib/access.ts'
+import {
+  revalidateProjectAfterChange,
+  revalidateProjectAfterDelete,
+} from '../lib/cms-revalidate.ts'
 
 export const Projects: CollectionConfig = {
   slug: 'projects',
@@ -13,6 +17,10 @@ export const Projects: CollectionConfig = {
   },
   versions: {
     drafts: true,
+  },
+  hooks: {
+    afterChange: [revalidateProjectAfterChange],
+    afterDelete: [revalidateProjectAfterDelete],
   },
   fields: [
     {
