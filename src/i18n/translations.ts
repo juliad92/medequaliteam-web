@@ -24,6 +24,10 @@ export const translations = {
         "Medical NGO providing free primary healthcare for refugees and displaced people. Donate or volunteer with Med'EqualiTeam.",
     },
 
+    partnersBanner: {
+      title: 'Our partners',
+    },
+
     // Hero
     hero: {
       eyebrow: 'Medical NGO · Since 2018',
@@ -451,6 +455,10 @@ export const translations = {
       metaTitle: "Med'EqualiTeam — Soins gratuits pour les réfugiés",
       metaDescription:
         "ONG médicale fournissant des soins de santé primaires gratuits aux réfugiés et personnes déplacées. Faites un don ou devenez bénévole avec Med'EqualiTeam.",
+    },
+
+    partnersBanner: {
+      title: 'Nos partenaires',
     },
 
     // Hero

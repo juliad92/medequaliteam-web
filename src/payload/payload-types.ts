@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     media: Media;
     projects: Project;
+    partners: Partner;
     'volunteer-needs': VolunteerNeed;
     'volunteer-applications': VolunteerApplication;
     'volunteer-cvs': VolunteerCv;
@@ -88,6 +89,7 @@ export interface Config {
   collectionsSelect: {
     media: MediaSelect<false> | MediaSelect<true>;
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
+    partners: PartnersSelect<false> | PartnersSelect<true>;
     'volunteer-needs': VolunteerNeedsSelect<false> | VolunteerNeedsSelect<true>;
     'volunteer-applications': VolunteerApplicationsSelect<false> | VolunteerApplicationsSelect<true>;
     'volunteer-cvs': VolunteerCvsSelect<false> | VolunteerCvsSelect<true>;
@@ -277,6 +279,32 @@ export interface Project {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * Organisation partners shown in the homepage logo banner (active partners only).
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "partners".
+ */
+export interface Partner {
+  id: string;
+  name: string;
+  /**
+   * Prefer a transparent PNG or SVG-style logo on a clean background.
+   */
+  logo: string | Media;
+  /**
+   * Full URL, e.g. https://example.com
+   */
+  url: string;
+  status: 'active' | 'inactive';
+  dateStart?: string | null;
+  /**
+   * Leave empty while the partnership is ongoing.
+   */
+  dateEnd?: string | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * Open volunteer roles linked to field projects (e.g. medical coordinator, nurse).
@@ -840,6 +868,10 @@ export interface PayloadLockedDocument {
         value: string | Project;
       } | null)
     | ({
+        relationTo: 'partners';
+        value: string | Partner;
+      } | null)
+    | ({
         relationTo: 'volunteer-needs';
         value: string | VolunteerNeed;
       } | null)
@@ -996,6 +1028,20 @@ export interface ProjectsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "partners_select".
+ */
+export interface PartnersSelect<T extends boolean = true> {
+  name?: T;
+  logo?: T;
+  url?: T;
+  status?: T;
+  dateStart?: T;
+  dateEnd?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1474,6 +1520,7 @@ export interface TaskCreateCollectionExport {
     collectionSlug:
       | 'media'
       | 'projects'
+      | 'partners'
       | 'volunteer-needs'
       | 'volunteer-applications'
       | 'volunteer-cvs'

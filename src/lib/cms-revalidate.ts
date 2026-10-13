@@ -7,7 +7,7 @@ import type {
 } from 'payload'
 
 import { CACHE_TAGS } from './cache.ts'
-import type { Page, Project, Testimonial, VolunteerNeed } from '../payload/payload-types.ts'
+import type { Page, Partner, Project, Testimonial, VolunteerNeed } from '../payload/payload-types.ts'
 
 const LOCALES = ['en', 'fr'] as const
 
@@ -246,5 +246,32 @@ export const revalidateHomepageAfterChange: GlobalAfterChangeHook = async ({
   payload.logger.info('Revalidating homepage')
   await revalidateLocalizedPath('')
   await revalidateSitemap()
+  return doc
+}
+
+export const revalidatePartnerAfterChange: CollectionAfterChangeHook<Partner> = async ({
+  doc,
+  previousDoc,
+  req: { context, payload },
+}) => {
+  if (!canRevalidate(context)) return doc
+
+  const affectsHomepage =
+    doc.status === 'active' || previousDoc?.status === 'active' || doc.status !== previousDoc?.status
+  if (!affectsHomepage) return doc
+
+  payload.logger.info(`Revalidating partners banner ("${doc.name}")`)
+  await revalidateLocalizedPath('')
+  return doc
+}
+
+export const revalidatePartnerAfterDelete: CollectionAfterDeleteHook<Partner> = async ({
+  doc,
+  req: { context, payload },
+}) => {
+  if (!canRevalidate(context) || doc?.status !== 'active') return doc
+
+  payload.logger.info(`Revalidating partners banner after delete ("${doc?.name}")`)
+  await revalidateLocalizedPath('')
   return doc
 }

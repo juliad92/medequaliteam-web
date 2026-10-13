@@ -11,6 +11,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 
 import { Projects } from './src/collections/Projects.ts'
+import { Partners } from './src/collections/Partners.ts'
 import { VolunteerNeeds } from './src/collections/VolunteerNeeds.ts'
 import { VolunteerApplications } from './src/collections/VolunteerApplications.ts'
 import { VolunteerCVs } from './src/collections/VolunteerCVs.ts'
@@ -72,6 +73,7 @@ export default buildConfig({
   collections: [
     Media, // Images, PDFs, uploads
     Projects,
+    Partners,
     VolunteerNeeds,
     VolunteerApplications,
     VolunteerCVs,

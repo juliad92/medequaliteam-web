@@ -6,9 +6,11 @@ import type { Metadata } from 'next'
 import HeroSection from '@/components/home/HeroSection'
 import ImpactBar from '@/components/home/ImpactBar'
 import MissionSection from '@/components/home/MissionSection'
+import PartnersMarquee, { type PartnerLogo } from '@/components/home/PartnersMarquee'
 import ProjectsSection from '@/components/home/ProjectsSection'
 import { VolunteerCTA } from '@/components/home/CtaAndNews'
 import { getT } from '@/i18n/translations'
+import { getMediaImageSrc } from '@/lib/media-image'
 import { buildPageMetadata } from '@/lib/seo'
 import { getProjectsWithVolunteerNeeds } from '@/lib/volunteer'
 import type { Project } from '@/payload/payload-types'
@@ -76,6 +78,23 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     ? `/${locale}/volunteer/${volunteerProjects[0].slug}`
     : `/${locale}/volunteer/stories`
 
+  const { docs: partnerDocs } = await payload.find({
+    collection: 'partners',
+    where: { status: { equals: 'active' } },
+    depth: 1,
+    limit: 20,
+    sort: 'name',
+  })
+
+  const partners: PartnerLogo[] = partnerDocs
+    .filter((partner) => Boolean(partner.name && partner.url && getMediaImageSrc(partner.logo)))
+    .map((partner) => ({
+      id: partner.id,
+      name: partner.name,
+      url: partner.url,
+      logo: partner.logo,
+    }))
+
   return (
     <>
       <HeroSection locale={locale} heroData={heroData} project={featuredProject} />
@@ -83,6 +102,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <MissionSection locale={locale} missionImage={missionImage} />
       <ProjectsSection locale={locale} projects={projects} />
       <VolunteerCTA locale={locale} volunteerHref={volunteerHref} />
+      <PartnersMarquee locale={locale} partners={partners} />
     </>
   )
 }
