@@ -8,13 +8,14 @@ import config from '@payload-config'
 import LexicalRenderer from '@/components/richtext/LexicalRenderer'
 import ImpactBar from '@/components/home/ImpactBar'
 import ProjectPageNav from '@/components/projects/ProjectPageNav'
+import { MediaImage } from '@/components/media-image'
 import JsonLd from '@/components/seo/JsonLd'
 import { getT } from '@/i18n/translations'
 import { extractArticleNavSections } from '@/lib/lexical-sections'
 import { breadcrumbJsonLd } from '@/lib/json-ld'
+import { getMediaImageSrc } from '@/lib/media-image'
 import { buildPageMetadata } from '@/lib/seo'
 import type { Media } from '@/payload/payload-types'
-import Image from 'next/image'
 
 /** Enable ISR with the locale layout `revalidate = 300`. */
 export const dynamicParams = true
@@ -46,20 +47,11 @@ type Project = {
   dateStart?: string | null
   dateEnd?: string | null
   coverImage?: (string | null) | Media
+  bannerImage?: (string | null) | Media
   summary: string
   content?: unknown
   partners?: { name: string; url?: string | null; logo?: (string | null) | Media }[] | null
   stats?: { value: string; label: string; id?: string | null }[] | null
-}
-
-function getCoverImageUrl(image: Project['coverImage']): string | null {
-  if (!image || typeof image === 'string') return null
-  return image.sizes?.hero?.url ?? image.sizes?.card?.url ?? image.url ?? null
-}
-
-function getCoverImageAlt(image: Project['coverImage'], fallback: string): string {
-  if (!image || typeof image === 'string') return fallback
-  return image.alt ?? fallback
 }
 
 function formatDate(value: string | null | undefined, locale: string): string | null {
@@ -132,8 +124,7 @@ export default async function ProjectDetailPage({
     t.projects.status[project.status as keyof typeof t.projects.status] ?? project.status
   const startLabel = formatDate(project.dateStart, locale)
   const endLabel = formatDate(project.dateEnd, locale)
-  // const coverImageUrl = getCoverImageUrl(project.coverImage)
-  // const coverImageAlt = getCoverImageAlt(project.coverImage, project.title)
+  const hasBannerImage = Boolean(getMediaImageSrc(project.bannerImage, 'hero'))
   const hasStats = Boolean(project.stats && project.stats.length > 0)
   const hasPartners = Boolean(project.partners && project.partners.length > 0)
   const dateLine = [startLabel, endLabel].filter(Boolean).join(' → ')
@@ -149,7 +140,24 @@ export default async function ProjectDetailPage({
         ])}
       />
       <header className="relative overflow-hidden bg-[var(--charcoal)] px-4 pt-20 pb-14 sm:px-8 sm:pt-24">
-        <div className="absolute inset-0" style={{ background: 'var(--gradient-hero)' }} />
+        {hasBannerImage ? (
+          <MediaImage
+            image={project.bannerImage}
+            alt=""
+            size="hero"
+            fill
+            priority
+            ariaHidden
+            className="object-cover"
+            sizes="100vw"
+          />
+        ) : null}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: hasBannerImage ? 'var(--gradient-hero-overlay)' : 'var(--gradient-hero)',
+          }}
+        />
         <div
           className="pointer-events-none absolute inset-0"
           style={{ background: 'var(--gradient-hero-glow)' }}

@@ -222,7 +222,14 @@ export interface Project {
   location: string;
   dateStart?: string | null;
   dateEnd?: string | null;
+  /**
+   * Card / listing image (projects list, homepage). Not used as the page banner.
+   */
   coverImage?: (string | null) | Media;
+  /**
+   * Full-width image shown in the top banner on the project detail page.
+   */
+  bannerImage?: (string | null) | Media;
   /**
    * 2–3 sentence summary shown on the Projects listing page.
    */
@@ -967,6 +974,7 @@ export interface ProjectsSelect<T extends boolean = true> {
   dateStart?: T;
   dateEnd?: T;
   coverImage?: T;
+  bannerImage?: T;
   summary?: T;
   content?: T;
   partners?:

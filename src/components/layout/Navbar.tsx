@@ -99,7 +99,14 @@ export default function Navbar({
           >
             Facebook
           </a>
-          {/* 'https://linkedin.com/company/medequaliteam-france', */}
+          <a
+            href="https://linkedin.com/company/medequaliteam-france"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition-colors hover:text-white"
+          >
+            LinkedIn
+          </a>
           <a
             href="https://x.com/equalimed"
             target="_blank"

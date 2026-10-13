@@ -80,7 +80,19 @@ export const Projects: CollectionConfig = {
       name: 'coverImage',
       type: 'upload',
       relationTo: 'media',
-      // required: true,
+      label: 'Cover image',
+      admin: {
+        description: 'Card / listing image (projects list, homepage). Not used as the page banner.',
+      },
+    },
+    {
+      name: 'bannerImage',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Banner image',
+      admin: {
+        description: 'Full-width image shown in the top banner on the project detail page.',
+      },
     },
     {
       name: 'summary',
