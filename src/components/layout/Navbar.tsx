@@ -84,6 +84,7 @@ export default function Navbar({
     },
     volunteerNav,
     // { label: t.nav.news, href: '/news' },
+    { label: t.nav.reports, href: '/financial-report' },
   ]
 
   return (

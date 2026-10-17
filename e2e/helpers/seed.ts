@@ -34,13 +34,22 @@ async function ensureAdminUser(payload: Payload) {
     overrideAccess: true,
   })
 
-  if (docs[0]) return docs[0]
+  if (docs[0]) {
+    if (docs[0].role === 'admin') return docs[0]
+    return payload.update({
+      collection: 'users',
+      id: docs[0].id,
+      data: { role: 'admin' },
+      overrideAccess: true,
+    })
+  }
 
   return payload.create({
     collection: 'users',
     data: {
       email: E2E.adminEmail,
       password: E2E.adminPassword,
+      role: 'admin',
     },
     overrideAccess: true,
   })

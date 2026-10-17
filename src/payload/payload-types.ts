@@ -545,6 +545,14 @@ export interface Testimonial {
  */
 export interface User {
   id: string;
+  /**
+   * Administrators can access all sensitive data and manage user rights. Editors need explicit permissions below.
+   */
+  role: 'admin' | 'editor';
+  /**
+   * Sensitive-data rights for editors. Administrators already have every permission.
+   */
+  permissions?: 'viewVolunteerApplications'[] | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -1165,6 +1173,8 @@ export interface TestimonialsSelect<T extends boolean = true> {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  role?: T;
+  permissions?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
