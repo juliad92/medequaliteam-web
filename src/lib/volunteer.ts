@@ -3,6 +3,8 @@ import { unstable_cache } from 'next/cache'
 import config from '@payload-config'
 import type { Project } from '@/payload/payload-types'
 
+import { CACHE_TAGS } from '@/lib/cache'
+
 export type VolunteerProjectNavItem = {
   slug: string
   title: string
@@ -11,7 +13,7 @@ export type VolunteerProjectNavItem = {
 
 type Locale = 'en' | 'fr'
 
-const VOLUNTEER_NAV_REVALIDATE_SECONDS = 300
+const VOLUNTEER_NAV_REVALIDATE_SECONDS = parseInt(process.env.CACHE_REVALIDATE_SECONDS || '300', 10)
 
 export const getCachedProjectsWithVolunteerNeeds = unstable_cache(
   async (locale: Locale) => {
@@ -21,7 +23,7 @@ export const getCachedProjectsWithVolunteerNeeds = unstable_cache(
   ['volunteer-nav-projects'],
   {
     revalidate: VOLUNTEER_NAV_REVALIDATE_SECONDS,
-    tags: ['volunteer-nav'],
+    tags: [CACHE_TAGS.volunteerNav],
   },
 )
 

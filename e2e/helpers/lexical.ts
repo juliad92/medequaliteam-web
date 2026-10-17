@@ -2,6 +2,9 @@ type LexicalTextNode = {
   type: 'text'
   text: string
   format?: number
+  detail?: number
+  mode?: 'normal'
+  style?: string
   version: 1
 }
 
@@ -9,14 +12,28 @@ type LexicalElementNode = {
   type: string
   children: LexicalNode[]
   version: 1
+  indent: number
+  format: string
+  direction: 'ltr' | 'rtl' | null
   tag?: string
   listType?: 'bullet' | 'number'
+  start?: number
+  value?: number
 }
 
 type LexicalNode = LexicalTextNode | LexicalElementNode
 
 const FORMAT_BOLD = 1
 const FORMAT_ITALIC = 2
+
+function elementDefaults(): Pick<LexicalElementNode, 'indent' | 'format' | 'direction' | 'version'> {
+  return {
+    indent: 0,
+    format: '',
+    direction: null,
+    version: 1,
+  }
+}
 
 function decodeHtmlEntities(text: string): string {
   return text
@@ -46,7 +63,10 @@ function parseInline(html: string): LexicalTextNode[] {
       nodes.push({
         type: 'text',
         text,
-        ...(format ? { format } : {}),
+        detail: 0,
+        mode: 'normal',
+        style: '',
+        ...(format ? { format } : { format: 0 }),
         version: 1,
       })
     }
@@ -57,7 +77,15 @@ function parseInline(html: string): LexicalTextNode[] {
     else if (tag.startsWith('<i') || tag.startsWith('<em')) format |= FORMAT_ITALIC
     else if (tag.startsWith('</i') || tag.startsWith('</em')) format &= ~FORMAT_ITALIC
     else if (tag.startsWith('<br')) {
-      nodes.push({ type: 'text', text: '\n', version: 1 })
+      nodes.push({
+        type: 'text',
+        text: '\n',
+        detail: 0,
+        mode: 'normal',
+        style: '',
+        format: 0,
+        version: 1,
+      })
     }
 
     lastIndex = match.index + match[0].length
@@ -68,12 +96,17 @@ function parseInline(html: string): LexicalTextNode[] {
     nodes.push({
       type: 'text',
       text: trailing,
-      ...(format ? { format } : {}),
+      detail: 0,
+      mode: 'normal',
+      style: '',
+      ...(format ? { format } : { format: 0 }),
       version: 1,
     })
   }
 
-  return nodes.length > 0 ? nodes : [{ type: 'text', text: '', version: 1 }]
+  return nodes.length > 0
+    ? nodes
+    : [{ type: 'text', text: '', detail: 0, mode: 'normal', style: '', format: 0, version: 1 }]
 }
 
 function paragraphFromHtml(html: string): LexicalElementNode | null {
@@ -84,11 +117,11 @@ function paragraphFromHtml(html: string): LexicalElementNode | null {
   return {
     type: 'paragraph',
     children,
-    version: 1,
+    ...elementDefaults(),
   }
 }
 
-function listItemFromHtml(html: string): LexicalElementNode {
+function listItemFromHtml(html: string, value: number): LexicalElementNode {
   const nestedListMatch = html.match(/<ul[^>]*>([\s\S]*)<\/ul>/i)
   const children: LexicalNode[] = []
 
@@ -105,15 +138,26 @@ function listItemFromHtml(html: string): LexicalElementNode {
   if (children.length === 0) {
     children.push({
       type: 'paragraph',
-      children: [{ type: 'text', text: stripTags(html), version: 1 }],
-      version: 1,
+      children: [
+        {
+          type: 'text',
+          text: stripTags(html),
+          detail: 0,
+          mode: 'normal',
+          style: '',
+          format: 0,
+          version: 1,
+        },
+      ],
+      ...elementDefaults(),
     })
   }
 
   return {
     type: 'listitem',
     children,
-    version: 1,
+    value,
+    ...elementDefaults(),
   }
 }
 
@@ -121,23 +165,26 @@ function parseList(html: string, listType: 'bullet' | 'number'): LexicalElementN
   const items: LexicalElementNode[] = []
   const itemPattern = /<li[^>]*>([\s\S]*?)<\/li>/gi
   let match: RegExpExecArray | null
+  let value = 1
 
   while ((match = itemPattern.exec(html)) !== null) {
-    items.push(listItemFromHtml(match[1]))
+    items.push(listItemFromHtml(match[1], value))
+    value += 1
   }
 
   return {
     type: 'list',
     listType,
+    tag: listType === 'number' ? 'ol' : 'ul',
+    start: 1,
     children: items,
-    version: 1,
+    ...elementDefaults(),
   }
 }
 
 function parseBlockNodes(html: string): LexicalNode[] {
   const nodes: LexicalNode[] = []
-  const blockPattern =
-    /<(p|ul|ol)(?:\s[^>]*)?>([\s\S]*?)<\/\1>|<br\s*\/?>/gi
+  const blockPattern = /<(p|ul|ol)(?:\s[^>]*)?>([\s\S]*?)<\/\1>|<br\s*\/?>/gi
   let match: RegExpExecArray | null
   let lastIndex = 0
 
@@ -152,8 +199,18 @@ function parseBlockNodes(html: string): LexicalNode[] {
     if (!tag) {
       nodes.push({
         type: 'paragraph',
-        children: [{ type: 'text', text: '\n', version: 1 }],
-        version: 1,
+        children: [
+          {
+            type: 'text',
+            text: '\n',
+            detail: 0,
+            mode: 'normal',
+            style: '',
+            format: 0,
+            version: 1,
+          },
+        ],
+        ...elementDefaults(),
       })
     } else if (tag === 'p') {
       const paragraph = paragraphFromHtml(match[2])
@@ -180,11 +237,30 @@ export function lexicalDocument(children: LexicalNode[]) {
   return {
     root: {
       type: 'root',
-      children: children.length > 0 ? children : [paragraphFromHtml('')!],
+      children:
+        children.length > 0
+          ? children
+          : [
+              {
+                type: 'paragraph',
+                children: [
+                  {
+                    type: 'text',
+                    text: '',
+                    detail: 0,
+                    mode: 'normal' as const,
+                    style: '',
+                    format: 0,
+                    version: 1 as const,
+                  },
+                ],
+                ...elementDefaults(),
+              },
+            ],
       direction: 'ltr' as const,
       format: '' as const,
       indent: 0,
-      version: 1,
+      version: 1 as const,
     },
   }
 }
@@ -193,8 +269,18 @@ export function lexicalParagraph(text: string) {
   return lexicalDocument([
     {
       type: 'paragraph',
-      children: [{ type: 'text', text, version: 1 }],
-      version: 1,
+      children: [
+        {
+          type: 'text',
+          text,
+          detail: 0,
+          mode: 'normal',
+          style: '',
+          format: 0,
+          version: 1,
+        },
+      ],
+      ...elementDefaults(),
     },
   ])
 }

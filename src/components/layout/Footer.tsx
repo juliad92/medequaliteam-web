@@ -18,7 +18,7 @@ export default function Footer({
     [t.nav.about]: [
       { label: t.nav.aboutWhy, href: '/about/why-we-exist' },
       { label: t.nav.aboutOrg, href: '/about/organisation' },
-      { label: t.nav.aboutTeam, href: '/about/team' },
+      { label: t.nav.aboutTeam, href: '/about/meet-team' },
     ],
     [t.nav.projects]: projects.map((project) => ({
       label: project.title,

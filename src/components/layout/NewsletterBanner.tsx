@@ -2,8 +2,7 @@
 
 import React, { useState } from 'react'
 import { getT } from '@/i18n/translations'
-
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+import { isValidEmail } from '@/lib/validation'
 
 const inputClass =
   'h-11 w-full rounded-lg border border-[var(--border)] bg-white px-4 text-[15px] text-[var(--charcoal)] outline-none placeholder:text-[var(--muted)] focus:border-[var(--green)] focus:ring-2 focus:ring-[var(--green)]/20'
@@ -37,7 +36,7 @@ export default function NewsletterBanner({ locale }: { locale: string }) {
     if (!firstName.trim()) errors.firstName = t.fieldErrors.required
     if (!email.trim()) {
       errors.email = t.fieldErrors.required
-    } else if (!EMAIL_PATTERN.test(email.trim())) {
+    } else if (!isValidEmail(email)) {
       errors.email = t.fieldErrors.invalidEmail
     }
     return errors

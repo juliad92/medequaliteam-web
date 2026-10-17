@@ -2,6 +2,8 @@ import { getPayload } from 'payload'
 import { unstable_cache } from 'next/cache'
 import config from '@payload-config'
 
+import { CACHE_TAGS } from '@/lib/cache'
+
 export type ProjectNavItem = {
   slug: string
   title: string
@@ -10,7 +12,7 @@ export type ProjectNavItem = {
 
 type Locale = 'en' | 'fr'
 
-const PROJECTS_NAV_REVALIDATE_SECONDS = 300
+const PROJECTS_NAV_REVALIDATE_SECONDS = parseInt(process.env.CACHE_REVALIDATE_SECONDS || '300', 10)
 
 const STATUS_ORDER: Record<ProjectNavItem['status'], number> = {
   active: 0,
@@ -44,9 +46,9 @@ export const getCachedProjectsForNav = unstable_cache(
         return a.title.localeCompare(b.title)
       })
   },
-  ['projects-nav'],
+  [CACHE_TAGS.projectsNav],
   {
     revalidate: PROJECTS_NAV_REVALIDATE_SECONDS,
-    tags: ['projects-nav'],
+    tags: [CACHE_TAGS.projectsNav],
   },
 )
