@@ -2,7 +2,10 @@
 
 import React from 'react'
 
+import { MediaImage } from '@/components/media-image'
 import { extractArticleNavSections } from '@/lib/lexical-sections'
+import { getMediaImageSrc } from '@/lib/media-image'
+import type { Media } from '@/payload/payload-types'
 
 type LexicalNode = {
   type?: string
@@ -10,10 +13,18 @@ type LexicalNode = {
   text?: string
   tag?: string
   listType?: 'bullet' | 'number'
-  value?: number
+  value?: number | string | Media | null
   format?: number | string
   url?: string
-  fields?: { url?: string; newTab?: boolean; linkType?: string; doc?: unknown }
+  relationTo?: string
+  fields?: {
+    url?: string
+    newTab?: boolean
+    linkType?: string
+    doc?: unknown
+    alt?: string
+    caption?: string
+  }
 }
 
 type Section = {
@@ -194,7 +205,78 @@ function renderNode(node: LexicalNode): React.ReactNode {
     return <hr className="my-8 border-0 border-t border-[var(--border)]" />
   }
 
+  if (type === 'upload') {
+    return renderUploadNode(node)
+  }
+
   return renderChildren(node.children)
+}
+
+function isMediaDoc(value: LexicalNode['value']): value is Media {
+  return Boolean(value && typeof value === 'object' && 'id' in value)
+}
+
+function renderUploadNode(node: LexicalNode): React.ReactNode {
+  // Payload populates `value` when the parent document is fetched with depth >= 1.
+  if (!isMediaDoc(node.value)) return null
+
+  const media = node.value
+  const caption =
+    (typeof node.fields?.caption === 'string' && node.fields.caption.trim()) ||
+    media.caption?.trim() ||
+    ''
+  const alt =
+    (typeof node.fields?.alt === 'string' && node.fields.alt.trim()) ||
+    media.alt?.trim() ||
+    caption ||
+    media.filename ||
+    ''
+
+  const imageSrc = getMediaImageSrc(media, 'hero') ?? getMediaImageSrc(media, 'card')
+  const isImage =
+    Boolean(imageSrc) &&
+    (media.mimeType?.startsWith('image/') ||
+      Boolean(media.width) ||
+      Boolean(media.sizes?.card?.url) ||
+      Boolean(media.sizes?.hero?.url))
+
+  if (isImage && imageSrc) {
+    return (
+      <figure className="my-6 last:mb-0">
+        <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--cream)]">
+          <MediaImage
+            image={media}
+            alt={alt}
+            size="hero"
+            className="h-auto w-full object-cover"
+            sizes="(max-width: 1024px) 100vw, 65ch"
+          />
+        </div>
+        {caption ? (
+          <figcaption className="mt-2.5 text-[14px] leading-relaxed text-[var(--muted)]">
+            {caption}
+          </figcaption>
+        ) : null}
+      </figure>
+    )
+  }
+
+  if (media.url) {
+    return (
+      <p className="my-4 last:mb-0">
+        <a
+          href={media.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-medium text-[var(--green)] underline-offset-2 hover:underline"
+        >
+          {media.filename || alt || 'Download file'}
+        </a>
+      </p>
+    )
+  }
+
+  return null
 }
 
 function ArticleSection({ section, id }: { section: Section; id?: string }) {
