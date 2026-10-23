@@ -51,7 +51,7 @@ export default async function ProjectsListingPage({
     fallbackLocale: 'en',
     depth: 1,
     limit: 100,
-    sort: 'dateStart',
+    sort: ['status', '-dateStart'],
   })
 
   const displayProjects = projects.filter((p) => p.slug) as Project[]
