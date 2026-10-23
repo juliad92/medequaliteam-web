@@ -229,12 +229,14 @@ export default async function ProjectDetailPage({
                 </dl>
 
                 <div className="mt-6 flex flex-col gap-2.5 border-t border-[var(--border)] pt-5">
-                  <Link
-                    href={volunteerHref}
-                    className="inline-flex h-11 items-center justify-center rounded-lg bg-[var(--green)] px-5 text-[15px] font-medium text-white transition-colors hover:bg-[var(--green-dark)]"
-                  >
-                    {t.projects.volunteerCta}
-                  </Link>
+                  {project.status !== 'past' ? (
+                    <Link
+                      href={volunteerHref}
+                      className="inline-flex h-11 items-center justify-center rounded-lg bg-[var(--green)] px-5 text-[15px] font-medium text-white transition-colors hover:bg-[var(--green-dark)]"
+                    >
+                      {t.projects.volunteerCta}
+                    </Link>
+                  ) : null}
                   <Link
                     href={`/${locale}/donate`}
                     className="inline-flex h-11 items-center justify-center rounded-lg border border-[var(--border)] bg-white px-5 text-[15px] font-medium text-[var(--charcoal)] transition-colors hover:bg-[var(--warm-white)]"
