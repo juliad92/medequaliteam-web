@@ -87,7 +87,7 @@ type BuildPageMetadataArgs = {
   absoluteTitle?: boolean
 }
 
-/** Title, description, Open Graph, Twitter, canonical, and hreflang alternates. */
+/** Title, description, Open Graph, canonical, and hreflang alternates. */
 export function buildPageMetadata({
   locale,
   path = '',
@@ -117,12 +117,6 @@ export function buildPageMetadata({
       title,
       description,
       ...(ogImage ? { images: [{ url: ogImage }] } : {}),
-    },
-    twitter: {
-      card: ogImage ? 'summary_large_image' : 'summary',
-      title,
-      description,
-      ...(ogImage ? { images: [ogImage] } : {}),
     },
   }
 }

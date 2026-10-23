@@ -418,7 +418,7 @@ export const translations = {
     // Footer
     footer: {
       tagline:
-        'A medical NGO providing free primary health care for refugees and displaced populations.',
+        'A medical NGO providing free health care and education for vulnerable or displaced populations.',
       charity: 'Charity No.',
       complaints: 'Complaints',
       dataProtection: 'Data protection',
@@ -854,7 +854,7 @@ export const translations = {
     // Footer
     footer: {
       tagline:
-        'Une ONG médicale fournissant des soins de santé primaires gratuits aux réfugiés et personnes déplacées.',
+        'Une ONG médicale fournissant des soins de santé gratuits aux personnes vulnérables ou déplacées.',
       charity: 'N° association',
       complaints: 'Réclamations',
       dataProtection: 'Protection des données',

@@ -108,14 +108,7 @@ export default function Navbar({
           >
             LinkedIn
           </a>
-          <a
-            href="https://x.com/equalimed"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="transition-colors hover:text-white"
-          >
-            Twitter
-          </a>
+
           <a
             href="https://instagram.com/medequaliteam"
             target="_blank"
