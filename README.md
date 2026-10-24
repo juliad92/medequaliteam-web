@@ -25,6 +25,12 @@ Bilingual (EN/FR) website for [Med'EqualiTeam](https://medequali.team), built wi
    DATABASE_URI=mongodb://127.0.0.1:27017/medequaliteam
    PAYLOAD_SECRET=your-random-secret-at-least-32-chars
 
+   # Recommended — absolute origin for SEO (canonical / Open Graph)
+   NEXT_PUBLIC_SITE_URL=http://localhost:3000
+
+   # Search indexing — leave unset/false until the site is public on medequali.team
+   ALLOW_SEARCH_INDEXING=false
+
    # Optional — file uploads (local dev uses public/media and storage/volunteer-cvs without this)
    BLOB_READ_WRITE_TOKEN=
 
@@ -60,6 +66,8 @@ Bilingual (EN/FR) website for [Med'EqualiTeam](https://medequali.team), built wi
 |----------|----------|-------------|
 | `DATABASE_URI` | Yes | MongoDB connection string |
 | `PAYLOAD_SECRET` | Yes | Secret for Payload auth and encryption |
+| `NEXT_PUBLIC_SITE_URL` | Recommended | Absolute site origin for SEO metadata (canonical, Open Graph). Prefer `https://medequali.team` even on the hidden Vercel production so canonicals do not advertise `*.vercel.app`. Defaults to `https://medequali.team`. |
+| `ALLOW_SEARCH_INDEXING` | Recommended | Set to `true` only when the deployment should appear in search results. Default / unset / `false` → `noindex` + `robots.txt` Disallow all (safe for hidden production and previews). |
 | `BLOB_READ_WRITE_TOKEN` | On Vercel | Vercel Blob storage token for media and CV uploads. Required when `VERCEL` is set. |
 | `RESEND_API_KEY` | For complaints | API key for sending complaint emails via Resend |
 | `COMPLAINTS_FROM_EMAIL` | No | Verified Resend sender address. Defaults to `safeguarding@medequali.team` |
@@ -131,4 +139,4 @@ e2e/                       # Playwright tests
 
 ## CI
 
-GitHub Actions runs lint, typecheck, and E2E tests on push/PR to `main`. See `.github/workflows/ci.yml`.
+GitHub Actions runs lint, typecheck, format check, production build, and E2E tests on push/PR to `main`. See `.github/workflows/ci.yml`.

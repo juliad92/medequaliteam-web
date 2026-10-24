@@ -19,14 +19,20 @@ export default function VolunteerApplicationForm(props: VolunteerApplicationForm
       <p className="text-[13px] font-medium tracking-[0.14em] text-[var(--green)] uppercase">
         {form.t.eyebrow}
       </p>
-      <h2 className="mt-2 font-serif text-2xl font-normal text-[var(--charcoal)]">{form.t.title}</h2>
-      <p className="mt-2 max-w-2xl text-[16px] leading-relaxed text-[var(--muted)]">{form.t.body}</p>
+      <h2 className="mt-2 font-serif text-2xl font-normal text-[var(--charcoal)]">
+        {form.t.title}
+      </h2>
+      <p className="mt-2 max-w-2xl text-[16px] leading-relaxed text-[var(--muted)]">
+        {form.t.body}
+      </p>
       <p className="mt-1 text-[14px] text-[var(--muted)]">{form.t.estimatedTime}</p>
 
       {form.status === 'success' ? (
         <div className="mt-6 rounded-xl border border-[var(--border)] bg-[var(--green-pale)] p-5">
           <p className="text-base font-medium text-[var(--charcoal)]">{form.t.successTitle}</p>
-          <p className="mt-1 text-[16px] leading-relaxed text-[var(--muted)]">{form.t.successBody}</p>
+          <p className="mt-1 text-[16px] leading-relaxed text-[var(--muted)]">
+            {form.t.successBody}
+          </p>
         </div>
       ) : (
         <form onSubmit={form.handleFormSubmit} className="mt-7 grid gap-5">

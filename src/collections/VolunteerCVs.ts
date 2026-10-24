@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { canAccessVolunteerApplications } from '../lib/access.ts'
 
 const cvStaticDir =
   process.env.VERCEL || process.env.BLOB_READ_WRITE_TOKEN?.trim()
@@ -25,10 +26,10 @@ export const VolunteerCVs: CollectionConfig = {
     },
   },
   access: {
-    read: ({ req }) => Boolean(req.user),
-    create: ({ req }) => Boolean(req.user),
-    update: ({ req }) => Boolean(req.user),
-    delete: ({ req }) => Boolean(req.user),
+    read: canAccessVolunteerApplications,
+    create: canAccessVolunteerApplications,
+    update: canAccessVolunteerApplications,
+    delete: canAccessVolunteerApplications,
   },
   fields: [],
   upload: {

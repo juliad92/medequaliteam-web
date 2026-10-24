@@ -1,10 +1,10 @@
 import React from 'react'
 import Link from 'next/link'
 import { getT } from '@/i18n/translations'
-import type { Media } from '@/payload/payload-types'
-import { MediaImage } from '@/components/media-image'
+import type { Project as PayloadProject } from '@/payload/payload-types'
+import ProjectCard, { type ProjectCardData } from '@/components/projects/ProjectCard'
 
-const getPlaceholders = (t: ReturnType<typeof getT>) => [
+const getPlaceholders = (t: ReturnType<typeof getT>): ProjectCardData[] => [
   {
     slug: 'northern-greece',
     status: 'active',
@@ -16,81 +16,16 @@ const getPlaceholders = (t: ReturnType<typeof getT>) => [
   },
 ]
 
-type Project = {
-  slug: string
-  status: string
-  location: string
-  title: string
-  summary: string
-  gradient?: string
-  coverImage?: string | Media | null | undefined
-}
-
-function ProjectCard({
-  project,
-  locale,
-  t,
-}: {
-  project: Project
-  locale: string
-  t: ReturnType<typeof getT>
-}) {
-  const imageAlt =
-    project.coverImage && typeof project.coverImage !== 'string'
-      ? (project.coverImage.alt ?? project.title)
-      : project.title
-
-  return (
-    <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-      <div
-        className="relative h-44 overflow-hidden"
-        style={
-          project.coverImage
-            ? undefined
-            : { background: project.gradient ?? 'var(--gradient-card)' }
-        }
-      >
-        <MediaImage
-          image={project.coverImage}
-          alt={imageAlt}
-          fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        />
-        <span
-          className={`absolute top-3 left-3 rounded-full px-3 py-1 text-[14px] font-medium tracking-wide uppercase ${project.status === 'active' ? 'bg-[var(--green)]/90 text-white' : 'bg-black/40 text-white/80'}`}
-        >
-          {project.status === 'active' ? t.projects.active : t.projects.past}
-        </span>
-      </div>
-      <div className="p-6">
-        <p className="mb-2 text-[13px] font-medium tracking-[0.12em] text-[var(--green)] uppercase">
-          📍 {project.location}
-        </p>
-        <h3 className="mb-3 font-serif text-lg leading-snug font-normal text-[var(--charcoal)]">
-          {project.title}
-        </h3>
-        <p className="mb-5 text-[16px] leading-relaxed text-[var(--muted)]">{project.summary}</p>
-        <Link
-          href={`/${locale}/projects/${project.slug}`}
-          className="group inline-flex items-center gap-1 text-[15px] font-medium text-[var(--green)]"
-        >
-          {t.projects.learnMore}
-          <span className="transition-transform group-hover:translate-x-1">→</span>
-        </Link>
-      </div>
-    </div>
-  )
-}
-
 export default function ProjectsSection({
   locale,
   projects,
 }: {
   locale: string
-  projects?: Project[]
+  projects?: PayloadProject[]
 }) {
   const t = getT(locale)
-  const displayProjects = projects && projects.length > 0 ? projects : getPlaceholders(t)
+  const displayProjects: ProjectCardData[] =
+    projects && projects.length > 0 ? projects : getPlaceholders(t)
   return (
     <section className="bg-[var(--cream)] px-4 py-16 sm:px-8 sm:py-24">
       <div className="mx-auto max-w-7xl">
@@ -115,7 +50,7 @@ export default function ProjectsSection({
         </div>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {displayProjects.map((project) => (
-            <ProjectCard key={project.slug} project={project} locale={locale} t={t} />
+            <ProjectCard key={project.slug} project={project} locale={locale} />
           ))}
         </div>
       </div>

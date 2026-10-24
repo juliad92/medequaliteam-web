@@ -1,0 +1,48 @@
+# Med'EqualiTeam
+
+> Medical NGO (since 2018) providing free primary healthcare for refugees and displaced people. Volunteer-powered and crowdfunded; 100% of donations go to operations. Registered charity W102001158, Megevette, France.
+
+Preferred citation URL: https://medequali.team
+
+## Languages
+
+- English: https://medequali.team/en
+- French: https://medequali.team/fr
+
+## Key pages
+
+- Homepage (EN): https://medequali.team/en
+- Homepage (FR): https://medequali.team/fr
+- Why we exist: https://medequali.team/en/about/why-we-exist
+- Organisation: https://medequali.team/en/about/organisation
+- Meet the team: https://medequali.team/en/about/meet-team
+- Projects: https://medequali.team/en/projects
+- Volunteer (apply): https://medequali.team/en/volunteer/volunteer_greece
+- Volunteer stories: https://medequali.team/en/volunteer/stories
+- Donate: https://medequali.team/en/donate
+- Financial report: https://medequali.team/en/financial-report
+- Data protection: https://medequali.team/en/data-protection
+- Complaints: https://medequali.team/en/complaints
+
+## Mission
+
+Med'EqualiTeam provides free primary health care for refugees and displaced populations who face financial, social, and logistical obstacles in accessing healthcare. Teams are multilingual (with embedded translators) and rely on international medical volunteers.
+
+## Contact
+
+- General: info@medequali.team
+- Volunteer coordination: volunteer@medequali.team
+- Safeguarding: safeguarding@medequali.team
+- Address: 867 route de Dorjon, 74490 Megevette, France
+- Charity number: W102001158
+
+## Social
+
+- Facebook: https://facebook.com/MedEqualiTeam
+- X: https://x.com/equalimed
+- Instagram: https://instagram.com/medequaliteam
+
+## Optional
+
+- French equivalents of the key pages use the same paths under `/fr/…`
+- CMS-managed project and story URLs live under `/en/projects/{slug}` and `/en/volunteer/stories/{slug}`

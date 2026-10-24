@@ -4,9 +4,10 @@ import { VolunteerApplicationsPlanningClient } from './VolunteerApplicationsPlan
 import type { PlanningEntry } from '@/lib/volunteer/planning-dates'
 import { mapPlanningRole } from '@/lib/volunteer/planning-dates'
 import { defaultVolunteerApplicationStatus } from '@/lib/volunteer/application-status'
+import { PERMISSIONS, userHasPermission } from '@/lib/permissions'
 
 export async function VolunteerApplicationsPlanning({ payload, user }: BeforeListServerProps) {
-  if (!user) {
+  if (!userHasPermission(user, PERMISSIONS.viewVolunteerApplications)) {
     return null
   }
 

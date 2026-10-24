@@ -68,9 +68,8 @@ export interface Config {
   blocks: {};
   collections: {
     media: Media;
-    posts: Post;
-    'team-members': TeamMember;
     projects: Project;
+    partners: Partner;
     'volunteer-needs': VolunteerNeed;
     'volunteer-applications': VolunteerApplication;
     'volunteer-cvs': VolunteerCv;
@@ -89,9 +88,8 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     media: MediaSelect<false> | MediaSelect<true>;
-    posts: PostsSelect<false> | PostsSelect<true>;
-    'team-members': TeamMembersSelect<false> | TeamMembersSelect<true>;
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
+    partners: PartnersSelect<false> | PartnersSelect<true>;
     'volunteer-needs': VolunteerNeedsSelect<false> | VolunteerNeedsSelect<true>;
     'volunteer-applications': VolunteerApplicationsSelect<false> | VolunteerApplicationsSelect<true>;
     'volunteer-cvs': VolunteerCvsSelect<false> | VolunteerCvsSelect<true>;
@@ -112,11 +110,9 @@ export interface Config {
   };
   fallbackLocale: ('false' | 'none' | 'null') | false | null | ('en' | 'fr') | ('en' | 'fr')[];
   globals: {
-    'site-info': SiteInfo;
     homepage: Homepage;
   };
   globalsSelect: {
-    'site-info': SiteInfoSelect<false> | SiteInfoSelect<true>;
     homepage: HomepageSelect<false> | HomepageSelect<true>;
   };
   locale: 'en' | 'fr';
@@ -206,46 +202,6 @@ export interface Media {
   };
 }
 /**
- * News articles, field updates, and annual reports.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "posts".
- */
-export interface Post {
-  id: string;
-  title: string;
-  slug: string;
-  category?: ('field-update' | 'annual-report' | 'press-release' | 'newsletter') | null;
-  /**
-   * Controls the display date and sort order.
-   */
-  publishedAt?: string | null;
-  coverImage?: (string | null) | Media;
-  /**
-   * Short preview shown on the News listing page (1–2 sentences).
-   */
-  excerpt?: string | null;
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  relatedProject?: (string | null) | Project;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
  * Medical projects run by Med'EqualiTeam on the ground.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -268,7 +224,14 @@ export interface Project {
   location: string;
   dateStart?: string | null;
   dateEnd?: string | null;
+  /**
+   * Card / listing image (projects list, homepage). Not used as the page banner.
+   */
   coverImage?: (string | null) | Media;
+  /**
+   * Full-width image shown in the top banner on the project detail page.
+   */
+  bannerImage?: (string | null) | Media;
   /**
    * 2–3 sentence summary shown on the Projects listing page.
    */
@@ -318,26 +281,28 @@ export interface Project {
   _status?: ('draft' | 'published') | null;
 }
 /**
- * Current and past team members shown on the "Meet the team" page.
+ * Organisation partners shown in the homepage logo banner (active partners only).
  *
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "team-members".
+ * via the `definition` "partners".
  */
-export interface TeamMember {
+export interface Partner {
   id: string;
   name: string;
   /**
-   * e.g. "Field Coordinator" / "Coordinatrice terrain"
+   * Prefer a transparent PNG or SVG-style logo on a clean background.
    */
-  role: string;
-  photo?: (string | null) | Media;
-  bio?: string | null;
-  project?: (string | null) | Project;
-  type?: ('coordinator' | 'medical' | 'translator' | 'admin') | null;
+  logo: string | Media;
   /**
-   * Lower = shown first. Coordinators typically get 1–10.
+   * Full URL, e.g. https://example.com
    */
-  order?: number | null;
+  url: string;
+  status: 'active' | 'inactive';
+  dateStart?: string | null;
+  /**
+   * Leave empty while the partnership is ongoing.
+   */
+  dateEnd?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -580,6 +545,14 @@ export interface Testimonial {
  */
 export interface User {
   id: string;
+  /**
+   * Administrators can access all sensitive data and manage user rights. Editors need explicit permissions below.
+   */
+  role: 'admin' | 'editor';
+  /**
+   * Sensitive-data rights for editors. Administrators already have every permission.
+   */
+  permissions?: 'viewVolunteerApplications'[] | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -899,16 +872,12 @@ export interface PayloadLockedDocument {
         value: string | Media;
       } | null)
     | ({
-        relationTo: 'posts';
-        value: string | Post;
-      } | null)
-    | ({
-        relationTo: 'team-members';
-        value: string | TeamMember;
-      } | null)
-    | ({
         relationTo: 'projects';
         value: string | Project;
+      } | null)
+    | ({
+        relationTo: 'partners';
+        value: string | Partner;
       } | null)
     | ({
         relationTo: 'volunteer-needs';
@@ -1035,38 +1004,6 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "posts_select".
- */
-export interface PostsSelect<T extends boolean = true> {
-  title?: T;
-  slug?: T;
-  category?: T;
-  publishedAt?: T;
-  coverImage?: T;
-  excerpt?: T;
-  content?: T;
-  relatedProject?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "team-members_select".
- */
-export interface TeamMembersSelect<T extends boolean = true> {
-  name?: T;
-  role?: T;
-  photo?: T;
-  bio?: T;
-  project?: T;
-  type?: T;
-  order?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "projects_select".
  */
 export interface ProjectsSelect<T extends boolean = true> {
@@ -1077,6 +1014,7 @@ export interface ProjectsSelect<T extends boolean = true> {
   dateStart?: T;
   dateEnd?: T;
   coverImage?: T;
+  bannerImage?: T;
   summary?: T;
   content?: T;
   partners?:
@@ -1098,6 +1036,20 @@ export interface ProjectsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "partners_select".
+ */
+export interface PartnersSelect<T extends boolean = true> {
+  name?: T;
+  logo?: T;
+  url?: T;
+  status?: T;
+  dateStart?: T;
+  dateEnd?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1221,6 +1173,8 @@ export interface TestimonialsSelect<T extends boolean = true> {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  role?: T;
+  permissions?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -1454,25 +1408,6 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   createdAt?: T;
 }
 /**
- * Contact details, social links, legal footer information.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "site-info".
- */
-export interface SiteInfo {
-  id: string;
-  email?: string | null;
-  address?: string | null;
-  charityNumber?: string | null;
-  seoDefaults?: {
-    title?: string | null;
-    description?: string | null;
-    image?: (string | null) | Media;
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
  * Editable content for the homepage hero, mission statement, and featured project.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1530,25 +1465,6 @@ export interface Homepage {
   featuredProject?: (string | null) | Project;
   updatedAt?: string | null;
   createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "site-info_select".
- */
-export interface SiteInfoSelect<T extends boolean = true> {
-  email?: T;
-  address?: T;
-  charityNumber?: T;
-  seoDefaults?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        image?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1613,9 +1529,8 @@ export interface TaskCreateCollectionExport {
     batchSize?: number | null;
     collectionSlug:
       | 'media'
-      | 'posts'
-      | 'team-members'
       | 'projects'
+      | 'partners'
       | 'volunteer-needs'
       | 'volunteer-applications'
       | 'volunteer-cvs'

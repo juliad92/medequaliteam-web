@@ -5,12 +5,13 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 
 import { getT } from '@/i18n/translations'
+import { breadcrumbJsonLd } from '@/lib/json-ld'
+import { buildPageMetadata } from '@/lib/seo'
 import { getProjectsWithVolunteerNeeds } from '@/lib/volunteer'
 import { formatStoryDate, getVolunteerStories } from '@/lib/volunteer-stories'
 import Image from 'next/image'
 import { MEDIA_SIZE_FALLBACKS } from '@/lib/media-image'
-
-export const dynamic = 'force-dynamic'
+import JsonLd from '@/components/seo/JsonLd'
 
 export async function generateMetadata({
   params,
@@ -20,10 +21,12 @@ export async function generateMetadata({
   const { locale } = await params
   const t = getT(locale)
 
-  return {
+  return buildPageMetadata({
+    locale,
+    path: '/volunteer/stories',
     title: t.volunteerStories.metaTitle,
     description: t.volunteerStories.metaDescription,
-  }
+  })
 }
 
 export default async function VolunteerStoriesPage({
@@ -43,6 +46,11 @@ export default async function VolunteerStoriesPage({
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd(locale, [
+          { name: t.volunteerStories.metaTitle, path: '/volunteer/stories' },
+        ])}
+      />
       <header className="relative overflow-hidden bg-[var(--charcoal)] px-4 pt-24 pb-16 sm:px-8">
         <div className="absolute inset-0" style={{ background: 'var(--gradient-hero)' }} />
         <div
