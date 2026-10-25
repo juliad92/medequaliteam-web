@@ -33,8 +33,8 @@ function PartnerItem({
     <li
       className={
         isStatic
-          ? 'flex h-16 w-40 shrink-0 items-center justify-center sm:h-20 sm:w-48'
-          : 'flex h-14 w-36 shrink-0 items-center justify-center sm:h-16 sm:w-44'
+          ? 'flex h-20 w-52 shrink-0 items-center justify-center sm:h-24 sm:w-60'
+          : 'flex h-16 w-48 shrink-0 items-center justify-center sm:h-20 sm:w-56'
       }
       data-marquee-clone={clone ? '' : undefined}
       aria-hidden={clone || undefined}
@@ -44,20 +44,19 @@ function PartnerItem({
         target="_blank"
         rel="noopener noreferrer"
         tabIndex={clone ? -1 : undefined}
-        className="flex h-full w-full items-center justify-center opacity-60 transition-opacity duration-300 hover:opacity-100 focus-visible:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--green)]"
+        className="relative block h-full w-full opacity-70 transition-opacity duration-300 hover:opacity-100 focus-visible:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--green)]"
         title={partner.name}
       >
-        <MediaImage
-          image={partner.logo}
-          alt={clone ? '' : partner.name}
-          size="thumbnail"
-          className={
-            isStatic
-              ? 'max-h-14 w-auto max-w-full object-contain sm:max-h-16'
-              : 'max-h-12 w-auto max-w-full object-contain sm:max-h-14'
-          }
-          sizes={isStatic ? '192px' : '176px'}
-        />
+        <span className="absolute inset-3">
+          <MediaImage
+            image={partner.logo}
+            alt={clone ? '' : partner.name}
+            size="original"
+            fill
+            className="object-contain"
+            sizes={isStatic ? '240px' : '224px'}
+          />
+        </span>
       </a>
     </li>
   )
@@ -111,7 +110,7 @@ export default function PartnersMarquee({
             aria-hidden
           />
 
-          <ul className="partners-marquee__track flex w-max items-center gap-10 py-2 sm:gap-14">
+          <ul className="partners-marquee__track flex w-max items-center gap-10 py-4 sm:gap-14">
             {marqueeSequence.map((partner, index) => (
               <PartnerItem key={`${partner.id}-${index}`} partner={partner} />
             ))}

@@ -196,7 +196,7 @@ export default async function ProjectDetailPage({
         <div className="mx-auto max-w-7xl">
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(260px,300px)] lg:gap-14">
             {/* At a glance + CTAs — after lead on mobile, sticky sidebar on desktop */}
-            <aside className="space-y-6 lg:sticky lg:top-36 lg:col-start-2 lg:row-span-2 lg:self-start">
+            <aside className="space-y-6 lg:sticky lg:top-36 lg:col-start-2 lg:row-start-1 lg:self-start">
               <div className="rounded-2xl border border-[var(--border)] bg-[var(--cream)] p-6 sm:p-7">
                 <p className="mb-5 text-[13px] font-medium tracking-[0.14em] text-[var(--green)] uppercase">
                   {t.projects.atAGlance}
@@ -274,7 +274,7 @@ export default async function ProjectDetailPage({
             </aside>
             {/* Long-form content — after aside on mobile so readers get facts first */}
             {project.content ? (
-              <article className="lg:col-start-1">
+              <article className="lg:col-start-1 lg:row-start-1">
                 <LexicalRenderer content={project.content} variant="article" />
               </article>
             ) : null}

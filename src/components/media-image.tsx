@@ -19,8 +19,8 @@ type MediaImageProps = {
   sizes?: string
   /**
    * Cover the parent container (parent must be `relative` + sized).
-   * Uses explicit width/height + absolute CSS instead of next/image `fill`,
-   * which avoids intermittent "missing required width" errors.
+   * Uses next/image `fill` so object-fit (contain/cover) is not clipped
+   * by conflicting intrinsic width/height attributes.
    */
   fill?: boolean
   priority?: boolean
@@ -29,7 +29,7 @@ type MediaImageProps = {
 
 /**
  * Shared next/image wrapper for Payload media.
- * Always passes numeric width/height so next/image never throws.
+ * Always passes numeric width/height (or fill) so next/image never throws.
  */
 export function MediaImage({
   image,
@@ -47,13 +47,27 @@ export function MediaImage({
   const { width, height } = getMediaImageDimensions(image, size)
   const alt = altProp ?? getMediaImageAlt(image, '')
 
+  if (fill) {
+    return (
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        className={className}
+        sizes={sizes}
+        priority={priority}
+        aria-hidden={ariaHidden}
+      />
+    )
+  }
+
   return (
     <Image
       src={src}
       alt={alt}
       width={width}
       height={height}
-      className={fill ? `absolute inset-0 h-full w-full ${className}` : className}
+      className={className}
       sizes={sizes}
       priority={priority}
       aria-hidden={ariaHidden}
