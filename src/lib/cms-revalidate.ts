@@ -7,7 +7,13 @@ import type {
 } from 'payload'
 
 import { CACHE_TAGS } from './cache.ts'
-import type { Page, Partner, Project, Testimonial, VolunteerNeed } from '../payload/payload-types.ts'
+import type {
+  Page,
+  Partner,
+  Project,
+  Testimonial,
+  VolunteerNeed,
+} from '../payload/payload-types.ts'
 
 const LOCALES = ['en', 'fr'] as const
 
@@ -257,7 +263,9 @@ export const revalidatePartnerAfterChange: CollectionAfterChangeHook<Partner> = 
   if (!canRevalidate(context)) return doc
 
   const affectsHomepage =
-    doc.status === 'active' || previousDoc?.status === 'active' || doc.status !== previousDoc?.status
+    doc.status === 'active' ||
+    previousDoc?.status === 'active' ||
+    doc.status !== previousDoc?.status
   if (!affectsHomepage) return doc
 
   payload.logger.info(`Revalidating partners banner ("${doc.name}")`)

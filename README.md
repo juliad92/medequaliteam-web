@@ -41,6 +41,13 @@ Bilingual (EN/FR) website for [Med'EqualiTeam](https://medequali.team), built wi
    # Optional — Instagram feed on homepage
    INSTAGRAM_ACCESS_TOKEN=
    INSTAGRAM_USER_ID=
+
+   # Optional — sync volunteer applications to Google Sheets
+   GOOGLE_SHEETS_CLIENT_EMAIL=
+   GOOGLE_SHEETS_PRIVATE_KEY=
+   # Defaults to the Medequali spreadsheet / "test" tab when omitted
+   GOOGLE_SHEETS_SPREADSHEET_ID=1rxudCKPglKna9goCmpRzaOAwmVXX-Gjck_oxeywn9u0
+   GOOGLE_SHEETS_TAB=test
    ```
 
 3. **Generate Payload types** (after config changes)
@@ -73,6 +80,10 @@ Bilingual (EN/FR) website for [Med'EqualiTeam](https://medequali.team), built wi
 | `COMPLAINTS_FROM_EMAIL` | No | Verified Resend sender address. Defaults to `safeguarding@medequali.team` |
 | `INSTAGRAM_ACCESS_TOKEN` | No | Instagram Graph API token for homepage feed |
 | `INSTAGRAM_USER_ID` | No | Instagram user ID (uses `/me/media` if omitted) |
+| `GOOGLE_SHEETS_CLIENT_EMAIL` | For Sheets sync | Google service account email used to append volunteer applications |
+| `GOOGLE_SHEETS_PRIVATE_KEY` | For Sheets sync | Service account private key (keep `\n` escaped in env values) |
+| `GOOGLE_SHEETS_SPREADSHEET_ID` | No | Spreadsheet ID (default: Medequali recruitment sheet) |
+| `GOOGLE_SHEETS_TAB` | No | Sheet tab name (default: `test`) |
 
 ### E2E testing variables
 
@@ -112,6 +123,10 @@ Tests seed an isolated `-e2e` database, run volunteer application flows, and cle
 ## Complaint email delivery
 
 Complaint submissions are sent to `safeguarding@medequali.team` through Resend. Set `RESEND_API_KEY` in your environment. Optionally set `COMPLAINTS_FROM_EMAIL` to a verified Resend sender; otherwise the safeguarding address is used as the sender.
+
+## Volunteer applications → Google Sheets
+
+When `GOOGLE_SHEETS_CLIENT_EMAIL` and `GOOGLE_SHEETS_PRIVATE_KEY` are set, each successful volunteer application is also appended to the configured Google Sheet (default tab: `test`). Share the spreadsheet with the service account email as **Editor**. If Sheets sync fails, the Payload entry is still kept and the form still succeeds.
 
 ## Deployment
 

@@ -77,12 +77,7 @@ export default async function ProjectsListingPage({
         <div className="mx-auto max-w-7xl">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {displayProjects.map((project) => (
-              <ProjectCard
-                key={project.slug}
-                project={project}
-                locale={locale}
-                headingLevel="h2"
-              />
+              <ProjectCard key={project.slug} project={project} locale={locale} headingLevel="h2" />
             ))}
           </div>
         </div>
