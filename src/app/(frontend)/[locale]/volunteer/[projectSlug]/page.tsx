@@ -4,11 +4,13 @@ import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 
+import { MediaImage } from '@/components/media-image'
 import JsonLd from '@/components/seo/JsonLd'
 import VolunteerPageNav from '@/components/volunteer/VolunteerPageNav'
 import VolunteerRolesAndForm from '@/components/volunteer/VolunteerRolesAndForm'
 import { getT } from '@/i18n/translations'
 import { breadcrumbJsonLd } from '@/lib/json-ld'
+import { getMediaImageSrc } from '@/lib/media-image'
 import { buildPageMetadata } from '@/lib/seo'
 import { getVolunteerNeedsForProject, getProjectsWithVolunteerNeeds } from '@/lib/volunteer'
 
@@ -139,6 +141,7 @@ export default async function VolunteerProjectPage({
     where: { slug: { equals: projectSlug }, _status: { equals: 'published' } },
     locale: locale as 'en' | 'fr',
     fallbackLocale: 'en',
+    depth: 1,
     limit: 1,
   })
 
@@ -150,6 +153,7 @@ export default async function VolunteerProjectPage({
   if (needs.length === 0) notFound()
 
   const copy = getCopy(locale, { title: project.title, location: project.location })
+  const hasBannerImage = Boolean(getMediaImageSrc(project.bannerImage, 'hero'))
 
   return (
     <>
@@ -159,18 +163,28 @@ export default async function VolunteerProjectPage({
           { name: project.title, path: `/volunteer/${projectSlug}` },
         ])}
       />
-      <header className="relative overflow-hidden bg-[var(--charcoal)] px-8 pt-24 pb-16">
+      <header className="relative overflow-hidden bg-[var(--charcoal)] px-4 pt-24 pb-16 sm:px-8">
+        {hasBannerImage ? (
+          <MediaImage
+            image={project.bannerImage}
+            alt=""
+            size="hero"
+            fill
+            priority
+            ariaHidden
+            className="object-cover"
+            sizes="100vw"
+          />
+        ) : null}
         <div
           className="absolute inset-0"
           style={{
-            background: 'var(--gradient-hero)',
+            background: hasBannerImage ? 'var(--gradient-hero-overlay)' : 'var(--gradient-hero)',
           }}
         />
         <div
           className="pointer-events-none absolute inset-0"
-          style={{
-            background: 'var(--gradient-hero-glow)',
-          }}
+          style={{ background: 'var(--gradient-hero-glow)' }}
         />
         <div className="relative mx-auto max-w-7xl">
           <p className="mb-4 flex items-center gap-3 text-[13px] font-medium tracking-[0.16em] text-[var(--green-light)] uppercase">
