@@ -56,7 +56,7 @@ function getCopy(locale: string, project: { title: string; location: string }) {
         "Si tout est aligné des deux côtés, nous confirmerons votre venue. Nous demanderons certains documents (notamment un extrait de casier judiciaire de moins de 6 mois et une copie de votre pièce d'identité) et nous vous enverrons notre Volunteer Guide",
         'Avant de réserver vos transports, assurez-vous que vos dates correspondent à notre planning',
       ],
-      contact: 'Questions ? Écrivez à',
+      contact: 'Des questions ? Écrivez à',
     }
   }
 

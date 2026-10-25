@@ -443,7 +443,7 @@ export const translations = {
       projects: 'Nos Projets',
       projectsActive: 'Grèce du Nord',
       projectsPast: 'Projets passés',
-      volunteer: 'Bénévolat avec nous',
+      volunteer: 'Devenir bénévole',
       volunteerShort: 'Bénévolat',
       volunteerGreece: 'Bénévolat en Grèce',
       volunteerStories: 'Témoignages',
@@ -546,7 +546,7 @@ export const translations = {
       metaTitle: 'Témoignages de bénévoles',
       metaDescription:
         'Découvrez les retours d’expérience de médecins, infirmiers et autres bénévoles qui ont travaillé avec Med’EqualiTeam à Thessalonique.',
-      eyebrow: 'Bénévolat avec nous',
+      eyebrow: 'Devenir bénévole',
       title: 'Témoignages',
       subtitle: 'Nos volontaires à Thessalonique racontent leur expérience',
       by: 'par Med’EqualiTeam',

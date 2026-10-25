@@ -27,7 +27,7 @@ export default function VolunteerNeedsAccordion({
       ? {
           eyebrow: 'Besoins bénévoles',
           title: `Rôles ouverts — ${locationLabel}`,
-          hint: 'Cliquez sur un rôle pour afficher les détails.',
+          hint: 'Cliquez sur un rôle pour afficher les détails. Veuillez noter que les positions sont affichées en anglais seulement.',
           roleDetails: 'Détails du rôle',
           duration: 'Durée',
           jobDescription: 'Description du poste',
