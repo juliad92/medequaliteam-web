@@ -14,6 +14,12 @@ type SeedState = {
   adminEmail: string
 }
 
+/** Skip Next.js cache revalidation while seeding outside a request. */
+const seedWrite = {
+  overrideAccess: true as const,
+  context: { disableRevalidate: true },
+}
+
 async function deleteVolunteerNeedsForProject(payload: Payload, projectId: string) {
   const { docs } = await payload.find({
     collection: 'volunteer-needs',
@@ -22,7 +28,7 @@ async function deleteVolunteerNeedsForProject(payload: Payload, projectId: strin
     overrideAccess: true,
   })
   for (const doc of docs) {
-    await payload.delete({ collection: 'volunteer-needs', id: doc.id, overrideAccess: true })
+    await payload.delete({ collection: 'volunteer-needs', id: doc.id, ...seedWrite })
   }
 }
 
@@ -40,7 +46,7 @@ async function ensureAdminUser(payload: Payload) {
       collection: 'users',
       id: docs[0].id,
       data: { role: 'admin' },
-      overrideAccess: true,
+      ...seedWrite,
     })
   }
 
@@ -51,7 +57,7 @@ async function ensureAdminUser(payload: Payload) {
       password: E2E.adminPassword,
       role: 'admin',
     },
-    overrideAccess: true,
+    ...seedWrite,
   })
 }
 
@@ -76,8 +82,8 @@ async function ensureProject(payload: Payload, slug: string, title: string) {
         _status: 'published',
       },
       locale: 'en',
-      overrideAccess: true,
       draft: false,
+      ...seedWrite,
     })
   }
 
@@ -92,8 +98,8 @@ async function ensureProject(payload: Payload, slug: string, title: string) {
       summary: 'E2E test project for volunteer application flows.',
       _status: 'published',
     },
-    overrideAccess: true,
     draft: false,
+    ...seedWrite,
   })
 }
 
@@ -111,7 +117,7 @@ async function ensurePublishedVolunteerNeed(payload: Payload, projectId: string)
     await payload.delete({
       collection: 'volunteer-needs',
       id: docs[0].id,
-      overrideAccess: true,
+      ...seedWrite,
     })
   }
 
@@ -127,8 +133,8 @@ async function ensurePublishedVolunteerNeed(payload: Payload, projectId: string)
       project: projectId,
       _status: 'published',
     },
-    overrideAccess: true,
     draft: false,
+    ...seedWrite,
   })
 }
 
@@ -204,7 +210,7 @@ export async function cleanupVolunteerE2EApplications() {
       await payload.delete({
         collection: 'volunteer-applications',
         id: doc.id,
-        overrideAccess: true,
+        ...seedWrite,
       })
     }
   })

@@ -42,23 +42,50 @@ async function nextCache() {
   return import('next/cache')
 }
 
-/** Revalidate a marketing path for every locale (`/en/...`, `/fr/...`). */
-export async function revalidateLocalizedPath(path: string): Promise<void> {
-  const { revalidatePath } = await nextCache()
-  const normalized = normalizePath(path)
-  for (const locale of LOCALES) {
-    revalidatePath(localizedHref(locale, normalized))
+/**
+ * `revalidatePath` / `revalidateTag` throw outside a Next.js request
+ * (Payload CLI, E2E seed scripts, etc.). Skip quietly in that case.
+ */
+function isOutsideNextRevalidateContext(error: unknown): boolean {
+  const message = error instanceof Error ? error.message : String(error)
+  return (
+    message.includes('static generation store missing') ||
+    message.includes('incrementalCache missing')
+  )
+}
+
+async function runRevalidate(work: () => void | Promise<void>): Promise<void> {
+  try {
+    await work()
+  } catch (error) {
+    if (isOutsideNextRevalidateContext(error)) return
+    throw error
   }
 }
 
+/** Revalidate a marketing path for every locale (`/en/...`, `/fr/...`). */
+export async function revalidateLocalizedPath(path: string): Promise<void> {
+  await runRevalidate(async () => {
+    const { revalidatePath } = await nextCache()
+    const normalized = normalizePath(path)
+    for (const locale of LOCALES) {
+      revalidatePath(localizedHref(locale, normalized))
+    }
+  })
+}
+
 async function revalidateSitemap(): Promise<void> {
-  const { revalidatePath } = await nextCache()
-  revalidatePath('/sitemap.xml')
+  await runRevalidate(async () => {
+    const { revalidatePath } = await nextCache()
+    revalidatePath('/sitemap.xml')
+  })
 }
 
 async function revalidateTag(tag: string): Promise<void> {
-  const { revalidateTag: revalidate } = await nextCache()
-  revalidate(tag)
+  await runRevalidate(async () => {
+    const { revalidateTag: revalidate } = await nextCache()
+    revalidate(tag)
+  })
 }
 
 async function revalidateProjectSurfaces(slug: string): Promise<void> {
