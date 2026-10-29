@@ -76,8 +76,10 @@ Bilingual (EN/FR) website for [Med'EqualiTeam](https://medequali.team), built wi
 | `NEXT_PUBLIC_SITE_URL` | Recommended | Absolute site origin for SEO metadata (canonical, Open Graph). Prefer `https://medequali.team` even on the hidden Vercel production so canonicals do not advertise `*.vercel.app`. Defaults to `https://medequali.team`. |
 | `ALLOW_SEARCH_INDEXING` | Recommended | Set to `true` only when the deployment should appear in search results. Default / unset / `false` → `noindex` + `robots.txt` Disallow all (safe for hidden production and previews). |
 | `BLOB_READ_WRITE_TOKEN` | On Vercel | Vercel Blob storage token for media and CV uploads. Required when `VERCEL` is set. |
-| `RESEND_API_KEY` | For complaints | API key for sending complaint emails via Resend |
+| `RESEND_API_KEY` | For complaints / volunteer apps | API key for sending emails via Resend |
 | `COMPLAINTS_FROM_EMAIL` | No | Verified Resend sender address. Defaults to `safeguarding@medequali.team` |
+| `VOLUNTEER_APPLICATIONS_RECIPIENT` | No | Recipient for new volunteer applications. Defaults to `volunteer@medequali.team` |
+| `VOLUNTEER_APPLICATIONS_FROM_EMAIL` | No | Verified Resend sender for volunteer notifications |
 | `INSTAGRAM_ACCESS_TOKEN` | No | Instagram Graph API token for homepage feed |
 | `INSTAGRAM_USER_ID` | No | Instagram user ID (uses `/me/media` if omitted) |
 | `GOOGLE_SHEETS_CLIENT_EMAIL` | For Sheets sync | Google service account email used to append volunteer applications |
@@ -123,6 +125,10 @@ Tests seed an isolated `-e2e` database, run volunteer application flows, and cle
 ## Complaint email delivery
 
 Complaint submissions are sent to `safeguarding@medequali.team` through Resend. Set `RESEND_API_KEY` in your environment. Optionally set `COMPLAINTS_FROM_EMAIL` to a verified Resend sender; otherwise the safeguarding address is used as the sender.
+
+## Volunteer application email
+
+Successful volunteer applications also notify `volunteer@medequali.team` through Resend (same `RESEND_API_KEY`). Override with `VOLUNTEER_APPLICATIONS_RECIPIENT` / `VOLUNTEER_APPLICATIONS_FROM_EMAIL` if needed. Email failure does not block the application from being saved.
 
 ## Volunteer applications → Google Sheets
 

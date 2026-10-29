@@ -2,9 +2,9 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { checkRateLimit, RATE_LIMITS } from '@/lib/rate-limit'
 import { isValidEmail } from '@/lib/validation'
-import { appendVolunteerApplicationToGoogleSheet } from '@/lib/volunteer/append-to-google-sheet'
 import { defaultVolunteerApplicationStatus } from '@/lib/volunteer/application-status'
 import { isAllowedCvFile, mimeTypeForCv, sanitizeCvFilename } from '@/lib/volunteer/cv-upload'
+import { notifyVolunteerApplicationEmail } from '@/lib/volunteer/notify-application-email'
 
 function str(value: unknown): string | undefined {
   const s = String(value ?? '').trim()
@@ -201,7 +201,7 @@ export async function POST(req: Request) {
       throw error
     }
 
-    /*try {
+    try {
       const [projectDoc, roleDocs] = await Promise.all([
         payload
           .findByID({
@@ -233,9 +233,8 @@ export async function POST(req: Request) {
       const projectTitle =
         projectDoc && typeof projectDoc.title === 'string' ? projectDoc.title : project
 
-        await appendVolunteerApplicationToGoogleSheet({
+      await notifyVolunteerApplicationEmail({
         applicationId,
-        submittedAt: new Date().toISOString(),
         firstName,
         lastName,
         age,
@@ -270,8 +269,8 @@ export async function POST(req: Request) {
         locale,
       })
     } catch (error) {
-      console.error('Failed to append volunteer application to Google Sheet:', error)
-    }*/
+      console.error('Failed to email volunteer application notification:', error)
+    }
 
     return Response.json({ ok: true })
   } catch {
