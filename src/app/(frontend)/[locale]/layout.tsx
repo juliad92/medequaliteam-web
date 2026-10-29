@@ -52,7 +52,7 @@ export default async function LocaleLayout({
         <Script
           defer
           src="https://cloud.umami.is/script.js"
-          data-website-id="17ed92d1-507e-4869-8d0d-d55546602a1f"
+          data-website-id="a4912dce-c7b7-49b5-ba74-de2d0a6e9cd2"
           strategy="afterInteractive"
         />
       </body>
