@@ -48,7 +48,10 @@ export default function Navbar({
     return `/${nextLocale}${pathWithoutLocale}`
   }
 
-  const volunteerNav = {
+  type NavChild = { label: string; href: string }
+  type DrawerNavItem = { label: string; href: string; children?: NavChild[] }
+
+  const volunteerNav: DrawerNavItem = {
     label: t.nav.volunteer,
     href: volunteerProjects[0] ? `/volunteer/${volunteerProjects[0].slug}` : '/volunteer/stories',
     children: [
@@ -60,15 +63,10 @@ export default function Navbar({
     ],
   }
 
-  const drawerNavItems = [
+  const drawerNavItems: DrawerNavItem[] = [
     {
       label: t.nav.about,
       href: '/about/why-we-exist',
-      // children: [
-      //   { label: t.nav.aboutWhy, href: '/about/why-we-exist' },
-      // { label: t.nav.aboutOrg, href: '/about/organisation' },
-      // { label: t.nav.aboutTeam, href: '/about/meet-team' },
-      // ],
     },
     {
       label: t.nav.projects,
@@ -208,7 +206,7 @@ export default function Navbar({
               </div>
               {openDropdown === volunteerNav.label && (
                 <div className="absolute top-full right-0 z-50 mt-1 min-w-[200px] rounded-xl border border-[var(--border)] bg-white py-2 shadow-lg md:right-auto md:left-0">
-                  {volunteerNav.children.map((child) => (
+                  {(volunteerNav.children ?? []).map((child) => (
                     <Link
                       key={child.href}
                       href={`/${locale}${child.href}`}
