@@ -1,4 +1,18 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionAfterReadHook, CollectionBeforeChangeHook, CollectionConfig } from 'payload'
+import { publishedOrAuthenticated } from '../lib/access.ts'
+import {
+  revalidateVolunteerNeedAfterChange,
+  revalidateVolunteerNeedAfterDelete,
+} from '../lib/cms-revalidate.ts'
+import { sanitizeVolunteerNeedRichText } from '../lib/lexical-sanitize.ts'
+
+const sanitizeRichTextAfterRead: CollectionAfterReadHook = ({ doc }) => {
+  return sanitizeVolunteerNeedRichText(doc)
+}
+
+const sanitizeRichTextBeforeChange: CollectionBeforeChangeHook = ({ data }) => {
+  return sanitizeVolunteerNeedRichText(data)
+}
 
 export const VolunteerNeeds: CollectionConfig = {
   slug: 'volunteer-needs',
@@ -12,10 +26,16 @@ export const VolunteerNeeds: CollectionConfig = {
     description: 'Open volunteer roles linked to field projects (e.g. medical coordinator, nurse).',
   },
   access: {
-    read: () => true,
+    read: publishedOrAuthenticated,
   },
   versions: {
     drafts: true,
+  },
+  hooks: {
+    afterRead: [sanitizeRichTextAfterRead],
+    beforeChange: [sanitizeRichTextBeforeChange],
+    afterChange: [revalidateVolunteerNeedAfterChange],
+    afterDelete: [revalidateVolunteerNeedAfterDelete],
   },
   fields: [
     {

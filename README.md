@@ -25,6 +25,12 @@ Bilingual (EN/FR) website for [Med'EqualiTeam](https://medequali.team), built wi
    DATABASE_URI=mongodb://127.0.0.1:27017/medequaliteam
    PAYLOAD_SECRET=your-random-secret-at-least-32-chars
 
+   # Recommended — absolute origin for SEO (canonical / Open Graph)
+   NEXT_PUBLIC_SITE_URL=http://localhost:3000
+
+   # Search indexing — leave unset/false until the site is public on medequali.team
+   ALLOW_SEARCH_INDEXING=false
+
    # Optional — file uploads (local dev uses public/media and storage/volunteer-cvs without this)
    BLOB_READ_WRITE_TOKEN=
 
@@ -35,6 +41,13 @@ Bilingual (EN/FR) website for [Med'EqualiTeam](https://medequali.team), built wi
    # Optional — Instagram feed on homepage
    INSTAGRAM_ACCESS_TOKEN=
    INSTAGRAM_USER_ID=
+
+   # Optional — sync volunteer applications to Google Sheets
+   GOOGLE_SHEETS_CLIENT_EMAIL=
+   GOOGLE_SHEETS_PRIVATE_KEY=
+   # Defaults to the Medequali spreadsheet / "test" tab when omitted
+   GOOGLE_SHEETS_SPREADSHEET_ID=1rxudCKPglKna9goCmpRzaOAwmVXX-Gjck_oxeywn9u0
+   GOOGLE_SHEETS_TAB=test
    ```
 
 3. **Generate Payload types** (after config changes)
@@ -60,11 +73,19 @@ Bilingual (EN/FR) website for [Med'EqualiTeam](https://medequali.team), built wi
 |----------|----------|-------------|
 | `DATABASE_URI` | Yes | MongoDB connection string |
 | `PAYLOAD_SECRET` | Yes | Secret for Payload auth and encryption |
+| `NEXT_PUBLIC_SITE_URL` | Recommended | Absolute site origin for SEO metadata (canonical, Open Graph). Prefer `https://medequali.team` even on the hidden Vercel production so canonicals do not advertise `*.vercel.app`. Defaults to `https://medequali.team`. |
+| `ALLOW_SEARCH_INDEXING` | Recommended | Set to `true` only when the deployment should appear in search results. Default / unset / `false` → `noindex` + `robots.txt` Disallow all (safe for hidden production and previews). |
 | `BLOB_READ_WRITE_TOKEN` | On Vercel | Vercel Blob storage token for media and CV uploads. Required when `VERCEL` is set. |
-| `RESEND_API_KEY` | For complaints | API key for sending complaint emails via Resend |
+| `RESEND_API_KEY` | For complaints / volunteer apps | API key for sending emails via Resend |
 | `COMPLAINTS_FROM_EMAIL` | No | Verified Resend sender address. Defaults to `safeguarding@medequali.team` |
+| `VOLUNTEER_APPLICATIONS_RECIPIENT` | No | Recipient for new volunteer applications. Defaults to `volunteer@medequali.team` |
+| `VOLUNTEER_APPLICATIONS_FROM_EMAIL` | No | Verified Resend sender for volunteer notifications |
 | `INSTAGRAM_ACCESS_TOKEN` | No | Instagram Graph API token for homepage feed |
 | `INSTAGRAM_USER_ID` | No | Instagram user ID (uses `/me/media` if omitted) |
+| `GOOGLE_SHEETS_CLIENT_EMAIL` | For Sheets sync | Google service account email used to append volunteer applications |
+| `GOOGLE_SHEETS_PRIVATE_KEY` | For Sheets sync | Service account private key (keep `\n` escaped in env values) |
+| `GOOGLE_SHEETS_SPREADSHEET_ID` | No | Spreadsheet ID (default: Medequali recruitment sheet) |
+| `GOOGLE_SHEETS_TAB` | No | Sheet tab name (default: `test`) |
 
 ### E2E testing variables
 
@@ -105,6 +126,14 @@ Tests seed an isolated `-e2e` database, run volunteer application flows, and cle
 
 Complaint submissions are sent to `safeguarding@medequali.team` through Resend. Set `RESEND_API_KEY` in your environment. Optionally set `COMPLAINTS_FROM_EMAIL` to a verified Resend sender; otherwise the safeguarding address is used as the sender.
 
+## Volunteer application email
+
+Successful volunteer applications also notify `volunteer@medequali.team` through Resend (same `RESEND_API_KEY`). Override with `VOLUNTEER_APPLICATIONS_RECIPIENT` / `VOLUNTEER_APPLICATIONS_FROM_EMAIL` if needed. Email failure does not block the application from being saved.
+
+## Volunteer applications → Google Sheets
+
+When `GOOGLE_SHEETS_CLIENT_EMAIL` and `GOOGLE_SHEETS_PRIVATE_KEY` are set, each successful volunteer application is also appended to the configured Google Sheet (default tab: `test`). Share the spreadsheet with the service account email as **Editor**. If Sheets sync fails, the Payload entry is still kept and the form still succeeds.
+
 ## Deployment
 
 Deployed on Vercel. On Vercel you must:
@@ -131,4 +160,4 @@ e2e/                       # Playwright tests
 
 ## CI
 
-GitHub Actions runs lint, typecheck, and E2E tests on push/PR to `main`. See `.github/workflows/ci.yml`.
+GitHub Actions runs lint, typecheck, format check, production build, and E2E tests on push/PR to `main`. See `.github/workflows/ci.yml`.

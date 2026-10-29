@@ -1,13 +1,14 @@
 import type { Media } from '@/payload/payload-types'
 
 export type CoverImage = string | Media | null | undefined
-export type MediaSizeName = 'thumbnail' | 'card' | 'hero'
+export type MediaSizeName = 'thumbnail' | 'card' | 'hero' | 'original'
 
 /** Defaults matching Payload `imageSizes` in MediaAndPages. */
 export const MEDIA_SIZE_FALLBACKS: Record<MediaSizeName, { width: number; height: number }> = {
   thumbnail: { width: 400, height: 300 },
   card: { width: 800, height: 500 },
   hero: { width: 1600, height: 900 },
+  original: { width: 800, height: 400 },
 }
 
 function isMedia(image: CoverImage): image is Media {
@@ -15,12 +16,10 @@ function isMedia(image: CoverImage): image is Media {
 }
 
 /** Prefer a named size when available, otherwise the original file URL. */
-export function getMediaImageSrc(
-  image: CoverImage,
-  size: MediaSizeName = 'card',
-): string | null {
+export function getMediaImageSrc(image: CoverImage, size: MediaSizeName = 'card'): string | null {
   if (!image) return null
   if (typeof image === 'string') return image
+  if (size === 'original') return image.url ?? null
   return image.sizes?.[size]?.url ?? image.url ?? null
 }
 
@@ -34,6 +33,13 @@ export function getMediaImageDimensions(
 ): { width: number; height: number } {
   const fallback = MEDIA_SIZE_FALLBACKS[size]
   if (!isMedia(image)) return fallback
+
+  if (size === 'original') {
+    return {
+      width: image.width ?? fallback.width,
+      height: image.height ?? fallback.height,
+    }
+  }
 
   const sizeMeta = image.sizes?.[size]
   const width = sizeMeta?.width ?? image.width ?? fallback.width

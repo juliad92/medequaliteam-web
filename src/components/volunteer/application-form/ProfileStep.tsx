@@ -149,7 +149,9 @@ export function ProfileStep({
               clearFieldError('countryOfResidence')
             }}
             aria-invalid={fieldErrors.countryOfResidence ? true : undefined}
-            aria-describedby={fieldErrors.countryOfResidence ? 'countryOfResidence-error' : undefined}
+            aria-describedby={
+              fieldErrors.countryOfResidence ? 'countryOfResidence-error' : undefined
+            }
             className={fieldErrors.countryOfResidence ? inputErrorClass : inputClass}
           />
           <FieldError id="countryOfResidence-error" message={fieldErrors.countryOfResidence} />

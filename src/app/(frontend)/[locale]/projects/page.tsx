@@ -5,19 +5,10 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 
 import { getT } from '@/i18n/translations'
-import type { Media } from '@/payload/payload-types'
-import { getMediaImageAlt, getMediaImageSrc, MediaImage } from '@/components/media-image'
-
-export const dynamic = 'force-dynamic'
-
-type Project = {
-  slug: string
-  status: string
-  location: string
-  title: string
-  summary: string
-  coverImage?: (string | null) | Media
-}
+import { breadcrumbJsonLd } from '@/lib/json-ld'
+import { buildPageMetadata } from '@/lib/seo'
+import ProjectCard, { type ProjectCardData } from '@/components/projects/ProjectCard'
+import JsonLd from '@/components/seo/JsonLd'
 
 export async function generateMetadata({
   params,
@@ -26,10 +17,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params
   const t = getT(locale)
-  return {
+  return buildPageMetadata({
+    locale,
+    path: '/projects',
     title: t.projects.metaTitle,
     description: t.projects.metaDescription,
-  }
+  })
 }
 
 export default async function ProjectsListingPage({
@@ -48,15 +41,18 @@ export default async function ProjectsListingPage({
     fallbackLocale: 'en',
     depth: 1,
     limit: 100,
-    sort: 'dateStart',
+    sort: ['status', '-dateStart'],
   })
 
-  const displayProjects = projects.filter((p) => p.slug) as Project[]
+  const displayProjects = projects.filter((p) => p.slug) as ProjectCardData[]
 
   if (displayProjects.length === 0) notFound()
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd(locale, [{ name: t.projects.metaTitle, path: '/projects' }])}
+      />
       <header className="relative overflow-hidden bg-[var(--charcoal)] px-4 pt-24 pb-14 sm:px-8 sm:pt-28">
         <div className="absolute inset-0" style={{ background: 'var(--gradient-hero)' }} />
         <div
@@ -80,68 +76,9 @@ export default async function ProjectsListingPage({
       <main className="bg-white px-4 py-14 sm:px-8 sm:py-20">
         <div className="mx-auto max-w-7xl">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {displayProjects.map((project) => {
-              const imageUrl = getMediaImageSrc(project.coverImage, 'card')
-              const imageAlt = getMediaImageAlt(project.coverImage, project.title)
-              const statusLabel =
-                t.projects.status[project.status as keyof typeof t.projects.status] ??
-                project.status
-
-              return (
-                <article
-                  key={project.slug}
-                  className="overflow-hidden rounded-2xl border border-[var(--border)] bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
-                >
-                  <div
-                    className="relative h-44 overflow-hidden"
-                    style={{
-                      background:
-                        project.status === 'active'
-                          ? 'var(--gradient-card)'
-                          : 'var(--gradient-hero)',
-                    }}
-                  >
-                    {imageUrl ? (
-                      <MediaImage
-                        image={project.coverImage}
-                        alt={imageAlt}
-                        size="card"
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      />
-                    ) : null}
-                    <span
-                      className={`absolute top-3 left-3 rounded-full px-3 py-1 text-[14px] font-medium tracking-wide uppercase ${
-                        project.status === 'active'
-                          ? 'bg-[var(--green)]/90 text-white'
-                          : 'bg-black/40 text-white/80'
-                      }`}
-                    >
-                      {statusLabel}
-                    </span>
-                  </div>
-                  <div className="p-6">
-                    <p className="mb-2 text-[13px] font-medium tracking-[0.12em] text-[var(--green)] uppercase">
-                      📍 {project.location}
-                    </p>
-                    <h2 className="mb-3 font-serif text-lg leading-snug font-normal text-[var(--charcoal)]">
-                      {project.title}
-                    </h2>
-                    <p className="mb-5 text-[16px] leading-relaxed text-[var(--muted)]">
-                      {project.summary}
-                    </p>
-                    <a
-                      href={`/${locale}/projects/${project.slug}`}
-                      className="group inline-flex items-center gap-1 text-[15px] font-medium text-[var(--green)]"
-                    >
-                      {t.projects.learnMore}
-                      <span className="transition-transform group-hover:translate-x-1">→</span>
-                    </a>
-                  </div>
-                </article>
-              )
-            })}
+            {displayProjects.map((project) => (
+              <ProjectCard key={project.slug} project={project} locale={locale} headingLevel="h2" />
+            ))}
           </div>
         </div>
       </main>

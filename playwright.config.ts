@@ -34,7 +34,9 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: `pnpm exec next dev --port ${e2ePort}`,
+    // Seed before Next starts: Playwright boots webServer before globalSetup, and the
+    // readiness URL would otherwise cache an empty volunteer nav via unstable_cache.
+    command: `pnpm exec tsx e2e/scripts/seed.ts && pnpm exec next dev --port ${e2ePort}`,
     url: e2eBaseUrl,
     // Start a dedicated server on the E2E port/database; opt in to reuse with E2E_REUSE_SERVER=true.
     reuseExistingServer: process.env.E2E_REUSE_SERVER === 'true' && !process.env.CI,
@@ -42,6 +44,7 @@ export default defineConfig({
     env: {
       DATABASE_URI: process.env.DATABASE_URI ?? '',
       PAYLOAD_SECRET: process.env.PAYLOAD_SECRET ?? 'e2e-payload-secret',
+      E2E_DISABLE_CACHE: 'true',
     },
   },
 })

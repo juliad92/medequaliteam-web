@@ -8,12 +8,36 @@ import config from '@payload-config'
 import LexicalRenderer from '@/components/richtext/LexicalRenderer'
 import ImpactBar from '@/components/home/ImpactBar'
 import ProjectPageNav from '@/components/projects/ProjectPageNav'
+import { MediaImage } from '@/components/media-image'
+import JsonLd from '@/components/seo/JsonLd'
 import { getT } from '@/i18n/translations'
 import { extractArticleNavSections } from '@/lib/lexical-sections'
+import { breadcrumbJsonLd } from '@/lib/json-ld'
+import { getMediaImageSrc } from '@/lib/media-image'
+import { buildPageMetadata } from '@/lib/seo'
 import type { Media } from '@/payload/payload-types'
-import Image from 'next/image'
 
-export const dynamic = 'force-dynamic'
+/** Enable ISR with the locale layout `revalidate = 300`. */
+export const dynamicParams = true
+
+export async function generateStaticParams() {
+  try {
+    const payload = await getPayload({ config })
+    const { docs } = await payload.find({
+      collection: 'projects',
+      where: { _status: { equals: 'published' } },
+      depth: 0,
+      limit: 200,
+      select: { slug: true },
+    })
+    return docs
+      .map((project) => project.slug)
+      .filter((slug): slug is string => Boolean(slug))
+      .map((slug) => ({ slug }))
+  } catch {
+    return []
+  }
+}
 
 type Project = {
   title: string
@@ -23,20 +47,11 @@ type Project = {
   dateStart?: string | null
   dateEnd?: string | null
   coverImage?: (string | null) | Media
+  bannerImage?: (string | null) | Media
   summary: string
   content?: unknown
   partners?: { name: string; url?: string | null; logo?: (string | null) | Media }[] | null
   stats?: { value: string; label: string; id?: string | null }[] | null
-}
-
-function getCoverImageUrl(image: Project['coverImage']): string | null {
-  if (!image || typeof image === 'string') return null
-  return image.sizes?.hero?.url ?? image.sizes?.card?.url ?? image.url ?? null
-}
-
-function getCoverImageAlt(image: Project['coverImage'], fallback: string): string {
-  if (!image || typeof image === 'string') return fallback
-  return image.alt ?? fallback
 }
 
 function formatDate(value: string | null | undefined, locale: string): string | null {
@@ -60,17 +75,28 @@ export async function generateMetadata({
   const payload = await getPayload({ config })
   const { docs: projects } = await payload.find({
     collection: 'projects',
-    where: { slug: { equals: slug } },
+    where: { slug: { equals: slug }, _status: { equals: 'published' } },
     locale: locale as 'en' | 'fr',
     fallbackLocale: 'en',
+    depth: 1,
     limit: 1,
   })
   const project = projects[0] as Project | undefined
-  if (!project) return { title: t.projects.metaTitle }
-  return {
+  if (!project) {
+    return buildPageMetadata({
+      locale,
+      path: `/projects/${slug}`,
+      title: t.projects.metaTitle,
+      description: t.projects.metaDescription,
+    })
+  }
+  return buildPageMetadata({
+    locale,
+    path: `/projects/${slug}`,
     title: `${project.title} — ${t.projects.metaTitle}`,
     description: project.summary ?? t.projects.metaDescription,
-  }
+    image: project.coverImage,
+  })
 }
 
 export default async function ProjectDetailPage({
@@ -84,7 +110,7 @@ export default async function ProjectDetailPage({
 
   const { docs: projects } = await payload.find({
     collection: 'projects',
-    where: { slug: { equals: slug } },
+    where: { slug: { equals: slug }, _status: { equals: 'published' } },
     locale: locale as 'en' | 'fr',
     fallbackLocale: 'en',
     depth: 1,
@@ -98,8 +124,7 @@ export default async function ProjectDetailPage({
     t.projects.status[project.status as keyof typeof t.projects.status] ?? project.status
   const startLabel = formatDate(project.dateStart, locale)
   const endLabel = formatDate(project.dateEnd, locale)
-  // const coverImageUrl = getCoverImageUrl(project.coverImage)
-  // const coverImageAlt = getCoverImageAlt(project.coverImage, project.title)
+  const hasBannerImage = Boolean(getMediaImageSrc(project.bannerImage, 'hero'))
   const hasStats = Boolean(project.stats && project.stats.length > 0)
   const hasPartners = Boolean(project.partners && project.partners.length > 0)
   const dateLine = [startLabel, endLabel].filter(Boolean).join(' → ')
@@ -108,8 +133,31 @@ export default async function ProjectDetailPage({
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd(locale, [
+          { name: t.projects.metaTitle, path: '/projects' },
+          { name: project.title, path: `/projects/${slug}` },
+        ])}
+      />
       <header className="relative overflow-hidden bg-[var(--charcoal)] px-4 pt-20 pb-14 sm:px-8 sm:pt-24">
-        <div className="absolute inset-0" style={{ background: 'var(--gradient-hero)' }} />
+        {hasBannerImage ? (
+          <MediaImage
+            image={project.bannerImage}
+            alt=""
+            size="hero"
+            fill
+            priority
+            ariaHidden
+            className="object-cover"
+            sizes="100vw"
+          />
+        ) : null}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: hasBannerImage ? 'var(--gradient-hero-overlay)' : 'var(--gradient-hero)',
+          }}
+        />
         <div
           className="pointer-events-none absolute inset-0"
           style={{ background: 'var(--gradient-hero-glow)' }}
@@ -148,7 +196,7 @@ export default async function ProjectDetailPage({
         <div className="mx-auto max-w-7xl">
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(260px,300px)] lg:gap-14">
             {/* At a glance + CTAs — after lead on mobile, sticky sidebar on desktop */}
-            <aside className="space-y-6 lg:sticky lg:top-36 lg:col-start-2 lg:row-span-2 lg:self-start">
+            <aside className="space-y-6 lg:sticky lg:top-36 lg:col-start-2 lg:row-start-1 lg:self-start">
               <div className="rounded-2xl border border-[var(--border)] bg-[var(--cream)] p-6 sm:p-7">
                 <p className="mb-5 text-[13px] font-medium tracking-[0.14em] text-[var(--green)] uppercase">
                   {t.projects.atAGlance}
@@ -181,12 +229,14 @@ export default async function ProjectDetailPage({
                 </dl>
 
                 <div className="mt-6 flex flex-col gap-2.5 border-t border-[var(--border)] pt-5">
-                  <Link
-                    href={volunteerHref}
-                    className="inline-flex h-11 items-center justify-center rounded-lg bg-[var(--green)] px-5 text-[15px] font-medium text-white transition-colors hover:bg-[var(--green-dark)]"
-                  >
-                    {t.projects.volunteerCta}
-                  </Link>
+                  {project.status !== 'past' ? (
+                    <Link
+                      href={volunteerHref}
+                      className="inline-flex h-11 items-center justify-center rounded-lg bg-[var(--green)] px-5 text-[15px] font-medium text-white transition-colors hover:bg-[var(--green-dark)]"
+                    >
+                      {t.projects.volunteerCta}
+                    </Link>
+                  ) : null}
                   <Link
                     href={`/${locale}/donate`}
                     className="inline-flex h-11 items-center justify-center rounded-lg border border-[var(--border)] bg-white px-5 text-[15px] font-medium text-[var(--charcoal)] transition-colors hover:bg-[var(--warm-white)]"
@@ -224,7 +274,7 @@ export default async function ProjectDetailPage({
             </aside>
             {/* Long-form content — after aside on mobile so readers get facts first */}
             {project.content ? (
-              <article className="lg:col-start-1">
+              <article className="lg:col-start-1 lg:row-start-1">
                 <LexicalRenderer content={project.content} variant="article" />
               </article>
             ) : null}

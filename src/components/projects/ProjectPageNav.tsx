@@ -17,7 +17,7 @@ export default function ProjectPageNav({
 
   return (
     <nav
-      aria-label={fr ? 'Navigation de la page projet' : 'Project page navigation'}
+      aria-label={fr ? 'Navigation de la page' : 'Page navigation'}
       className="sticky top-16 z-40 border-b border-[var(--border)] bg-white/95 backdrop-blur-sm"
     >
       <div className="mx-auto flex max-w-7xl gap-1 overflow-x-auto px-4 py-3 sm:px-8">

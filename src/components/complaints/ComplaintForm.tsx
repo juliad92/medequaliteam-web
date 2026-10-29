@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 
 import PhoneCountryCodeSelect from '@/components/volunteer/PhoneCountryCodeSelect'
 import { getT } from '@/i18n/translations'
+import { isValidEmail } from '@/lib/validation'
 
 type SensitiveChoice = '' | 'yes' | 'no'
 
@@ -17,8 +18,6 @@ type FieldName =
   | 'details'
 
 type FieldErrors = Partial<Record<FieldName, string>>
-
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 const inputClass =
   'h-11 w-full rounded-lg border border-[var(--border)] bg-white px-4 text-[15px] text-[var(--charcoal)] outline-none focus:border-[var(--green)] focus:ring-2 focus:ring-[var(--green)]/20'
@@ -97,7 +96,7 @@ export default function ComplaintForm({ locale }: { locale: string }) {
     if (!lastName.trim()) errors.lastName = f.fieldErrors.required
     if (!email.trim()) {
       errors.email = f.fieldErrors.required
-    } else if (!EMAIL_PATTERN.test(email.trim())) {
+    } else if (!isValidEmail(email)) {
       errors.email = f.fieldErrors.email
     }
     if (!phoneCountryCode.trim()) errors.phoneCountryCode = f.fieldErrors.required

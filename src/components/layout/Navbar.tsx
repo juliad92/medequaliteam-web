@@ -48,7 +48,10 @@ export default function Navbar({
     return `/${nextLocale}${pathWithoutLocale}`
   }
 
-  const volunteerNav = {
+  type NavChild = { label: string; href: string }
+  type DrawerNavItem = { label: string; href: string; children?: NavChild[] }
+
+  const volunteerNav: DrawerNavItem = {
     label: t.nav.volunteer,
     href: volunteerProjects[0] ? `/volunteer/${volunteerProjects[0].slug}` : '/volunteer/stories',
     children: [
@@ -60,15 +63,10 @@ export default function Navbar({
     ],
   }
 
-  const drawerNavItems = [
+  const drawerNavItems: DrawerNavItem[] = [
     {
       label: t.nav.about,
-      href: '/about',
-      children: [
-        { label: t.nav.aboutWhy, href: '/about/why-we-exist' },
-        { label: t.nav.aboutOrg, href: '/about/organisation' },
-        { label: t.nav.aboutTeam, href: '/about/team' },
-      ],
+      href: '/about/why-we-exist',
     },
     {
       label: t.nav.projects,
@@ -84,13 +82,14 @@ export default function Navbar({
     },
     volunteerNav,
     // { label: t.nav.news, href: '/news' },
+    { label: t.nav.reports, href: '/financial-report' },
   ]
 
   return (
     <>
       {/* Top bar — always visible */}
-      <div className="flex items-center justify-between gap-2 bg-[var(--charcoal)] px-4 py-2 text-[12px] tracking-wider text-white/50 sm:px-8 sm:text-[13px]">
-        <div className="flex gap-2 sm:gap-4">
+      <div className="flex items-center justify-between gap-3 bg-[var(--charcoal)] px-4 py-2 text-[12px] tracking-wider text-white/50 sm:px-8 sm:text-[13px]">
+        <div className="flex min-w-0 flex-wrap gap-x-2 gap-y-1 sm:gap-x-4">
           <a
             href="https://facebook.com/MedEqualiTeam"
             target="_blank"
@@ -99,15 +98,15 @@ export default function Navbar({
           >
             Facebook
           </a>
-          {/* 'https://linkedin.com/company/medequaliteam-france', */}
           <a
-            href="https://x.com/equalimed"
+            href="https://linkedin.com/company/medequaliteam-france"
             target="_blank"
             rel="noopener noreferrer"
             className="transition-colors hover:text-white"
           >
-            Twitter
+            LinkedIn
           </a>
+
           <a
             href="https://instagram.com/medequaliteam"
             target="_blank"
@@ -144,12 +143,12 @@ export default function Navbar({
       <nav
         className={`sticky top-0 z-50 border-b border-[var(--border)] bg-white transition-shadow duration-300 ${scrolled ? 'shadow-md' : ''}`}
       >
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-2 px-4 sm:px-8">
-          <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-2 px-3 sm:gap-3 sm:px-8">
+          <div className="flex min-w-0 items-center gap-1.5 sm:gap-3">
             {/* Burger — left side */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="flex h-9 w-9 flex-col items-center justify-center gap-1.5 rounded-lg hover:bg-[var(--cream)]"
+              className="flex h-9 w-9 shrink-0 flex-col items-center justify-center gap-1.5 rounded-lg hover:bg-[var(--cream)]"
               aria-label={menuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={menuOpen}
             >
@@ -178,33 +177,36 @@ export default function Navbar({
           </div>
 
           {/* Volunteer + Donate — always visible */}
-          <div className="flex shrink-0 items-center gap-0.5 sm:gap-1">
+          <div className="flex shrink-0 items-center gap-1 sm:gap-1">
             <div
-              className="relative flex items-center"
+              className="relative"
               onMouseEnter={() => setOpenDropdown(volunteerNav.label)}
               onMouseLeave={() => setOpenDropdown(null)}
             >
-              <Link
-                href={`/${locale}${volunteerNav.href}`}
-                className="rounded-lg px-2 py-1.5 text-[14px] font-medium text-[var(--muted)] transition-all hover:bg-[var(--cream)] hover:text-[var(--charcoal)] sm:px-3 sm:py-2 sm:text-[16px]"
-              >
-                {volunteerNav.label}
-                <span className="ml-0.5 hidden text-[12px] opacity-50 md:inline">▾</span>
-              </Link>
-              <button
-                type="button"
-                onClick={() =>
-                  setOpenDropdown(openDropdown === volunteerNav.label ? null : volunteerNav.label)
-                }
-                className="flex h-8 w-7 items-center justify-center rounded-lg text-[12px] text-[var(--muted)] hover:bg-[var(--cream)] md:hidden"
-                aria-expanded={openDropdown === volunteerNav.label}
-                aria-label={`${openDropdown === volunteerNav.label ? 'Collapse' : 'Expand'} ${volunteerNav.label}`}
-              >
-                ▾
-              </button>
+              <div className="inline-flex items-center rounded-lg hover:bg-[var(--cream)]">
+                <Link
+                  href={`/${locale}${volunteerNav.href}`}
+                  className="py-1.5 pr-0.5 pl-2 text-[13px] font-medium whitespace-nowrap text-[var(--muted)] transition-colors hover:text-[var(--charcoal)] sm:px-3 sm:py-2 sm:text-[16px]"
+                >
+                  <span className="sm:hidden">{t.nav.volunteerShort}</span>
+                  <span className="hidden sm:inline">{volunteerNav.label}</span>
+                  <span className="ml-0.5 hidden text-[12px] opacity-50 md:inline">▾</span>
+                </Link>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setOpenDropdown(openDropdown === volunteerNav.label ? null : volunteerNav.label)
+                  }
+                  className="flex h-8 w-6 shrink-0 items-center justify-center text-[12px] text-[var(--muted)] md:hidden"
+                  aria-expanded={openDropdown === volunteerNav.label}
+                  aria-label={`${openDropdown === volunteerNav.label ? 'Collapse' : 'Expand'} ${volunteerNav.label}`}
+                >
+                  ▾
+                </button>
+              </div>
               {openDropdown === volunteerNav.label && (
                 <div className="absolute top-full right-0 z-50 mt-1 min-w-[200px] rounded-xl border border-[var(--border)] bg-white py-2 shadow-lg md:right-auto md:left-0">
-                  {volunteerNav.children.map((child) => (
+                  {(volunteerNav.children ?? []).map((child) => (
                     <Link
                       key={child.href}
                       href={`/${locale}${child.href}`}
@@ -219,7 +221,7 @@ export default function Navbar({
             </div>
             <Link
               href={`/${locale}/donate`}
-              className="rounded-lg bg-[var(--green)] px-3 py-1.5 text-[14px] font-medium text-white transition-colors hover:bg-[var(--green-dark)] sm:ml-1 sm:px-5 sm:py-2 sm:text-[16px]"
+              className="rounded-lg bg-[var(--green)] px-2.5 py-1.5 text-[13px] font-medium whitespace-nowrap text-white transition-colors hover:bg-[var(--green-dark)] sm:ml-1 sm:px-5 sm:py-2 sm:text-[16px]"
             >
               {t.nav.donate}
             </Link>

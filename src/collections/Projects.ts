@@ -1,4 +1,9 @@
 import type { CollectionConfig } from 'payload'
+import { publishedOrAuthenticated } from '../lib/access.ts'
+import {
+  revalidateProjectAfterChange,
+  revalidateProjectAfterDelete,
+} from '../lib/cms-revalidate.ts'
 
 export const Projects: CollectionConfig = {
   slug: 'projects',
@@ -8,10 +13,14 @@ export const Projects: CollectionConfig = {
     description: "Medical projects run by Med'EqualiTeam on the ground.",
   },
   access: {
-    read: () => true, // public
+    read: publishedOrAuthenticated,
   },
   versions: {
     drafts: true,
+  },
+  hooks: {
+    afterChange: [revalidateProjectAfterChange],
+    afterDelete: [revalidateProjectAfterDelete],
   },
   fields: [
     {
@@ -71,7 +80,19 @@ export const Projects: CollectionConfig = {
       name: 'coverImage',
       type: 'upload',
       relationTo: 'media',
-      // required: true,
+      label: 'Cover image',
+      admin: {
+        description: 'Card / listing image (projects list, homepage). Not used as the page banner.',
+      },
+    },
+    {
+      name: 'bannerImage',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Banner image',
+      admin: {
+        description: 'Full-width image shown in the top banner on the project detail page.',
+      },
     },
     {
       name: 'summary',

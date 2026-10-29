@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { canAccessVolunteerApplications } from '../lib/access.ts'
 import {
   defaultVolunteerApplicationStatus,
   volunteerApplicationStatusOptions,
@@ -50,11 +51,11 @@ export const VolunteerApplications: CollectionConfig = {
     },
   },
   access: {
-    read: ({ req }) => Boolean(req.user),
+    read: canAccessVolunteerApplications,
     // Public submissions go through /api/volunteer-application (Local API bypasses access).
     create: () => false,
-    update: ({ req }) => Boolean(req.user),
-    delete: ({ req }) => Boolean(req.user),
+    update: canAccessVolunteerApplications,
+    delete: canAccessVolunteerApplications,
   },
   fields: [
     // ── Identity ──────────────────────────────────────────────────────────────

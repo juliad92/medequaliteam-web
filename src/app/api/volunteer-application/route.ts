@@ -4,6 +4,7 @@ import { checkRateLimit, RATE_LIMITS } from '@/lib/rate-limit'
 import { isValidEmail } from '@/lib/validation'
 import { defaultVolunteerApplicationStatus } from '@/lib/volunteer/application-status'
 import { isAllowedCvFile, mimeTypeForCv, sanitizeCvFilename } from '@/lib/volunteer/cv-upload'
+import { notifyVolunteerApplicationEmail } from '@/lib/volunteer/notify-application-email'
 
 function str(value: unknown): string | undefined {
   const s = String(value ?? '').trim()
@@ -132,9 +133,28 @@ export async function POST(req: Request) {
     }
 
     const datesFlexible = yesNo(body.datesFlexible)
+    const relevantWorkAcademicExperience = str(body.relevantWorkAcademicExperience)
+    const medicalGraduationDate = str(body.medicalGraduationDate)
+    const preferredStartDate = str(body.preferredStartDate)
+    const preferredEndDate = str(body.preferredEndDate)
+    const flexibleFromDate = datesFlexible === 'yes' ? str(body.flexibleFromDate) : undefined
+    const flexibleToDate = datesFlexible === 'yes' ? str(body.flexibleToDate) : undefined
+    const happyStressfulEnvironment = yesNo(body.happyStressfulEnvironment)
+    const goodEnglishLevel = yesNo(body.goodEnglishLevel)
+    const euSchengenResident = yesNo(body.euSchengenResident)
+    const greeceVisa = yesNo(body.greeceVisa)
+    const greeceVisaComments = str(body.greeceVisaComments)
+    const visaExpiryDate = str(body.visaExpiryDate)
+    const languageGreek = languageLevel(body.languageGreek)
+    const languageArabic = languageLevel(body.languageArabic)
+    const languageFarsi = languageLevel(body.languageFarsi)
+    const drivingLicenceValue = drivingLicence(body.drivingLicence)
+    const drivingLicenceOther = str(body.drivingLicenceOther)
+    const comfortableDriving9SeatVan = yesNo(body.comfortableDriving9SeatVan)
 
+    let applicationId: string
     try {
-      await payload.create({
+      const application = await payload.create({
         collection: 'volunteer-applications',
         data: {
           firstName,
@@ -146,38 +166,110 @@ export async function POST(req: Request) {
           phoneCountryCode,
           phone,
           selectedRoles: selectedRoles.length > 0 ? selectedRoles : undefined,
-          relevantWorkAcademicExperience: str(body.relevantWorkAcademicExperience),
+          relevantWorkAcademicExperience,
           cv: cvId,
-          medicalGraduationDate: str(body.medicalGraduationDate),
-          preferredStartDate: str(body.preferredStartDate),
-          preferredEndDate: str(body.preferredEndDate),
+          medicalGraduationDate,
+          preferredStartDate,
+          preferredEndDate,
           datesFlexible,
-          flexibleFromDate: datesFlexible === 'yes' ? str(body.flexibleFromDate) : undefined,
-          flexibleToDate: datesFlexible === 'yes' ? str(body.flexibleToDate) : undefined,
+          flexibleFromDate,
+          flexibleToDate,
           motivation,
-          happyStressfulEnvironment: yesNo(body.happyStressfulEnvironment),
-          goodEnglishLevel: yesNo(body.goodEnglishLevel),
-          euSchengenResident: yesNo(body.euSchengenResident),
-          greeceVisa: yesNo(body.greeceVisa),
-          greeceVisaComments: str(body.greeceVisaComments),
-          visaExpiryDate: str(body.visaExpiryDate),
-          languageGreek: languageLevel(body.languageGreek),
-          languageArabic: languageLevel(body.languageArabic),
-          languageFarsi: languageLevel(body.languageFarsi),
-          drivingLicence: drivingLicence(body.drivingLicence),
-          drivingLicenceOther: str(body.drivingLicenceOther),
-          comfortableDriving9SeatVan: yesNo(body.comfortableDriving9SeatVan),
+          happyStressfulEnvironment,
+          goodEnglishLevel,
+          euSchengenResident,
+          greeceVisa,
+          greeceVisaComments,
+          visaExpiryDate,
+          languageGreek,
+          languageArabic,
+          languageFarsi,
+          drivingLicence: drivingLicenceValue,
+          drivingLicenceOther,
+          comfortableDriving9SeatVan,
           howDidYouHearAboutUs,
           project,
           locale,
           applicationStatus: defaultVolunteerApplicationStatus,
         },
       })
+      applicationId = application.id
     } catch (error) {
       if (cvId) {
         await payload.delete({ collection: 'volunteer-cvs', id: cvId }).catch(() => undefined)
       }
       throw error
+    }
+
+    try {
+      const [projectDoc, roleDocs] = await Promise.all([
+        payload
+          .findByID({
+            collection: 'projects',
+            id: project,
+            depth: 0,
+            locale,
+            overrideAccess: true,
+          })
+          .catch(() => null),
+        selectedRoles.length > 0
+          ? payload
+              .find({
+                collection: 'volunteer-needs',
+                where: { id: { in: selectedRoles } },
+                depth: 0,
+                limit: selectedRoles.length,
+                locale,
+                overrideAccess: true,
+              })
+              .then((result) => result.docs)
+          : Promise.resolve([]),
+      ])
+
+      const roleNames = roleDocs
+        .map((doc) => (typeof doc.roleName === 'string' ? doc.roleName : ''))
+        .filter(Boolean)
+        .join(', ')
+      const projectTitle =
+        projectDoc && typeof projectDoc.title === 'string' ? projectDoc.title : project
+
+      await notifyVolunteerApplicationEmail({
+        applicationId,
+        firstName,
+        lastName,
+        age,
+        email,
+        countryOfResidence,
+        nationality,
+        phone: `${phoneCountryCode} ${phone}`.trim(),
+        selectedRoles: roleNames,
+        relevantExperience: relevantWorkAcademicExperience ?? '',
+        cvUploaded: Boolean(cvId),
+        medicalGraduationDate: medicalGraduationDate ?? '',
+        preferredStartDate: preferredStartDate ?? '',
+        preferredEndDate: preferredEndDate ?? '',
+        datesFlexible: datesFlexible ?? '',
+        flexibleFromDate: flexibleFromDate ?? '',
+        flexibleToDate: flexibleToDate ?? '',
+        motivation,
+        happyStressfulEnvironment: happyStressfulEnvironment ?? '',
+        goodEnglishLevel: goodEnglishLevel ?? '',
+        euSchengenResident: euSchengenResident ?? '',
+        greeceVisa: greeceVisa ?? '',
+        greeceVisaComments: greeceVisaComments ?? '',
+        visaExpiryDate: visaExpiryDate ?? '',
+        languageGreek: languageGreek ?? '',
+        languageArabic: languageArabic ?? '',
+        languageFarsi: languageFarsi ?? '',
+        drivingLicence: drivingLicenceValue ?? '',
+        drivingLicenceOther: drivingLicenceOther ?? '',
+        comfortableDriving9SeatVan: comfortableDriving9SeatVan ?? '',
+        howDidYouHearAboutUs,
+        project: projectTitle,
+        locale,
+      })
+    } catch (error) {
+      console.error('Failed to email volunteer application notification:', error)
     }
 
     return Response.json({ ok: true })

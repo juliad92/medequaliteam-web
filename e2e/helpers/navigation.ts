@@ -2,7 +2,10 @@ import { expect, type Page } from '@playwright/test'
 
 export async function openVolunteerNavDropdown(page: Page) {
   const nav = page.getByRole('navigation')
-  await nav.getByRole('link', { name: /^Volunteer/ }).hover()
+  const volunteerLink = nav.getByRole('link', { name: /Volunteer with us/i })
+  await volunteerLink.hover()
+  // Always present once the dropdown is open (independent of seeded projects).
+  await expect(nav.getByRole('link', { name: /Volunteer stories/i })).toBeVisible()
 }
 
 export async function expectVolunteerProjectInNav(

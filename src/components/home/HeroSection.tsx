@@ -1,17 +1,8 @@
 import React from 'react'
 import Link from 'next/link'
 import { getT } from '@/i18n/translations'
-import type { Homepage } from '@/payload/payload-types'
+import type { Homepage, Project } from '@/payload/payload-types'
 import { MediaImage } from '@/components/media-image'
-
-type Project = {
-  slug: string
-  status: string
-  location: string
-  title: string
-  summary: string
-  gradient: string
-}
 
 export default function HeroSection({
   locale,
@@ -20,7 +11,7 @@ export default function HeroSection({
 }: {
   locale: string
   heroData?: Homepage['hero']
-  project?: Project
+  project?: Project | null
 }) {
   const t = getT(locale)
 
@@ -54,7 +45,7 @@ export default function HeroSection({
           style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}
         >
           {' '}
-          <p className="mb-5 flex items-center gap-3 text-[13px] font-medium tracking-[0.16em] text-[var(--green)] uppercase">
+          <p className="mb-5 flex items-center gap-3 text-[13px] font-medium tracking-[0.16em] text-white/55 uppercase">
             <span className="h-px w-8 bg-[var(--green)]" />
             {t.hero.eyebrow}
           </p>
