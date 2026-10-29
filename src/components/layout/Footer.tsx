@@ -17,8 +17,8 @@ export default function Footer({
   const footerLinks = {
     [t.nav.about]: [
       { label: t.nav.aboutWhy, href: '/about/why-we-exist' },
-      { label: t.nav.aboutOrg, href: '/about/organisation' },
-      { label: t.nav.aboutTeam, href: '/about/meet-team' },
+      // { label: t.nav.aboutOrg, href: '/about/organisation' },
+      // { label: t.nav.aboutTeam, href: '/about/meet-team' },
     ],
     [t.nav.projects]: projects.map((project) => ({
       label: project.title,

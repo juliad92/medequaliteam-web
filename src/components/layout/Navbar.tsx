@@ -64,11 +64,11 @@ export default function Navbar({
     {
       label: t.nav.about,
       href: '/about/why-we-exist',
-      children: [
-        { label: t.nav.aboutWhy, href: '/about/why-we-exist' },
-        { label: t.nav.aboutOrg, href: '/about/organisation' },
-        { label: t.nav.aboutTeam, href: '/about/meet-team' },
-      ],
+      // children: [
+      //   { label: t.nav.aboutWhy, href: '/about/why-we-exist' },
+      // { label: t.nav.aboutOrg, href: '/about/organisation' },
+      // { label: t.nav.aboutTeam, href: '/about/meet-team' },
+      // ],
     },
     {
       label: t.nav.projects,

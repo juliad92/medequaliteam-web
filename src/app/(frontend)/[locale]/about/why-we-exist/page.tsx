@@ -3,10 +3,12 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import PageHero from '@/components/pages/PageHero'
+import ProjectPageNav from '@/components/projects/ProjectPageNav'
 import LexicalRenderer from '@/components/richtext/LexicalRenderer'
 import JsonLd from '@/components/seo/JsonLd'
 import { getT } from '@/i18n/translations'
 import { breadcrumbJsonLd } from '@/lib/json-ld'
+import { extractArticleNavSections } from '@/lib/lexical-sections'
 import { getPageBySlug, getPageHero, getPageRichTextContent } from '@/lib/pages'
 import { buildCmsPageMetadata } from '@/lib/seo'
 
@@ -43,6 +45,7 @@ export default async function WhyWeExistPage({ params }: { params: Promise<{ loc
 
   const hero = getPageHero(page)
   const content = getPageRichTextContent(page)
+  const navSections = extractArticleNavSections(content)
 
   return (
     <>
@@ -53,6 +56,8 @@ export default async function WhyWeExistPage({ params }: { params: Promise<{ loc
         ])}
       />
       <PageHero locale={locale} hero={hero} fallbackHeading={page.title} />
+
+      <ProjectPageNav locale={locale} sections={navSections} />
 
       <main className="bg-[var(--warm-white)] px-4 py-14 sm:px-8 sm:py-20">
         <div className="mx-auto w-full max-w-2xl">

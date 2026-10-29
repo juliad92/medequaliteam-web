@@ -201,7 +201,7 @@ export async function POST(req: Request) {
       throw error
     }
 
-    try {
+    /*try {
       const [projectDoc, roleDocs] = await Promise.all([
         payload
           .findByID({
@@ -233,7 +233,7 @@ export async function POST(req: Request) {
       const projectTitle =
         projectDoc && typeof projectDoc.title === 'string' ? projectDoc.title : project
 
-      await appendVolunteerApplicationToGoogleSheet({
+        await appendVolunteerApplicationToGoogleSheet({
         applicationId,
         submittedAt: new Date().toISOString(),
         firstName,
@@ -271,7 +271,7 @@ export async function POST(req: Request) {
       })
     } catch (error) {
       console.error('Failed to append volunteer application to Google Sheet:', error)
-    }
+    }*/
 
     return Response.json({ ok: true })
   } catch {
