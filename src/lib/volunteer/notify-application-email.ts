@@ -41,7 +41,8 @@ function line(label: string, value: string | number | boolean | undefined): stri
 }
 
 function applicationEmailText(data: VolunteerApplicationEmailPayload): string {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim().replace(/\/$/, '') || 'https://medequali.team'
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL?.trim().replace(/\/$/, '') || 'https://medequali.team'
   const adminUrl = `${siteUrl}/admin/collections/volunteer-applications/${data.applicationId}`
 
   const sections = [
