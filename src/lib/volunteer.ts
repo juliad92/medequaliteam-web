@@ -15,7 +15,7 @@ type Locale = 'en' | 'fr'
 
 const VOLUNTEER_NAV_REVALIDATE_SECONDS = parseInt(process.env.CACHE_REVALIDATE_SECONDS || '300', 10)
 
-export const getCachedProjectsWithVolunteerNeeds = unstable_cache(
+const getCachedProjectsWithVolunteerNeedsCached = unstable_cache(
   async (locale: Locale) => {
     const payload = await getPayload({ config })
     return getProjectsWithVolunteerNeeds(payload, locale)
@@ -26,6 +26,17 @@ export const getCachedProjectsWithVolunteerNeeds = unstable_cache(
     tags: [CACHE_TAGS.volunteerNav],
   },
 )
+
+/** Cached in production; uncached under E2E so seed-after-boot cannot serve a stale empty nav. */
+export async function getCachedProjectsWithVolunteerNeeds(
+  locale: Locale,
+): Promise<VolunteerProjectNavItem[]> {
+  if (process.env.E2E_DISABLE_CACHE === 'true') {
+    const payload = await getPayload({ config })
+    return getProjectsWithVolunteerNeeds(payload, locale)
+  }
+  return getCachedProjectsWithVolunteerNeedsCached(locale)
+}
 
 export async function getProjectsWithVolunteerNeeds(
   payload: Payload,
