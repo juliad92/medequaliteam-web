@@ -46,7 +46,7 @@ function applicationEmailText(data: VolunteerApplicationEmailPayload): string {
   const adminUrl = `${siteUrl}/admin/collections/volunteer-applications/${data.applicationId}`
 
   const sections = [
-    'New volunteer application submitted via medequali.team',
+    'Volunteering with MedEqualiTeam : ',
     '',
     `Admin: ${adminUrl}`,
     '',
@@ -121,7 +121,7 @@ export async function notifyVolunteerApplicationEmail(
       from,
       to: [recipient],
       reply_to: data.email,
-      subject: `New volunteer application — ${data.firstName} ${data.lastName}`,
+      subject: `Volunteering with MedEqualiTeam : ${data.firstName} ${data.lastName}  — <${data.selectedRoles}> [ ${data.preferredStartDate} - ${data.preferredEndDate} ] `,
       text: applicationEmailText(data),
     }),
   })
