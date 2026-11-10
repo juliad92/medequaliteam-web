@@ -60,6 +60,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     fallbackLocale: 'en',
     depth: 1,
     limit: 3,
+    sort: '-dateStart',
   })
 
   // Get the project configured in featuredProject in globals

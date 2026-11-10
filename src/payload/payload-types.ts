@@ -1462,7 +1462,6 @@ export interface Homepage {
       [k: string]: unknown;
     } | null;
   };
-  featuredProject?: (string | null) | Project;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1503,7 +1502,6 @@ export interface HomepageSelect<T extends boolean = true> {
         image?: T;
         missionText?: T;
       };
-  featuredProject?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

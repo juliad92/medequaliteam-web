@@ -94,11 +94,5 @@ export const Homepage: GlobalConfig = {
         },
       ],
     },
-    {
-      name: 'featuredProject',
-      type: 'relationship',
-      relationTo: 'projects',
-      label: 'Featured project (shown on homepage)',
-    },
   ],
 }
