@@ -69,7 +69,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     locale: locale as 'en' | 'fr',
     depth: 1,
   })
-  const featuredProject = populatedProject(homepageSettings?.featuredProject)
   const heroData = homepageSettings?.hero
   const impactStats = homepageSettings?.impactStats
   const missionImage = homepageSettings?.mission?.image
@@ -98,7 +97,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
   return (
     <>
-      <HeroSection locale={locale} heroData={heroData} project={featuredProject} />
+      <HeroSection locale={locale} heroData={heroData} />
       <ImpactBar locale={locale} impactStats={impactStats} />
       <MissionSection locale={locale} missionImage={missionImage} />
       <ProjectsSection locale={locale} projects={projects} />
