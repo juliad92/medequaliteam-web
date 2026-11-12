@@ -141,12 +141,14 @@ export const translations = {
     // Donate
     donate: {
       metaTitle: 'Donate',
-      metaDescription: "Support Med'EqualiTeam with a donation. 100% of funds go to operations.",
+      metaDescription:
+        "Support Med'EqualiTeam with a donation. Your donation funds medicines and medical supplies. We keep our costs low, 95% of it goes straight to care",
       srTitle:
         "Med'EqualiTeam donation page — select your country to see tax deduction options and donate online.",
       eyebrow: "Med'EqualiTeam — Free healthcare for vulnerable and displaced populations",
       title: 'Every donation saves lives',
-      subtitle: '100% of funds go to operations. We depend entirely on your generosity.',
+      subtitle:
+        'Your donation funds medicines and medical supplies. We keep our costs low, 95% of it goes straight to care. We depend entirely on your generosity.',
       impact: {
         consultation: { value: '€15', label: '1 consultation funded' },
         medicine: { value: '€50', label: '1 week of medicine for a child' },
@@ -294,6 +296,10 @@ export const translations = {
       metaTitle: 'Financial report',
       metaDescription:
         "How Med'EqualiTeam is funded and how donations are spent. Our accounts are reviewed by a chartered accountant.",
+    },
+    annualReports: {
+      metaTitle: 'Annual reports',
+      metaDescription: "Med'EqualiTeam Activity Annual Reports",
     },
 
     // Why we exist
@@ -582,7 +588,7 @@ export const translations = {
       eyebrow: "Med'EqualiTeam — Soins gratuits pour les populations vulnérables et déplacées",
       title: 'Chaque don sauve des vies',
       subtitle:
-        '100 % des fonds vont aux opérations. Nous dépendons entièrement de votre générosité.',
+        "Votre soutien permet de financer l'achat de médicaments et de matériel médical. Nous réduisons nos frais au maximum et plus de 95 % de vos dons sont directement consacrés aux soins. Nous dépendons entièrement de votre générosité.",
       impact: {
         consultation: { value: '15 €', label: '1 consultation financée' },
         medicine: { value: '50 €', label: '1 semaine de médicaments pour un enfant' },
@@ -730,6 +736,10 @@ export const translations = {
       metaTitle: 'Rapport financier',
       metaDescription:
         "Comment Med'EqualiTeam est financée et comment les dons sont utilisés. Nos comptes sont suivis par un expert-comptable.",
+    },
+    annualReports: {
+      metaTitle: "Rapports d'activités annuels",
+      metaDescription: "Rapports d'activités annuels de Med'EqualiTeam",
     },
 
     // Why we exist
