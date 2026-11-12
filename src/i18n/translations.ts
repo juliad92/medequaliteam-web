@@ -14,7 +14,7 @@ export const translations = {
       volunteerGreece: 'Volunteer in Greece',
       volunteerStories: 'Volunteer stories',
       news: 'News',
-      reports: 'Financial reports',
+      reports: 'Reports',
       donate: 'Donate',
     },
 
@@ -448,7 +448,7 @@ export const translations = {
       volunteerGreece: 'Bénévolat en Grèce',
       volunteerStories: 'Témoignages',
       news: 'Actualités',
-      reports: 'Rapports financiers',
+      reports: 'Rapports',
       donate: 'Faire un don',
     },
 
